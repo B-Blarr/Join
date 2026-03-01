@@ -128,12 +128,14 @@
                            placeholder="Add new subtask"
                            (input)="asOfSubtasks()">
                            <div class="subtaskSaveReset" *ngIf="asOfCategory">
-                            <div class="subtaskReset"></div>
+                            <div (click)="inputReset()" class="subtaskReset"></div>
                             <div class="subtaskLine"></div>
-                            <div class="subtaskSave"></div>
+                            <div (click)="subtasksSaveJson()" class="subtaskSave"></div>
                            </div>
                 </div>
-
+                    <div *ngFor="let subtask of subtasksJSON">
+                    <li><input [value]="subtask.task" readonly /></li>
+                    </div>
             </div>
         </div>
 

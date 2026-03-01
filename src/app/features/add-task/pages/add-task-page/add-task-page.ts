@@ -21,6 +21,8 @@ import { CommonModule } from '@angular/common';
 })
 
 export class AddTaskPage {
+  subtasksJSON: { task: string | null | undefined }[] = [];
+
   asOfCategory:boolean = false;
   
   dropdownCategory:boolean = false;
@@ -44,7 +46,7 @@ export class AddTaskPage {
       validators: [Validators.required]
     }),
     subtasks: new FormControl('', {
-      validators: [Validators.minLength(1)]
+      validators: []
     }),
   });
 
@@ -99,4 +101,16 @@ USSelction(){
   let value = this.taskForm.get('subtasks')?.value;
   value && value?.length > 0 ? this.asOfCategory = true : this.asOfCategory = false;
  }
+
+ subtasksSaveJson() {
+  let value = this.taskForm.get('subtasks')?.value;
+  this.subtasksJSON.push({
+    task: value
+  })
+   this.taskForm.get('subtasks')?.setValue('');
+ }
+
+inputReset() {
+  this.taskForm.get('subtasks')?.setValue('');
+}
 }
