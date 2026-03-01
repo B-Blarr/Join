@@ -119,7 +119,7 @@
                     </div>
                     }
                 </div>
-
+                <div class="subtask">
                 <div class="subtaskContent">
                     <label for="subtasks">Subtasks</label>
                     <input formControlName="subtasks"
@@ -133,8 +133,19 @@
                             <div (click)="subtasksSaveJson()" class="subtaskSave"></div>
                            </div>
                 </div>
-                    <div *ngFor="let subtask of subtasksJSON">
-                    <li><input [value]="subtask.task" readonly /></li>
+                     <div class="subtasksList">
+                    <div  *ngFor="let subtask of subtasksJSON"  let i = index>
+                    <li class="subtask-item"><input 
+                        class="subtasksListIndividually" 
+                        [value]="subtask.task" 
+                        readonly />
+                    <div class="subtaskaTool">    
+                    <div class="editSubtasks"></div>
+                    <div class="removeSubtasks"></div>
+                    </div>
+                    </li>
+                    </div>
+                    </div>
                     </div>
             </div>
         </div>

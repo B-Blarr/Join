@@ -108,6 +108,7 @@ USSelction(){
     task: value
   })
    this.taskForm.get('subtasks')?.setValue('');
+   this.asOfCategory = false;
  }
 
 inputReset() {

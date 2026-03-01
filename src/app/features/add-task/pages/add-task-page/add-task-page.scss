@@ -119,7 +119,7 @@ select {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             min-height: 400px;
         }
 
@@ -339,7 +339,57 @@ select {
     }
 }
 
+.subtask{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+.subtasksList{
+    margin-top: 10px;
+    .subtask-item {
+  list-style: none;   
+  position: relative;
+}
 
+.subtask-item::before {
+  content: "•";
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+    .subtasksListIndividually{
+        position: relative;
+        width: 440px;
+        background-color: #F6F7F8;
+        border: none;
+        padding-left: 45px;
+    }
+    .subtaskaTool{
+        top: 8px;
+        right: 10px;
+        position: absolute;
+        display: flex;
+        gap: 3px;
+        .editSubtasks{
+        background-image: url(../../../../../../public/assets/icons/AddTask/editIcon.svg);
+        width: 30px;
+        height: 30px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    .removeSubtasks{
+        background-image: url(../../../../../../public/assets/icons/AddTask/trashIcon.svg);
+        width: 30px;
+        height: 30px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    }
+}
+}
         }
 
         footer {
