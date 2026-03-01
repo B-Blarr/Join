@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ViewChildren, AfterViewInit, QueryList, ElementRef, TemplateRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewChildren, AfterViewInit, QueryList, ElementRef, TemplateRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { TaskCard } from '../task-card/task-card';
 import { Task, Status } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,9 @@ export class BoardColumn implements AfterViewInit {
   @Output() taskSelected = new EventEmitter<Task>();
   @Output() addClicked = new EventEmitter<void>();
   @Output() taskDropped = new EventEmitter<{ task: Task; newStatus: Status }>();
+  @Output() moveTask = new EventEmitter<{ taskId: string; status: Status }>();
+  @Input() openMenuTaskId: string | null = null;
+  @Output() menuToggleGlobal = new EventEmitter<string>();
 
   @ViewChild(CdkDropList) dropList!: CdkDropList<Task[]>;
   @ViewChildren('taskElement') taskElements!: QueryList<ElementRef>;
@@ -33,6 +36,7 @@ export class BoardColumn implements AfterViewInit {
   draggedTaskIndex = -1;
   previewContainer: TemplateRef<any> | string = 'body';
   draggedElement: ElementRef | null = null;
+ 
 
   ngAfterViewInit(): void {
     if (!this.connectedDropLists || this.connectedDropLists.length === 0) {
@@ -129,4 +133,19 @@ export class BoardColumn implements AfterViewInit {
   getEmptyMessage(): string {
     return this.tasks.length === 0 ? `No tasks in ${this.title}` : '';
   }
+
+  onMoveFromMenu(event: { taskId: string; status: Status }): void {
+    if (event.status === this.columnId) {
+      return;
+    } 
+    this.moveTask.emit(event);
+  }
+    /**
+   * Closes the FAB menu when clicking anywhere outside of it.
+   */
+onMenuToggle(taskId: string): void {
+  this.menuToggleGlobal.emit(taskId);
+}
+
+
 }
