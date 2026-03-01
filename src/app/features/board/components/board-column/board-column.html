@@ -28,7 +28,13 @@
       class="draggable-task"
       #taskElement
     >
-      <app-task-card [task]="task"></app-task-card>
+      <app-task-card
+       (moveTo)="onMoveFromMenu($event)"
+        [menuOpen]="openMenuTaskId === task.id"
+  (menuToggle)="onMenuToggle($event)"
+        [task]="task"
+        >
+      </app-task-card>
     </div>
 
     <div *ngIf="getEmptyMessage()" class="empty-message">
