@@ -358,18 +358,28 @@ select {
   transform: translateY(-50%);
   z-index: 3;
 }
+
+.subtask-item {
+  &:hover .subtaskaTool {
+    display: flex;
+  }
+}
     .subtasksListIndividually{
         position: relative;
         width: 440px;
+        height: 30px;
         background-color: #F6F7F8;
         border: none;
         padding-left: 45px;
+        &:hover{
+            background-color: #ececec;
+        }
     }
     .subtaskaTool{
-        top: 8px;
+        top: 0px;
         right: 10px;
         position: absolute;
-        display: flex;
+        display: none;
         gap: 3px;
         .editSubtasks{
         background-image: url(../../../../../../public/assets/icons/AddTask/editIcon.svg);

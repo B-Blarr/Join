@@ -114,4 +114,8 @@ USSelction(){
 inputReset() {
   this.taskForm.get('subtasks')?.setValue('');
 }
+
+removeSubtask(index: number) {
+  this.subtasksJSON.splice(index, 1);
+}
 }

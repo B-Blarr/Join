@@ -134,14 +134,15 @@
                            </div>
                 </div>
                      <div class="subtasksList">
-                    <div  *ngFor="let subtask of subtasksJSON"  let i = index>
-                    <li class="subtask-item"><input 
+                    <div *ngFor="let subtask of subtasksJSON; let i = index">
+                    <li class="subtask-item">
+                        <input 
                         class="subtasksListIndividually" 
                         [value]="subtask.task" 
                         readonly />
                     <div class="subtaskaTool">    
                     <div class="editSubtasks"></div>
-                    <div class="removeSubtasks"></div>
+                    <div class="removeSubtasks" (click)="removeSubtask(i)"></div>
                     </div>
                     </li>
                     </div>
