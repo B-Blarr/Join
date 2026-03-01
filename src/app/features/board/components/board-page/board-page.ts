@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef, effect } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef, effect, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task , Status} from '../../models/task.model';
@@ -22,6 +22,7 @@ export class BoardPage implements OnInit {
 
   searchQuery = '';
   allTasks: Task[] = [];
+  openMenuTaskId: string | null = null;
 
   columns: Array<{ title: string; status: Status; tasks: Task[] }> = [
     { title: 'To do', status: 'todo', tasks: [] },
@@ -98,6 +99,15 @@ export class BoardPage implements OnInit {
     this.filterTasks(this.allTasks);
   }
 
+  onMenuToggle(taskId: string): void {
+  this.openMenuTaskId = this.openMenuTaskId === taskId ? null : taskId;
+}
+
+@HostListener('document:click')
+onDocClick(): void {
+  this.openMenuTaskId = null;
+}
+
   openAddTaskDialog(): void {
     this.selectedStatus = 'todo';
     this.showAddTask = true;
@@ -141,5 +151,11 @@ export class BoardPage implements OnInit {
     await this.taskStore.updateTask(event.task.id, { status: event.newStatus });
     await this.taskStore.loadTasks();
   }
+
+  async onMoveTask(evt: { taskId: string; status: Status }): Promise<void> {
+    this.openMenuTaskId = null;
+    await this.taskStore.updateTask(evt.taskId, { status: evt.status });
+    await this.taskStore.loadTasks();
+}
 }
 
