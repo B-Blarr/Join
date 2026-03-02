@@ -51,7 +51,11 @@ body {
 }
 
 .add-task-btn {
-    flex: 0 0 auto; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    flex: 0 0 auto;
+    gap: 8px;
     white-space: nowrap;
     background: #2a3647;
     color: #fff;
@@ -61,26 +65,27 @@ body {
     border: none;
     border-radius: 10px;
     padding: 0px 25px;
-    border-top-right-radius: 10px !important;
-    border-bottom-right-radius: 10px;
     height: 45px;
     cursor: pointer;
 
     >span {
         font-size: 20px;
     }
-}
 
+    &:hover{
+      background: #29ABE2;
+    }
+}
 
 .search {
     margin-left: auto;
     display: flex;
     align-items: center;
     height: 45px;
-    flex: 1 1 260px; 
-    min-width: 0px; 
-    max-width: 400px; 
-    width: auto; 
+    flex: 1 1 260px;
+    min-width: 0px;
+    max-width: 400px;
+    width: auto;
     margin-right: 0;
     border: 1px solid #A8A8A8;
     border-radius: 10px;
@@ -204,13 +209,13 @@ body {
 
     .board-page__toolbar {
         order: 2;
-        margin-left: auto; 
+        margin-left: auto;
     }
 
     .search {
         order: 3;
-        flex: 0 0 100%; 
-        margin-left: 0; 
+        flex: 0 0 100%;
+        margin-left: 0;
         width: 280px;
         max-width: 100%;
     }

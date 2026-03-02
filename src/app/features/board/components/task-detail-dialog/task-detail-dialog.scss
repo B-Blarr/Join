@@ -670,22 +670,26 @@ textarea.input {
     &.active {
       img {
         filter: brightness(0) invert(1);
+        box-shadow:none;
       }
     }
 
     &.active.urgent {
       background-color: #ff3d00;
       color: white;
+      box-shadow:none;
     }
 
     &.active.medium {
       background-color: #ffa800;
       color: white;
+      box-shadow:none;
     }
 
     &.active.low {
       background-color: #7ae229;
       color: white;
+      box-shadow:none;
     }
   }
 }
