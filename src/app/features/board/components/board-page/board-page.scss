@@ -93,7 +93,6 @@ body {
     border-radius: 10px;
     background: #fff;
     overflow: hidden;
-
 }
 
 .search>input {
@@ -104,6 +103,7 @@ body {
     padding: 0 14px;
     background: transparent;
     min-width: 0;
+    cursor: pointer;
 }
 
 .search>button {
@@ -133,6 +133,12 @@ body {
 .search>button img {
     display: block;
     width: 25px;
+    transition: background-color 100ms;
+    border-radius: 50%;
+
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.08);
+    }
 }
 
 .board {
