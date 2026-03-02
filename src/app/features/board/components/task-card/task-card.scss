@@ -1,4 +1,7 @@
 .task-card{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: var(--card-w);
   max-width: 100%;
   background: #fff;
@@ -16,13 +19,13 @@
   padding: 0 12px;
   border-radius: 10px;
   color: #fff;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .title{
   color:#2A3647;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   margin: 0 0 6px 0;
 }
@@ -42,11 +45,11 @@
 }
 
 .progress {
-  flex: 1;               
+  flex: 1;
   height: 6px;
   background: #F4F4F4;
   border-radius: 6px;
-  overflow: hidden;        
+  overflow: hidden;
 }
 
 .bar {
@@ -85,8 +88,8 @@
   font-weight: 700;
   color: #fff;
   background: #2A3647;
-  border: 2px solid #fff;   
-  margin-left: -8px;        
+  border: 2px solid #fff;
+  margin-left: -8px;
 }
 
 .assignees__initials .avatar:first-child{
@@ -132,8 +135,8 @@
 
   .fab-menu {
   position: absolute;
-  top: calc(100% + -30px);  
-  right: 15px;              
+  top: calc(100% + -30px);
+  right: 15px;
   width: 160px;
   background: #2A3647;
   border-radius: 16px;

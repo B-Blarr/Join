@@ -25,13 +25,13 @@
     {{ task.description }}
   </p>
 
-  <div class="meta">
-    <div class="progress" *ngIf="task.subtasks?.length">
+  <div class="meta" *ngIf="task.subtasks?.length">
+    <div class="progress">
       <div class="bar" [style.width.%]="(doneSubtasksCount / totalSubtasksCount) * 100">
       </div>
     </div>
 
-    <span class="subtasks" *ngIf="task.subtasks?.length">
+    <span class="subtasks">
       {{ doneSubtasksCount }}/{{ totalSubtasksCount }} Subtasks
     </span>
   </div>
