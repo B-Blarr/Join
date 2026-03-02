@@ -231,7 +231,7 @@ textarea.input {
   }
 
   .dropdown-arrow {
-    width: 12px;
+    width: 8px;
     height: auto;
     cursor: pointer;
     transition: transform 200ms;
@@ -298,6 +298,7 @@ textarea.input {
     margin-left: auto;
     width: 24px;
     height: 24px;
+    flex-shrink: 0;
     cursor: pointer;
     appearance: none;
     box-sizing: border-box;
@@ -492,6 +493,7 @@ textarea.input {
 
   & input {
     flex: 1;
+    min-width: 120px;
     border: none;
     outline: none;
     background: transparent;
@@ -719,6 +721,14 @@ textarea.input {
 
   .input {
     padding: 8px 21px;
+    font-size: 16px;
+  }
+
+  .edit-input {
+  gap: 4px;
+  }
+
+  .edit-input input {
     font-size: 16px;
   }
 
