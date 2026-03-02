@@ -122,13 +122,20 @@
           >
 
             <label for="assignedTo">Assigned to</label>
+            <div class="withoutTitle">
+  <div class="inputWrapper">
+    <div 
+      class="arrowDirection"
+      [class.rotate]="showAssignedDropdown">
+    </div>
 
-            <input
-              id="assignedTo"
-              type="text"
-              placeholder="Select contacts to assign"
-              (input)="filterContacts($event.target.value)"
-            />
+    <input
+      id="assignedTo"
+      type="text"
+      placeholder="Select contacts to assign"
+      (input)="filterContacts($event.target.value)"
+    />
+  </div>
 
             <div class="assignedDropdown" *ngIf="showAssignedDropdown">
               <div *ngFor="let contact of filteredContacts">
@@ -142,7 +149,7 @@
                 </div>
               </div>
             </div>
-
+            </div>
           </div>
 
         <!-- CATEGORY -->
