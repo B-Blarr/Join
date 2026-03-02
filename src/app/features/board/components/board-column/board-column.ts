@@ -8,7 +8,8 @@ import {
   QueryList,
   ElementRef,
   TemplateRef,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TaskCard } from '../task-card/task-card';
 import { Task, Status } from '../../models/task.model';
@@ -39,6 +40,7 @@ import { Supabase } from '../../../../supabase';
   imports: [CommonModule, TaskCard, CdkDrag, CdkDropList, DragDropModule],
   templateUrl: './board-column.html',
   styleUrl: './board-column.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardColumn  {
   @Input() title = '';
@@ -111,7 +113,7 @@ export class BoardColumn  {
     }
 
     this.isDragOver = false;
-    setTimeout(() => this.cdr.detectChanges());
+    this.cdr.markForCheck();
   }
 
   /**
@@ -145,6 +147,7 @@ export class BoardColumn  {
    */
   onDropListEntered(): void {
     this.isDragOver = true;
+    this.cdr.markForCheck();
   }
 
   /**
@@ -154,6 +157,7 @@ export class BoardColumn  {
    */
   onDropListExited(): void {
     this.isDragOver = false;
+    this.cdr.markForCheck();
   }
 
   /**
@@ -165,6 +169,7 @@ export class BoardColumn  {
    */
   onDragStarted(event: any): void {
     this.isDragging = true;
+    this.cdr.markForCheck();
   }
 
   /**
@@ -175,6 +180,7 @@ export class BoardColumn  {
    */
   onDragEnded(event: any): void {
     this.isDragging = false;
+    this.cdr.markForCheck();
   }
 
   /**
