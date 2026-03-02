@@ -145,6 +145,9 @@ export class TaskDetailDialog implements OnInit {
     if (!target.closest('.assigned-dropdown')) {
       this.dropdownOpen.set(false);
     }
+    if (!target.closest('.edit-input') && !target.closest('.edit-subtask-item')) {
+      this.cancelSubtaskEdit();
+    }
   }
 
   async deleteTask() {
