@@ -67,6 +67,7 @@ body {
     padding: 0px 25px;
     height: 45px;
     cursor: pointer;
+    transition: 125ms;
 
     >span {
         font-size: 20px;
@@ -74,6 +75,7 @@ body {
 
     &:hover{
       background: #29ABE2;
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     }
 }
 
