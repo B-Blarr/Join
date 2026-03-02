@@ -67,8 +67,6 @@ categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | 
 }),
   });
 
-  
-
   filteredContacts = computed(() => {
     const search = this.searchText().toLowerCase();
     if (!search) return this.supabaseService.contacts();
@@ -140,17 +138,19 @@ categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | 
     this.dropdownCategory = !this.dropdownCategory;
   }
 
-TTSelction() {
-  this.taskForm.patchValue({ type: 'Technical Task' });
-  this.taskForm.get('type')?.updateValueAndValidity();
-  this.dropdownCategory = false;
-}
+  TTSelction() {
+    this.taskForm.patchValue({
+      type: "Technical Task"
+    })
+    this.dropdownCategory = false;
+  }
 
-USSelction() {
-  this.taskForm.patchValue({ type: 'User Story' });
-  this.taskForm.get('type')?.updateValueAndValidity();
-  this.dropdownCategory = false;
-}
+  USSelction() {
+    this.taskForm.patchValue({
+      type: "User Story"
+    })
+    this.dropdownCategory = false;
+  }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
