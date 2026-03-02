@@ -49,8 +49,8 @@ export class AddTaskDialog implements OnInit {
   today: string = new Date().toISOString().split('T')[0];
 
 categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const v = (control.value ?? '').toString().trim();
-  return v === 'Select task category' || v === '' ? { categoryRequired: true } : null;
+  const valid = (control.value ?? '').toString().trim();
+  return valid === 'Select task category' || valid === '' ? { categoryRequired: true } : null;
 };
 
   taskForm = new FormGroup({
