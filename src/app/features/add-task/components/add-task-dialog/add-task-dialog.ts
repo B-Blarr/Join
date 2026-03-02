@@ -4,8 +4,9 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  FormsModule,
-  Validators
+  FormsModule,AbstractControl, ValidationErrors,
+  Validators,
+  ValidatorFn
 } from '@angular/forms';
 import { Supabase, Contact } from '../../../../supabase';
 import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
@@ -47,6 +48,11 @@ export class AddTaskDialog implements OnInit {
 
   today: string = new Date().toISOString().split('T')[0];
 
+categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const v = (control.value ?? '').toString().trim();
+  return v === 'Select task category' || v === '' ? { categoryRequired: true } : null;
+};
+
   taskForm = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)]
@@ -56,8 +62,12 @@ export class AddTaskDialog implements OnInit {
       validators: [Validators.required]
     }),
     priority: new FormControl('medium'),
-    type: new FormControl('Select task category'),
+   type: new FormControl('Select task category', {
+  validators: [this.categoryValidator]
+}),
   });
+
+  
 
   filteredContacts = computed(() => {
     const search = this.searchText().toLowerCase();
@@ -130,19 +140,17 @@ export class AddTaskDialog implements OnInit {
     this.dropdownCategory = !this.dropdownCategory;
   }
 
-  TTSelction() {
-    this.taskForm.patchValue({
-      type: "Technical Task"
-    })
-    this.dropdownCategory = false;
-  }
+TTSelction() {
+  this.taskForm.patchValue({ type: 'Technical Task' });
+  this.taskForm.get('type')?.updateValueAndValidity();
+  this.dropdownCategory = false;
+}
 
-  USSelction() {
-    this.taskForm.patchValue({
-      type: "User Story"
-    })
-    this.dropdownCategory = false;
-  }
+USSelction() {
+  this.taskForm.patchValue({ type: 'User Story' });
+  this.taskForm.get('type')?.updateValueAndValidity();
+  this.dropdownCategory = false;
+}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
