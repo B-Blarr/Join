@@ -52,13 +52,21 @@ export class AddTaskPage implements OnInit {
   return valid === 'Select task category' || valid === '' ? { categoryRequired: true } : null;
 };
 
+  minDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) return null;
+    const entered = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return entered < today ? { pastDate: true } : null;
+  };
+
   taskForm = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)]
     }),
      description: new FormControl(''),
     due_at: new FormControl('', {
-      validators: [Validators.required]
+      validators: [Validators.required, this.minDateValidator]
     }),
     priority: new FormControl('medium'),
   type: new FormControl('Select task category', {
