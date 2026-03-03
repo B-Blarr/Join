@@ -66,7 +66,7 @@
   .mainContent {
     .divContent {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr); 
+      grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
       column-gap: 60px;
       align-items: start;
       min-height: 376px;
@@ -141,6 +141,34 @@
       color: black;
     }
 
+    .input-date-wrapper {
+      position: relative;
+      width: 100%;
+
+      .input-date {
+        padding-right: 44px;
+
+        &::-webkit-calendar-picker-indicator {
+          opacity: 0;
+          position: absolute;
+          right: 0;
+          width: 44px;
+          height: 100%;
+          cursor: pointer;
+        }
+      }
+
+      .date-icon {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+      }
+    }
+
     input.invalid {
       border: 2px solid #E60026;
     }
@@ -151,7 +179,7 @@
       margin: 0;
     }
 
-  
+
     .priorityContent {
       .priorityContentElements {
         display: flex;
@@ -228,6 +256,12 @@
             width: 20px;
             height: 20px;
           }
+        }
+
+        #prioUrgent:checked + .priorityUrgent:hover,
+        #prioMedium:checked + .priorityMedium:hover,
+        #prioLow:checked + .priorityLow:hover {
+          box-shadow: none;
         }
       }
     }
@@ -501,7 +535,6 @@
 
         img {
           width: 16px;
-          height: 16px;
         }
 
         &:hover {
