@@ -3,7 +3,7 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators
+  Validators,AbstractControl, ValidationErrors,ValidatorFn
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Supabase } from '../../../../supabase';
@@ -46,20 +46,23 @@ export class AddTaskPage implements OnInit {
 
   today: string = new Date().toISOString().split('T')[0];
 
+  categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const valid = (control.value ?? '').toString().trim();
+  return valid === 'Select task category' || valid === '' ? { categoryRequired: true } : null;
+};
+
   taskForm = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)]
     }),
-    description: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(10)]
-    }),
+     description: new FormControl(''),
     due_at: new FormControl('', {
       validators: [Validators.required]
     }),
     priority: new FormControl('medium'),
     type: new FormControl('Select task category', {
-      validators: [Validators.required]
-    }),
+    validators: [this.categoryValidator]
+}),
     subtasks: new FormControl('')
   });
 
