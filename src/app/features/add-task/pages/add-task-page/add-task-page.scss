@@ -172,6 +172,7 @@
         #prioUrgent:checked+.priorityUrgent {
           background-color: #FF3D00;
           color: white;
+          box-shadow: none;
 
           .priorityUrgentIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsUrgentWhite.svg);
@@ -181,6 +182,7 @@
         #prioMedium:checked+.priorityMedium {
           background-color: #FFA800;
           color: white;
+          box-shadow: none;
 
           .priorityMediumIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumWhite.svg);
@@ -190,6 +192,7 @@
         #prioLow:checked+.priorityLow {
           background-color: #7AE229;
           color: white;
+          box-shadow: none;
 
           .priorityLowIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowWhite.svg);
@@ -1412,6 +1415,7 @@ select {
       #prioUrgent:checked+.priorityUrgent {
         background-color: #FF3D00;
         color: white;
+        box-shadow: none;
 
         .priorityUrgentIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsUrgentWhite.svg);
@@ -1421,6 +1425,7 @@ select {
       #prioMedium:checked+.priorityMedium {
         background-color: #FFA800;
         color: white;
+        box-shadow: none;
 
         .priorityMediumIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumWhite.svg);
@@ -1430,6 +1435,7 @@ select {
       #prioLow:checked+.priorityLow {
         background-color: #7AE229;
         color: white;
+        box-shadow: none;
 
         .priorityLowIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowWhite.svg);

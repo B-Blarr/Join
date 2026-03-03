@@ -244,6 +244,7 @@ input[type="date"] {
             #prioUrgent:checked + .priorityUrgent {
                 background-color: #FF3D00;
                 color: white;
+                box-shadow: none;
 
                 .priorityUrgentIMG {
                     background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsUrgentWhite.svg);
@@ -253,6 +254,7 @@ input[type="date"] {
             #prioMedium:checked + .priorityMedium {
                 background-color: #FFA800;
                 color: white;
+                box-shadow: none;
 
                 .priorityMediumIMG {
                     background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumWhite.svg);
@@ -262,6 +264,7 @@ input[type="date"] {
             #prioLow:checked + .priorityLow {
                 background-color: #7AE229;
                 color: white;
+                box-shadow: none;
 
                 .priorityLowIMG {
                     background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowWhite.svg);
