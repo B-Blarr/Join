@@ -245,6 +245,12 @@ textarea.input {
 
   &:focus-within {
     border-color: #29abe2;
+
+    & button,
+    & .dividing-line {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 
   & input {
@@ -275,6 +281,8 @@ textarea.input {
     flex-shrink: 0;
     width: 28px;
     height: 28px;
+    opacity: 0;
+    pointer-events: none;
     transition: background-color 100ms;
 
     & img {
@@ -291,6 +299,10 @@ textarea.input {
   width: 1px;
   height: 20px;
   border: 1px solid #d1d1d1;
+  display: flex;
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 // Subtask Edit List
