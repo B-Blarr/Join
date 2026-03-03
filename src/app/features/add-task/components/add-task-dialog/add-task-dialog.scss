@@ -84,7 +84,8 @@
   }
 }
 
-span {
+label > span,
+footer span {
   color: #ff8190;
 }
 
@@ -535,6 +536,7 @@ input[type='date'] {
 
   .assigned-name {
     font-size: 19px;
+    color: black;
   }
 
   .assigned-avatars {

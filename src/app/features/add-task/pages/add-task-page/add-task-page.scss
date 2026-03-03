@@ -16,7 +16,8 @@
     color: #2A3647;
   }
 
-  span {
+  label > span,
+  footer span {
     color: #FF8190;
   }
 
@@ -1150,7 +1151,8 @@
   }
 }
 
-span {
+label > span,
+footer span {
   color: #FF8190;
 }
 
