@@ -239,8 +239,7 @@
                 <img src="assets/icons/check-grey.svg" alt="Add" />
               </button>
             </div>
-          </div>
-          <aside class="subtask-list">
+            <aside class="subtask-list">
           @for (sub of task!.subtasks; track sub.id) {
             @if (editingSubtaskId() === sub.id) {
               <div class="edit-input input">
@@ -273,6 +272,7 @@
             }
           }
           </aside>
+          </div>
         </div>
         <div class="edit-actions">
           <button
