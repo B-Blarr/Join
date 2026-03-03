@@ -1,90 +1,129 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, computed, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators
+  FormsModule,
+  AbstractControl,
+  ValidationErrors,
+  Validators,
+  ValidatorFn
 } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { Supabase } from '../../../../supabase';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { Supabase, Contact } from '../../../../supabase';
+import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
+import { TaskStore } from '../../../board/services/task-store';
+import { Status } from '../../../board/models/task.model';
+
+interface Subtask {
+  id: string;
+  title: string;
+  done: boolean;
+}
 
 @Component({
   selector: 'app-add-task-page',
   imports: [
-    RouterOutlet,
-    ReactiveFormsModule,
     CommonModule,
-    JsonPipe
+    ReactiveFormsModule,
+    FormsModule
   ],
+  standalone: true,
   templateUrl: './add-task-page.html',
   styleUrl: './add-task-page.scss',
 })
 export class AddTaskPage implements OnInit {
+  @ViewChild('searchInput') searchInputRef!: ElementRef<HTMLInputElement>;
 
-    ngOnInit() {
-    this.getProducts();
-  }
-
-  showAssignedDropdown: boolean = false;
-
-  filteredContacts: any[] = [];
-
-  contacts = signal<{name:string}[]>([]);
-
+  dropdownCategory = false;
+  dropdownOpen = false;
+  searchText = signal('');
+  selectedContacts: Contact[] = [];
+  newSubtaskTitle = '';
+  subtasks: Subtask[] = [];
+  editingSubtaskId: string | null = null;
+  editingSubtaskTitle = '';
   showSuccessMessage = signal(false);
 
-  editingIndex: number | null = null;
-
-  subtasksJSON: { task: string | null | undefined }[] = [];
-
-  asOfCategory: boolean = false;
-
-  dropdownCategory: boolean = false;
-
   supabaseService = inject(Supabase);
+  taskStore = inject(TaskStore);
 
   today: string = new Date().toISOString().split('T')[0];
+
+  categoryValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const valid = (control.value ?? '').toString().trim();
+    return valid === 'Select task category' || valid === '' ? { categoryRequired: true } : null;
+  };
 
   taskForm = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required, Validators.minLength(3)]
     }),
-    description: new FormControl('', {
-      validators: [Validators.required, Validators.maxLength(10)]
-    }),
+    description: new FormControl(''),
     due_at: new FormControl('', {
       validators: [Validators.required]
     }),
     priority: new FormControl('medium'),
     type: new FormControl('Select task category', {
-      validators: [Validators.required]
+      validators: [this.categoryValidator]
     }),
-    subtasks: new FormControl('')
   });
 
+  filteredContacts = computed(() => {
+    const search = this.searchText().toLowerCase();
+    if (!search) return this.supabaseService.contacts();
+    return this.supabaseService.contacts().filter(c => c.name.toLowerCase().includes(search));
+  });
+
+  ngOnInit() {
+    this.supabaseService.getContacts();
+  }
+
   async formSubmit() {
-    if (this.taskForm.invalid) return;
-
-    console.log(this.taskForm.value);
-
-    const { data, error } = await this.supabaseService.supabase
-      .from('tasks')
-      .insert([this.taskForm.value])
-      .select();
-
-    if (error) {
-      console.error(error);
+    if (this.taskForm.invalid) {
+      Object.keys(this.taskForm.controls).forEach(key => {
+        this.taskForm.get(key)?.markAsTouched();
+      });
       return;
     }
 
-    console.log('Task erstellt:', data);
+    const typeValue = this.taskForm.value.type;
+    if (typeValue === 'Select task category') {
+      console.log('Please select a valid category');
+      return;
+    }
 
-    this.showSuccessMessage.set(true);
-    setTimeout(() => {
-      this.showSuccessMessage.set(false);
-      this.clearForm();
-    }, 2000);
+    const assignees = this.selectedContacts.map(c => ({
+      id: c.id!,
+      initials: this.getInitials(c.name),
+      name: c.name,
+    }));
+
+    const taskData = {
+      title: this.taskForm.value.title!,
+      description: this.taskForm.value.description || undefined,
+      status: 'todo' as Status,
+      type: this.taskForm.value.type as 'Technical Task' | 'User Story',
+      priority: this.taskForm.value.priority as 'high' | 'medium' | 'low',
+      assignees,
+      subtasks: this.subtasks,
+      dueDate: this.taskForm.value.due_at || undefined,
+    };
+
+    try {
+      const result = await this.taskStore.addTask(taskData);
+      if (result) {
+        this.showSuccessMessage.set(true);
+        setTimeout(() => {
+          this.showSuccessMessage.set(false);
+          this.clearForm();
+        }, 2000);
+      } else {
+        console.error('Failed to create task');
+      }
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
   }
 
   clearForm() {
@@ -94,9 +133,11 @@ export class AddTaskPage implements OnInit {
       due_at: '',
       priority: 'medium',
       type: 'Select task category',
-      subtasks: ''
     });
     this.dropdownCategory = false;
+    this.selectedContacts = [];
+    this.subtasks = [];
+    this.newSubtaskTitle = '';
   }
 
   actionDropdown() {
@@ -104,126 +145,91 @@ export class AddTaskPage implements OnInit {
   }
 
   TTSelction() {
-    this.taskForm.patchValue({ type: 'Technical Task' });
+    this.taskForm.patchValue({
+      type: "Technical Task"
+    })
     this.dropdownCategory = false;
   }
 
   USSelction() {
-    this.taskForm.patchValue({ type: 'User Story' });
+    this.taskForm.patchValue({
+      type: "User Story"
+    })
     this.dropdownCategory = false;
   }
 
-  asOfSubtasks() {
-    const value = this.taskForm.get('subtasks')?.value;
-    this.asOfCategory = !!value && value.length > 0;
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+    if (this.dropdownOpen) {
+      setTimeout(() => this.searchInputRef?.nativeElement?.focus(), 0);
+    }
   }
 
-  subtasksSaveJson() {
-    const value = this.taskForm.get('subtasks')?.value;
-
-    this.subtasksJSON.push({ task: value });
-
-    this.taskForm.get('subtasks')?.setValue('');
-    this.asOfCategory = false;
+  onSearchInput(event: Event) {
+    this.searchText.set((event.target as HTMLInputElement).value);
+    this.dropdownOpen = true;
   }
 
-  inputReset() {
-    this.taskForm.get('subtasks')?.setValue('');
+  isContactSelected(contact: Contact): boolean {
+    return this.selectedContacts.some(c => c.id === contact.id);
   }
 
-  removeSubtask(index: number) {
-    this.subtasksJSON.splice(index, 1);
+  toggleContact(contact: Contact) {
+    if (this.isContactSelected(contact)) {
+      this.selectedContacts = this.selectedContacts.filter(c => c.id !== contact.id);
+    } else {
+      this.selectedContacts = [...this.selectedContacts, contact];
+    }
   }
-
-  editSubtask(index: number) {
-    this.editingIndex = index;
-  }
-
-  refreshSubtasks(index: number, input: HTMLInputElement) {
-    const newValue = input.value?.trim();
-    if (!newValue) return;
-
-    this.subtasksJSON[index].task = newValue;
-    this.editingIndex = null;
-  }
-
-  async getProducts() {
-   /* An dieser Stelle werden die Daten, die durch .select() von der Datenbank geholt wurden,
-   in dein Angular-Signal products hineingeschrieben. */
-  const { data, error } = await this.supabaseService.supabase
-    .from('contacts')
-    .select('name')
-    /* Begrenzen Anzeige */
-    .range(0, 10)
-    /* Begrenzen nach Werten */
-/*     .lt('count', '50')
-    .lte('count', '5') */
-
-  if (error) {
-    console.error(error)
-    return
-  }
-
-  if (!data) return
-
-  this.contacts.set(data)
- }
 
   getInitials(name: string): string {
-    if (!name) return '';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  }
 
-    const parts = name.trim().split(' ');
-
-    if (parts.length === 1) {
-      return parts[0].substring(0, 2).toUpperCase();
+  getAvatarColor(name: string): string {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
-
-    return (parts[0][0] + parts[1][0]).toUpperCase();
+    return avatarColors[Math.abs(hash) % avatarColors.length];
   }
 
-      colorAvatar(name: string): string {
-      const colors: string[] = [
-        '#FF7A00',
-        '#FF5EB3',
-        '#6E52FF',
-        '#9327FF',
-        '#00BEE8',
-        '#1FD7C1',
-        '#FF745E',
-        '#FFA35E',
-        '#FC71FF',
-        '#FFC701',
-        '#0038FF',
-        '#C3FF2B'
-      ];
+  addSubtask() {
+    if (!this.newSubtaskTitle.trim()) return;
+    const newSubtask: Subtask = {
+      id: crypto.randomUUID(),
+      title: this.newSubtaskTitle.trim(),
+      done: false
+    };
+    this.subtasks = [...this.subtasks, newSubtask];
+    this.newSubtaskTitle = '';
+  }
 
-      let hash = 0;
+  removeSubtask(subtaskId: string) {
+    this.subtasks = this.subtasks.filter(sub => sub.id !== subtaskId);
+  }
 
-      for (let i = 0; i < name.length; i++) {
-        hash = name.charCodeAt(i) + ((hash << 5) - hash);
-      }
+  openEditForm(subtaskId: string) {
+    const subtask = this.subtasks.find(sub => sub.id === subtaskId);
+    if (!subtask) return;
+    this.editingSubtaskId = subtaskId;
+    this.editingSubtaskTitle = subtask.title;
+  }
 
-      const index = Math.abs(hash % colors.length);
-      return colors[index];
-      }
-
-  filterContacts(value: string) {
-    this.filteredContacts = this.contacts().filter(contact =>
-      contact.name.toLowerCase().includes(value.toLowerCase())
+  saveSubtaskEdit() {
+    if (!this.editingSubtaskId || !this.editingSubtaskTitle.trim()) return;
+    this.subtasks = this.subtasks.map(sub =>
+      sub.id === this.editingSubtaskId
+        ? { ...sub, title: this.editingSubtaskTitle.trim() }
+        : sub
     );
+    this.editingSubtaskId = null;
   }
 
-  hideDropdown(event: FocusEvent) {
-  const relatedTarget = event.relatedTarget as HTMLElement;
-
-  if (!event.currentTarget ||
-      !(event.currentTarget as HTMLElement).contains(relatedTarget)) {
-    this.showAssignedDropdown = false;
+  onBackdropClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.assigned-dropdown')) {
+      this.dropdownOpen = false;
+    }
   }
-}
-
-openAssignedDropdown() {
-  this.filteredContacts = this.contacts();
-  this.showAssignedDropdown = true;
-}
 }
