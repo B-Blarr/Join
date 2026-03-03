@@ -149,17 +149,17 @@ input[type="date"] {
     .divContent {
         display: flex;
         justify-content: space-between;
-        gap: 40px;
-        min-height: 376px;
+        // gap: 40px;
+        // min-height: 376px;
     }
 
     .leftContent,
     .rightContent {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: flex-start;
-        min-height: 400px;
+        // min-height: 400px;
     }
 
     .rightContent {
@@ -180,14 +180,9 @@ input[type="date"] {
         gap: 8px;
     }
 
-    .titleInContent {
-        height: 128px;
-    }
-
-    .dueDateContent {
-        max-height: 96px;
-        min-height: 96px;
-        margin-top: 20px;
+    .titleInContent,
+     .descriptionInContent{
+        padding-bottom: 32px;
     }
 
     .input-date-wrapper {
