@@ -9,7 +9,7 @@
 }
 
 .add-task-content {
-  padding: 90px;
+  padding: 80px;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -183,8 +183,8 @@
     .priorityContent {
       .priorityContentElements {
         display: flex;
+        justify-content: center;
         gap: 16px;
-        flex-wrap: wrap;
 
         .prioRadio {
           display: none;
@@ -193,7 +193,8 @@
         .priorityBasic {
           border-radius: 10px;
           padding: 10px 16px;
-          width: 136px;
+          flex: 1;
+          min-width: 136px;
           background-color: white;
           display: flex;
           justify-content: center;
@@ -737,6 +738,12 @@
 }
 
 /*    RESPONSIVE */
+@media (max-width: 1390px) {
+.priorityContentElements{
+  flex-direction: column;
+}
+}
+
 @media (max-width: 1200px) {
   .add-task-content {
     padding: 60px;
@@ -756,6 +763,15 @@
 
   .add-task-content ::placeholder {
     font-size: 18px;
+  }
+
+  .add-task-content .mainContent .priorityContent .priorityContentElements {
+    flex-direction: column;
+    gap: 8px;
+
+    .priorityBasic {
+      width: 100%;
+    }
   }
 }
 
@@ -777,6 +793,15 @@
 
     h2 {
       font-size: 32px;
+    }
+  }
+
+  .add-task-content .mainContent .priorityContent .priorityContentElements {
+    flex-direction: row;
+    gap: 16px;
+
+    .priorityBasic {
+      width: auto;
     }
   }
 
