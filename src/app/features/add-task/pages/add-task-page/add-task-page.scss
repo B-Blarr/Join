@@ -742,11 +742,7 @@
 }
 
 /*    RESPONSIVE */
-@media (max-width: 1390px) {
-.priority-content-elements{
-  flex-direction: column;
-}
-}
+
 
 @media (max-width: 1200px) {
   .add-task-content {
@@ -769,13 +765,22 @@
     font-size: 18px;
   }
 
-  .add-task-content .main-content .priority-content .priority-content-elements {
-    flex-direction: column;
-    gap: 8px;
 
-    .priority-basic {
-      width: 100%;
-    }
+}
+
+/* PRIORITY: side-by-side until mobile */
+@media (min-width: 1025px) {
+  .add-task-content .main-content .priority-content .priority-content-elements {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+  }
+
+  .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;     /* taşma olmasın */
+    padding: 10px 12px;          /* biraz daralt */
   }
 }
 
