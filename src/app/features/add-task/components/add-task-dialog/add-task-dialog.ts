@@ -233,8 +233,14 @@ minDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | n
     this.editingSubtaskId = null;
   }
 
+  isClosing = false;
+
   close() {
-    this.closed.emit();
+    this.isClosing = true;
+    setTimeout(() => {
+      this.isClosing = false;
+      this.closed.emit();
+    }, 400);
   }
 
   onBackdropClick(event: MouseEvent) {
