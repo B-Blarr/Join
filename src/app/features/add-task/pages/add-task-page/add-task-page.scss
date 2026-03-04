@@ -10,6 +10,7 @@
 
 .add-task-content {
   padding: 80px;
+  padding: 90px;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -52,7 +53,7 @@
   }
 
 
-  .main-content {
+  .mainContent {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
@@ -63,8 +64,8 @@
   }
 
 
-  .main-content {
-    .div-content {
+  .mainContent {
+    .divContent {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
       column-gap: 60px;
@@ -72,8 +73,8 @@
       min-height: 376px;
     }
 
-    .left-content,
-    .right-content {
+    .leftContent,
+    .rightContent {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -82,7 +83,7 @@
       box-sizing: border-box;
     }
 
-    .line-content {
+    .lineContent {
       width: 1px;
       background-color: #D1D1D1;
       border-radius: 1px;
@@ -90,13 +91,13 @@
       justify-self: center;
     }
 
-    .title-in-content,
-    .description-in-content,
-    .due-date-content,
-    .assigned-to-content,
-    .category-content,
-    .subtask-content,
-    .priority-content {
+    .titleInContent,
+    .descriptionInContent,
+    .dueDateContent,
+    .assignedToContent,
+    .categoryContent,
+    .subtaskContent,
+    .priorityContent {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -180,21 +181,20 @@
     }
 
 
-    .priority-content {
-      .priority-content-elements {
+    .priorityContent {
+      .priorityContentElements {
         display: flex;
-        justify-content: center;
         gap: 16px;
+        flex-wrap: wrap;
 
-        .prio-radio {
+        .prioRadio {
           display: none;
         }
 
-        .priority-basic {
+        .priorityBasic {
           border-radius: 10px;
           padding: 10px 16px;
-          flex: 1;
-          min-width: 136px;
+          width: 136px;
           background-color: white;
           display: flex;
           justify-content: center;
@@ -209,7 +209,7 @@
           }
         }
 
-        .priority-basic-img {
+        .priorityBasicIMG {
           background-position: center;
           background-repeat: no-repeat;
           background-size: contain;
@@ -217,62 +217,62 @@
           height: 25px;
         }
 
-        .priority-urgent-img {
+        .priorityUrgentIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronUrgentRealRed.svg);
         }
 
-        .priority-medium-img {
+        .priorityMediumIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumOrange.svg);
         }
 
-        .priority-low-img {
+        .priorityLowIMG {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowGreen.svg);
           width: 20px;
           height: 20px;
         }
 
-        #prio-urgent:checked + .priority-urgent {
+        #prioUrgent:checked + .priorityUrgent {
           background-color: #FF3D00;
           color: white;
           box-shadow: none;
 
-          .priority-urgent-img {
+          .priorityUrgentIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsUrgentWhite.svg);
           }
         }
 
-        #prio-medium:checked + .priority-medium {
+        #prioMedium:checked + .priorityMedium {
           background-color: #FFA800;
           color: white;
           box-shadow: none;
 
-          .priority-medium-img {
+          .priorityMediumIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumWhite.svg);
           }
         }
 
-        #prio-low:checked + .priority-low {
+        #prioLow:checked + .priorityLow {
           background-color: #7AE229;
           color: white;
           box-shadow: none;
 
-          .priority-low-img {
+          .priorityLowIMG {
             background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowWhite.svg);
             width: 20px;
             height: 20px;
           }
         }
 
-        #prio-urgent:checked + .priority-urgent:hover,
-        #prio-medium:checked + .priority-medium:hover,
-        #prio-low:checked + .priority-low:hover {
+        #prioUrgent:checked + .priorityUrgent:hover,
+        #prioMedium:checked + .priorityMedium:hover,
+        #prioLow:checked + .priorityLow:hover {
           box-shadow: none;
         }
       }
     }
 
     /*ASSIGNED TO */
-    .assigned-to-content {
+    .assignedToContent {
       position: relative;
     }
 
@@ -345,7 +345,7 @@
       padding: 4px 0;
       margin: 0;
       z-index: 10;
-      max-height: 240px;
+      max-height: 190px;
       overflow-y: auto;
     }
 
@@ -422,7 +422,7 @@
     }
 
     /*CATEGORY  */
-    .category-content {
+    .categoryContent {
       position: relative;
     }
 
@@ -438,7 +438,7 @@
       width: 100%;
     }
 
-    .category-selection {
+    .categorySelection {
       flex: 1;
       width: 100%;
       height: 48px;
@@ -469,7 +469,7 @@
       }
     }
 
-    .category-options {
+    .categoryOptions {
       position: absolute;
       top: 100%;
       left: 0;
@@ -495,7 +495,7 @@
     }
 
     /*  SUBTASKS  */
-    .subtask-content {
+    .subtaskContent {
       position: relative;
     }
 
@@ -568,7 +568,7 @@
       display: flex;
       flex-direction: column;
       margin-top: 12px;
-      max-height: 120px;
+      max-height: 200px;
       overflow-y: auto;
     }
 
@@ -663,12 +663,12 @@
         }
       }
 
-      .btn-div {
+      .btnDiv {
         margin-left: auto;
         display: flex;
         gap: 16px;
 
-        .btn-basic-icon {
+        .btnBasicIcon {
           background-position: center;
           background-repeat: no-repeat;
           background-size: contain;
@@ -676,7 +676,7 @@
           height: 25px;
         }
 
-        .btn-basic {
+        .btnBasic {
           display: flex;
           gap: 4px;
           justify-content: center;
@@ -690,12 +690,12 @@
           transition: background-color 125ms, box-shadow 125ms, color 125ms;
         }
 
-        .btn-clear {
+        .btnClear {
           background-color: #F6F7F8;
           font-size: 20px;
           font-weight: 400;
 
-          .btn-clear-icon {
+          .btnClearIcon {
             background-image: url(../../../../../../public/assets/icons/AddTask/clearIconDarkColor.svg);
           }
 
@@ -704,19 +704,19 @@
             color: #29ABE2;
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 
-            .btn-clear-icon {
+            .btnClearIcon {
               background-image: url(../../../../../../public/assets/icons/AddTask/clearIconLightColor.svg);
             }
           }
         }
 
-        .btn-create-task {
+        .btnCreateTask {
           background-color: #2A3647;
           color: white;
           font-size: 21px;
           font-weight: 700;
 
-          .btn-create-task-icon {
+          .btnCreateTaskIcon {
             background-image: url(../../../../../../public/assets/icons/AddTask/createIconLightColor.svg);
           }
 
@@ -727,7 +727,7 @@
           }
         }
 
-        .btn-create-task:disabled {
+        .btnCreateTask:disabled {
           opacity: 0.5;
           cursor: not-allowed;
           pointer-events: none;
@@ -738,12 +738,6 @@
 }
 
 /*    RESPONSIVE */
-@media (max-width: 1390px) {
-.priority-content-elements{
-  flex-direction: column;
-}
-}
-
 @media (max-width: 1200px) {
   .add-task-content {
     padding: 60px;
@@ -751,27 +745,18 @@
 }
 
 @media (max-width: 1100px) {
-  .add-task-content .main-content input,
-  .add-task-content .main-content input[type="date"],
-  .add-task-content .main-content textarea,
-  .add-task-content .main-content .assigned-search,
-  .add-task-content .main-content .edit-input input,
-  .add-task-content .main-content .category-selection,
-  .add-task-content .main-content .category-options p {
+  .add-task-content .mainContent input,
+  .add-task-content .mainContent input[type="date"],
+  .add-task-content .mainContent textarea,
+  .add-task-content .mainContent .assigned-search,
+  .add-task-content .mainContent .edit-input input,
+  .add-task-content .mainContent .categorySelection,
+  .add-task-content .mainContent .categoryOptions p {
     font-size: 18px;
   }
 
   .add-task-content ::placeholder {
     font-size: 18px;
-  }
-
-  .add-task-content .main-content .priority-content .priority-content-elements {
-    flex-direction: column;
-    gap: 8px;
-
-    .priority-basic {
-      width: 100%;
-    }
   }
 }
 
@@ -796,37 +781,28 @@
     }
   }
 
-  .add-task-content .main-content .priority-content .priority-content-elements {
-    flex-direction: row;
-    gap: 16px;
-
-    .priority-basic {
-      width: auto;
-    }
-  }
-
-  .add-task-content .main-content .div-content {
+  .add-task-content .mainContent .divContent {
     display: flex;
     flex-direction: column;
     gap: 24px;
     min-height: auto;
   }
 
-  .add-task-content .main-content .line-content {
+  .add-task-content .mainContent .lineContent {
     display: none;
   }
 
-  .add-task-content .main-content label {
+  .add-task-content .mainContent label {
     font-size: 18px;
   }
 
-  .add-task-content .main-content input {
+  .add-task-content .mainContent input {
     height: 44px;
     padding: 10px 16px;
     font-size: 18px;
   }
 
-  .add-task-content .main-content textarea {
+  .add-task-content .mainContent textarea {
     min-height: 100px;
     max-height: 100px;
     font-size: 18px;
@@ -834,39 +810,39 @@
   }
 
 
-  .add-task-content .main-content .assigned-to-content,
-  .add-task-content .main-content .category-content,
-  .add-task-content .main-content .subtask-content,
-  .add-task-content .main-content .assigned-dropdown,
-  .add-task-content .main-content .category-dropdown,
-  .add-task-content .main-content .edit-input {
+  .add-task-content .mainContent .assignedToContent,
+  .add-task-content .mainContent .categoryContent,
+  .add-task-content .mainContent .subtaskContent,
+  .add-task-content .mainContent .assigned-dropdown,
+  .add-task-content .mainContent .category-dropdown,
+  .add-task-content .mainContent .edit-input {
     width: 100%;
     max-width: none;
   }
 
-  .add-task-content .main-content footer {
+  .add-task-content .mainContent footer {
     flex-direction: column-reverse;
     align-items: stretch;
     gap: 16px;
   }
 
-  .add-task-content .main-content footer p {
+  .add-task-content .mainContent footer p {
     font-size: 16px;
     order: 2;
   }
 
-  .add-task-content .main-content footer .btn-div {
+  .add-task-content .mainContent footer .btnDiv {
     order: 1;
     width: 100%;
   }
 
-  .add-task-content .main-content footer .btn-div .btn-basic {
+  .add-task-content .mainContent footer .btnDiv .btnBasic {
     flex: 1;
     padding: 12px 16px;
     font-size: 18px;
   }
 
-  .add-task-content .main-content .assigned-trigger {
+  .add-task-content .mainContent .assigned-trigger {
     height: 44px;
 
     .assigned-search {
@@ -874,7 +850,7 @@
     }
   }
 
-  .add-task-content .main-content .subtask-list {
+  .add-task-content .mainContent .subtask-list {
     max-height: 150px;
   }
 }
@@ -888,27 +864,27 @@
     }
   }
 
-  .add-task-content .main-content label {
+  .add-task-content .mainContent label {
     font-size: 16px;
   }
 
-  .add-task-content .main-content input,
-  .add-task-content .main-content input[type="date"],
-  .add-task-content .main-content .edit-input input {
+  .add-task-content .mainContent input,
+  .add-task-content .mainContent input[type="date"],
+  .add-task-content .mainContent .edit-input input {
     height: 40px;
     font-size: 16px;
   }
 
-  .add-task-content .main-content textarea {
+  .add-task-content .mainContent textarea {
     min-height: 80px;
     max-height: 80px;
     font-size: 16px;
   }
 
-  .add-task-content .main-content .category-selection,
-  .add-task-content .main-content .assigned-trigger .assigned-search,
-  .add-task-content .main-content .assigned-name,
-  .add-task-content .main-content .category-options p {
+  .add-task-content .mainContent .categorySelection,
+  .add-task-content .mainContent .assigned-trigger .assigned-search,
+  .add-task-content .mainContent .assigned-name,
+  .add-task-content .mainContent .categoryOptions p {
     font-size: 16px;
   }
 
@@ -916,18 +892,18 @@
     font-size: 16px;
   }
 
-  .add-task-content .main-content .priority-content .priority-content-elements {
+  .add-task-content .mainContent .priorityContent .priorityContentElements {
     flex-direction: column;
     gap: 8px;
 
-    .priority-basic {
+    .priorityBasic {
       width: 100%;
       font-size: 15px;
       padding: 10px 12px;
     }
   }
 
-  .add-task-content .main-content footer .btn-div .btn-basic {
+  .add-task-content .mainContent footer .btnDiv .btnBasic {
     font-size: 15px;
     padding: 10px 12px;
   }
@@ -942,11 +918,11 @@
     }
   }
 
-  .add-task-content .main-content footer .btn-div {
+  .add-task-content .mainContent footer .btnDiv {
     flex-direction: column;
   }
 
-  .add-task-content .main-content footer .btn-div .btn-basic {
+  .add-task-content .mainContent footer .btnDiv .btnBasic {
     width: 100%;
     font-size: 14px;
   }
