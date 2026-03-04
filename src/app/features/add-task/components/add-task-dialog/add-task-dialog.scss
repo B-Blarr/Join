@@ -992,8 +992,12 @@ input[type='date'] {
     font-size: 14px;
   }
 
-  .assigned-name {
-    font-size: 16px;
+  .main-content .assigned-name {
+    font-size: 18px;
+  }
+
+  .main-content .category-options p {
+    font-size: 18px;
   }
 
   .assigned-list {
@@ -1062,11 +1066,12 @@ input[type='date'] {
   .main-content {
     .priority-content {
       .priority-content-elements {
+        flex-direction: column;
         gap: 8px;
+        width: 100%;
 
         .priority-basic {
-          padding: 6px 8px;
-          font-size: 14px;
+          width: 100%;
           gap: 6px;
         }
 
@@ -1098,8 +1103,12 @@ input[type='date'] {
     font-size: 13px;
   }
 
-  .assigned-name {
-    font-size: 15px;
+  .main-content .assigned-name {
+    font-size: 16px;
+  }
+
+  .main-content .category-options p {
+    font-size: 16px;
   }
 }
 
