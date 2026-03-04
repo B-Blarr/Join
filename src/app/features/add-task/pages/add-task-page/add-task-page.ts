@@ -238,5 +238,8 @@ export class AddTaskPage implements OnInit {
     if (!target.closest('.assigned-dropdown')) {
       this.dropdownOpen = false;
     }
+    if (!target.closest('.category-dropdown')) {
+      this.dropdownCategory = false;
+    }
   }
 }

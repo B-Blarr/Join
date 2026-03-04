@@ -353,6 +353,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      border-radius: 10px;
       padding: 10px 16px;
       cursor: pointer;
       transition: background-color 150ms;
@@ -491,9 +492,10 @@
         margin: 0;
         padding: 12px 16px;
         font-size: 20px;
+        border-radius: 10px;
 
         &:hover {
-          background-color: #D1D1D1;
+          background-color: #ebebeb;
           cursor: pointer;
         }
       }
