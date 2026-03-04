@@ -147,26 +147,26 @@ input[type='date'] {
   color: black;
 }
 
-.mainContent {
+.main-content {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
 
-  .divContent {
+  .div-content {
     flex: 1;
     display: flex;
     justify-content: space-between;
   }
 
-  .leftContent,
-  .rightContent {
+  .left-content,
+  .right-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .rightContent {
+  .right-content {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -175,19 +175,19 @@ input[type='date'] {
     min-height: 0;
   }
 
-  .titleInContent,
-  .descriptionInContent,
-  .dueDateContent,
-  .assignedToContent,
-  .categoryContent,
-  .subtaskContent {
+  .title-in-content,
+  .description-in-content,
+  .due-date-content,
+  .assigned-to-content,
+  .category-content,
+  .subtask-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  .titleInContent,
-  .descriptionInContent {
+  .title-in-content,
+  .description-in-content {
     padding-bottom: 32px;
   }
 
@@ -218,7 +218,7 @@ input[type='date'] {
     }
   }
 
-  .descriptionInContent {
+  .description-in-content {
     max-height: 168px;
     min-height: 168px;
   }
@@ -232,27 +232,27 @@ input[type='date'] {
     color: #e60026;
   }
 
-  .lineContent {
+  .line-content {
     height: 424px;
     width: 1px;
     background-color: #d1d1d1;
     border-radius: 1px;
   }
 
-  .priorityContent {
+  .priority-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
 
-    .priorityContentElements {
+    .priority-content-elements {
       display: flex;
       gap: 16px;
 
-      .prioRadio {
+      .prio-radio {
         display: none;
       }
 
-      .priorityBasic {
+      .priority-basic {
         border-radius: 10px;
         padding: 10px 16px;
         width: 136px;
@@ -269,39 +269,39 @@ input[type='date'] {
         }
       }
 
-      #prioUrgent:checked + .priorityUrgent {
+      #prio-urgent:checked + .priority-urgent {
         background-color: #ff3d00;
         color: white;
         box-shadow: none;
 
-        .priorityUrgentIMG {
+        .priority-urgent-img {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsUrgentWhite.svg);
         }
       }
 
-      #prioMedium:checked + .priorityMedium {
+      #prio-medium:checked + .priority-medium {
         background-color: #ffa800;
         color: white;
         box-shadow: none;
 
-        .priorityMediumIMG {
+        .priority-medium-img {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumWhite.svg);
         }
       }
 
-      #prioLow:checked + .priorityLow {
+      #prio-low:checked + .priority-low {
         background-color: #7ae229;
         color: white;
         box-shadow: none;
 
-        .priorityLowIMG {
+        .priority-low-img {
           background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowWhite.svg);
           width: 20px;
           height: 20px;
         }
       }
 
-      .priorityBasicIMG {
+      .priority-basic-img {
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -309,15 +309,15 @@ input[type='date'] {
         height: 25px;
       }
 
-      .priorityUrgentIMG {
+      .priority-urgent-img {
         background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronUrgentRealRed.svg);
       }
 
-      .priorityMediumIMG {
+      .priority-medium-img {
         background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsMediumOrange.svg);
       }
 
-      .priorityLowIMG {
+      .priority-low-img {
         background-image: url(../../../../../../public/assets/icons/AddTask/chevrons/chevronsLowGreen.svg);
         width: 20px;
         height: 20px;
@@ -325,7 +325,7 @@ input[type='date'] {
     }
   }
 
-  .categoryContent {
+  .category-content {
     display: flex;
     flex-direction: column;
     width: 440px;
@@ -345,7 +345,7 @@ input[type='date'] {
     width: 100%;
   }
 
-  .categorySelection {
+  .category-selection {
     flex: 1;
     height: 48px;
     border: 1px solid #d1d1d1;
@@ -373,7 +373,7 @@ input[type='date'] {
     }
   }
 
-  .categoryOptions {
+  .category-options {
     position: absolute;
     top: 100%;
     left: 0;
@@ -398,7 +398,7 @@ input[type='date'] {
     }
   }
 
-  .assignedToContent {
+  .assigned-to-content {
     position: relative;
   }
 
@@ -553,7 +553,7 @@ input[type='date'] {
     margin-top: 8px;
   }
 
-  .subtaskContent {
+  .subtask-content {
     position: relative;
   }
 
@@ -711,11 +711,11 @@ input[type='date'] {
       color: black;
     }
 
-    .btnDiv {
+    .btn-div {
       display: flex;
       gap: 16px;
 
-      .btnBasicIcon {
+      .btn-basic-icon {
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -723,7 +723,7 @@ input[type='date'] {
         height: 25px;
       }
 
-      .btnBasic {
+      .btn-basic {
         display: flex;
         gap: 4px;
         justify-content: center;
@@ -734,12 +734,12 @@ input[type='date'] {
         cursor: pointer;
       }
 
-      .btnClear {
+      .btn-clear {
         background-color: #f6f7f8;
         font-size: 20px;
         font-weight: 400;
 
-        .btnClearIcon {
+        .btn-clear-icon {
           background-image: url(../../../../../../public/assets/icons/AddTask/clearIconDarkColor.svg);
         }
 
@@ -748,20 +748,20 @@ input[type='date'] {
           color: #29abe2;
           box-shadow: 0px 9px 4px rgba(0, 0, 0, 0.1);
 
-          .btnClearIcon {
+          .btn-clear-icon {
             background-image: url(../../../../../../public/assets/icons/AddTask/clearIconLightColor.svg);
           }
         }
       }
 
-      .btnCreateTask {
+      .btn-create-task {
         background-color: #2a3647;
         color: white;
         font-style: Bold;
         font-size: 21px;
         font-weight: 700;
 
-        .btnCreateTaskIcon {
+        .btn-create-task-icon {
           background-image: url(../../../../../../public/assets/icons/AddTask/createIconLightColor.svg);
         }
 
@@ -771,7 +771,7 @@ input[type='date'] {
           box-shadow: 0px 9px 4px rgba(0, 0, 0, 0.1);
         }
       }
-      .btnCreateTask:disabled {
+      .btn-create-task:disabled {
         opacity: 0.5;
         cursor: not-allowed;
         pointer-events: none;
@@ -790,12 +790,12 @@ input[type='date'] {
     font-size: 40px;
   }
 
-  .mainContent {
-    .divContent {
+  .main-content {
+    .div-content {
       gap: 30px;
     }
 
-    .categoryContent {
+    .category-content {
       width: 360px;
     }
   }
@@ -846,7 +846,7 @@ input[type='date'] {
     font-size: 18px;
   }
 
-  .categorySelection {
+  .category-selection {
     font-size: 18px;
   }
 
@@ -854,51 +854,51 @@ input[type='date'] {
     font-size: 18px;
   }
 
-  .mainContent {
-    .divContent {
+  .main-content {
+    .div-content {
       flex-direction: column;
       gap: 24px;
       min-height: auto;
     }
 
-    .lineContent {
+    .line-content {
       display: none;
     }
 
-    .leftContent,
-    .rightContent {
+    .left-content,
+    .right-content {
       width: 100%;
       min-height: auto;
       gap: 20px;
     }
 
-    .titleInContent,
-    .descriptionInContent,
-    .dueDateContent,
-    .assignedToContent,
-    .categoryContent,
-    .subtaskContent,
-    .priorityContent {
+    .title-in-content,
+    .description-in-content,
+    .due-date-content,
+    .assigned-to-content,
+    .category-content,
+    .subtask-content,
+    .priority-content {
       width: 100%;
     }
 
-    .titleInContent {
+    .title-in-content {
       height: auto;
       min-height: 100px;
     }
 
-    .descriptionInContent {
+    .description-in-content {
       min-height: auto;
       max-height: none;
     }
 
-    .dueDateContent {
+    .due-date-content {
       margin-top: 0;
       min-height: auto;
       max-height: none;
     }
 
-    .priorityContent {
+    .priority-content {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -907,13 +907,13 @@ input[type='date'] {
         align-self: flex-start;
       }
 
-      .priorityContentElements {
+      .priority-content-elements {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
         gap: 12px;
 
-        .priorityBasic {
+        .priority-basic {
           width: auto;
           min-width: 120px;
           padding: 8px 12px;
@@ -927,11 +927,11 @@ input[type='date'] {
       width: 100%;
     }
 
-    .categoryContent {
+    .category-content {
       width: 100%;
     }
 
-    .categorySelection {
+    .category-selection {
       width: 100%;
     }
 
@@ -950,22 +950,22 @@ input[type='date'] {
         order: 2;
       }
 
-      .btnDiv {
+      .btn-div {
         flex-direction: row;
         gap: 12px;
         order: 1;
         justify-content: center;
         display: flex;
-        .btnBasic {
+        .btn-basic {
           padding: 12px 16px;
           font-size: 18px;
         }
 
-        .btnClear {
+        .btn-clear {
           font-size: 18px;
         }
 
-        .btnCreateTask {
+        .btn-create-task {
           font-size: 18px;
         }
       }
@@ -1042,7 +1042,7 @@ input[type='date'] {
     font-size: 16px;
   }
 
-  .categorySelection {
+  .category-selection {
     font-size: 16px;
   }
 
@@ -1054,18 +1054,18 @@ input[type='date'] {
     font-size: 16px;
   }
 
-  .mainContent {
-    .priorityContent {
-      .priorityContentElements {
+  .main-content {
+    .priority-content {
+      .priority-content-elements {
         gap: 8px;
 
-        .priorityBasic {
+        .priority-basic {
           padding: 6px 8px;
           font-size: 14px;
           gap: 6px;
         }
 
-        .priorityBasicIMG {
+        .priority-basic-img {
           width: 20px;
           height: 20px;
         }
@@ -1073,13 +1073,13 @@ input[type='date'] {
     }
 
     footer {
-      .btnDiv {
-        .btnBasic {
+      .btn-div {
+        .btn-basic {
           padding: 10px 14px;
           font-size: 16px;
         }
 
-        .btnBasicIcon {
+        .btn-basic-icon {
           width: 20px;
           height: 20px;
         }
