@@ -667,6 +667,13 @@ input[type='date'] {
     align-items: center;
     gap: 4px;
 
+    .dividing-line {
+      width: 1px;
+      height: 20px;
+      background-color: #d1d1d1;
+      flex-shrink: 0;
+    }
+
     button {
       background: none;
       border: none;

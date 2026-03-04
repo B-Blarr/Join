@@ -513,9 +513,18 @@
       &:focus-within {
         border-color: #29abe2;
 
-        button {
+        button,
+        .dividing-line {
           visibility: visible;
         }
+      }
+
+      .dividing-line {
+        visibility: hidden;
+        width: 1px;
+        height: 20px;
+        border: 1px solid #d1d1d1;
+        flex-shrink: 0;
       }
 
       input {
@@ -585,10 +594,19 @@
       &:hover {
         background-color: #ebebeb;
 
-        .edit-subtask-buttons {
+        .edit-subtask-buttons,
+        .edit-subtask-buttons .dividing-line {
           visibility: visible;
         }
       }
+    }
+
+    .dividing-line {
+      display: flex;
+      width: 1px;
+      height: 20px;
+      border: 1px solid #d1d1d1;
+      flex-shrink: 0;
     }
 
     .edit-subtask-buttons {
