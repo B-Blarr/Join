@@ -504,6 +504,7 @@
     /*  SUBTASKS  */
     .subtask-content {
       position: relative;
+      min-height: 188px;
     }
 
     .edit-input {
@@ -649,7 +650,7 @@
     footer {
       width: 100%;
       max-width: 1440px;
-      margin: 120px auto 0 auto;
+      margin: 12px auto 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -771,13 +772,13 @@
   .add-task-content .main-content .priority-content .priority-content-elements {
     flex-wrap: nowrap !important;
     justify-content: space-between !important;
-    gap: 12px !important; 
+    gap: 12px !important;
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
     flex: 1 1 0 !important;
-    min-width: 0 !important;     
-    padding: 8px 10px;           
+    min-width: 0 !important;
+    padding: 8px 10px;
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
@@ -906,10 +907,10 @@
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
-    flex: 0 1 auto;                 
-    width: clamp(110px, 30vw, 140px); 
-    min-width: 0;               
-    padding: 8px 10px;           
+    flex: 0 1 auto;
+    width: clamp(110px, 30vw, 140px);
+    min-width: 0;
+    padding: 8px 10px;
   }
 }
 
@@ -1050,9 +1051,9 @@
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
     flex: 1 1 0 !important;
-    min-width: 0 !important;      
-    padding: 7px 6px !important;  
-    font-size: 12px !important; 
+    min-width: 0 !important;
+    padding: 7px 6px !important;
+    font-size: 12px !important;
     gap: 6px !important;
   }
 
