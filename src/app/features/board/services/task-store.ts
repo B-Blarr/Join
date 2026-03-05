@@ -108,9 +108,9 @@ export class TaskStore {
   }): Promise<Task | null> {
     const userId = this.supabase.currentUser()?.id;
     const isGuest = this.supabase.isGuest();
-    
+
     console.log('addTask called - userId:', userId, 'isGuest:', isGuest);
-    
+
     if (!userId && !isGuest) {
       console.error('Cannot create task: Not authenticated and not guest');
       return null;
@@ -127,7 +127,7 @@ export class TaskStore {
       subtasks: data.subtasks || [],
       due_at: data.dueDate,
     };
-    
+
     console.log('Inserting task with payload:', taskPayload);
 
     const { data: result, error } = await this.supabase.supabase
