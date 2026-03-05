@@ -152,11 +152,11 @@
           opacity: 0;
           cursor: pointer;
 
-          @media (pointer: fine) {
+          @media (any-pointer: fine) {
             position: absolute;
             right: 0;
             top: 0;
-            bottom: 0;
+            height: 44px;
             width: 44px;
           }
         }
@@ -878,7 +878,7 @@
     flex-direction: column-reverse;
     align-items: stretch;
     gap: 16px;
-    margin: 60px auto 0 auto;
+    margin: 25px auto 0 auto;
   }
 
   .add-task-content .main-content footer p {
