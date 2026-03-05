@@ -25,7 +25,6 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   padding: 40px;
   animation: slideInFromRight 400ms ease-out;
-
   &.closing {
     animation: slideOutToRight 400ms ease-in forwards;
   }
@@ -150,8 +149,10 @@ input[type='date'] {
 .main-content {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  padding-right: 80px;
 
   .div-content {
     flex: 1;
@@ -846,7 +847,7 @@ input[type='date'] {
     border-radius: 30px;
     padding: 24px 20px 32px;
     height: auto;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   .dialog-header {
