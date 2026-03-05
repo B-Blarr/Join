@@ -150,7 +150,15 @@
   }
 }
 
+@media (max-width: 1215px){
+  .column-title {
+  font-size: 18px;
+}
 
+.column-header {
+  padding: 16px 6px;
+}
+}
 
 
 
