@@ -139,7 +139,7 @@
           <label for="subtasks">Subtasks</label>
           <div class="edit-input input">
             <input type="text" [(ngModel)]="newSubtaskTitle" [ngModelOptions]="{ standalone: true }"
-              placeholder="Add new subtask" (keyup.enter)="addSubtask()" />
+              placeholder="Add new subtask" (keydown.enter)="$event.preventDefault(); addSubtask()" />
             <button type="button" (click)="newSubtaskTitle = ''">
               <img src="assets/icons/AddTask/clearIconDarkColor.svg" alt="Clear" />
             </button>
@@ -154,7 +154,7 @@
             @if (editingSubtaskId === sub.id) {
             <div class="edit-input input">
               <input type="text" name="edit-input" id="edit-input" [(ngModel)]="editingSubtaskTitle"
-                [ngModelOptions]="{ standalone: true }" (keyup.enter)="saveSubtaskEdit()" />
+                [ngModelOptions]="{ standalone: true }" (keydown.enter)="$event.preventDefault(); saveSubtaskEdit()" />
               <button type="button" (click)="removeSubtask(sub.id)">
                 <img src="assets/icons/trash.svg" alt="Delete" />
               </button>
