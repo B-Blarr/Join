@@ -502,6 +502,10 @@ input[type='date'] {
       background-color: #2a3647;
       color: white;
       border-radius: 10px;
+
+      .assigned-name {
+        color: white;
+      }
     }
 
     &:hover {
@@ -510,6 +514,10 @@ input[type='date'] {
 
     &.selected:hover {
       background-color: #091931;
+
+      .assigned-name {
+        color: white;
+      }
 
       input[type='checkbox']:checked {
         background-color: #091931;
