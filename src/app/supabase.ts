@@ -39,7 +39,27 @@ export class Supabase {
   currentUser = signal<User | null>(null);
 
   /** Whether the user is logged in as a guest. */
-  isGuest = signal<boolean>(false);
+  isGuest = signal<boolean>(this.getGuestStatus());
+
+  /** Get guest status from localStorage */
+  private getGuestStatus(): boolean {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('isGuest') === 'true';
+    }
+    return false;
+  }
+
+  /** Set guest status and persist to localStorage */
+  private setGuestStatus(value: boolean): void {
+    this.isGuest.set(value);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      if (value) {
+        localStorage.setItem('isGuest', 'true');
+      } else {
+        localStorage.removeItem('isGuest');
+      }
+    }
+  }
 
   /** Computed user profile derived from user metadata. */
   currentProfile = computed(() => {
@@ -83,12 +103,12 @@ export class Supabase {
     this.currentUser.set(session?.user ?? null);
 
     if (session?.user) {
-      this.isGuest.set(false);
+      this.setGuestStatus(false);
     }
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.currentUser.set(session?.user ?? null);
       if (session?.user) {
-        this.isGuest.set(false);
+        this.setGuestStatus(false);
       }
     });
   }
@@ -112,7 +132,7 @@ export class Supabase {
       return false;
     }
     this.currentUser.set(data.user);
-    this.isGuest.set(false);
+    this.setGuestStatus(false);
     return true;
   }
 
@@ -145,13 +165,13 @@ export class Supabase {
   async signOut() {
     await this.supabase.auth.signOut({ scope: 'local' });
     this.currentUser.set(null);
-    this.isGuest.set(false);
+    this.setGuestStatus(false);
     this.router.navigate(['/login']);
   }
 
   /** Enables guest mode without requiring authentication. */
   guestLogin() {
-    this.isGuest.set(true);
+    this.setGuestStatus(true);
   }
 
   /** List of all loaded contacts. */

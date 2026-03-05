@@ -106,8 +106,11 @@ export class TaskStore {
     subtasks?: { id: string; title: string; done: boolean }[];
     dueDate?: string;
   }): Promise<Task | null> {
-    const userId = this.supabase.currentUser()?.id;
-    if (!userId) {
+    // For guest users, use null instead of a fake UUID to avoid foreign key constraint
+    const userId = this.supabase.currentUser()?.id || null;
+
+    // Don't allow task creation if not authenticated and not a guest
+    if (!userId && !this.supabase.isGuest()) {
       return null;
     }
 
@@ -115,7 +118,7 @@ export class TaskStore {
       .from('tasks')
       .insert([
         {
-          created_by: userId,
+          created_by: userId, // Will be null for guest users
           title: data.title,
           description: data.description,
           status: data.status,
@@ -130,6 +133,13 @@ export class TaskStore {
       .single();
 
     if (error) {
+      console.error('Supabase error creating task:', error);
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      });
       return null;
     }
 

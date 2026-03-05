@@ -24,9 +24,9 @@ export class Header {
    */
   getInitials(): string {
     const user = this.supabase.currentUser();
-    if (!user) return '?';
+    if (!user) return 'G';
     const name = user.user_metadata?.['display_name'] || user.email || '';
-    return name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || '?';
+    return name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2) || 'G';
   }
 
   isMenuOpen = false;
@@ -39,5 +39,11 @@ export class Header {
   /** Closes the header dropdown menu. */
   closeMenu() {
     this.isMenuOpen = false;
+  }
+
+  /** Logs out the current user and closes the menu. */
+  async logout() {
+    this.closeMenu();
+    await this.supabase.signOut();
   }
 }

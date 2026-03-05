@@ -18,8 +18,8 @@
   <div class="backdrop" (click)="closeMenu()"></div>
   <div class="header-menu" (click)="$event.stopPropagation()">
     <a class="header-links help-link" routerLink="/help" (click)="closeMenu()">Help</a>
-    <a class="header-links" routerLink="/legal">Legal Notice</a>
-    <a class="header-links" routerLink="/privacy">Privacy Policy</a>
-    <a class="header-links" routerLink="">Log out</a>
+    <a class="header-links" routerLink="/legal" (click)="closeMenu()">Legal Notice</a>
+    <a class="header-links" routerLink="/privacy" (click)="closeMenu()">Privacy Policy</a>
+    <button class="header-links" (click)="logout()" type="button">Log out</button>
   </div>
 }
