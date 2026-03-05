@@ -152,11 +152,11 @@
           opacity: 0;
           cursor: pointer;
 
-          @media (pointer: fine) {
+          @media (any-pointer: fine) {
             position: absolute;
             right: 0;
             top: 0;
-            bottom: 0;
+            height: 44px;
             width: 44px;
           }
         }
