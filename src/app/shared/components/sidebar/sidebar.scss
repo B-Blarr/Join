@@ -120,11 +120,22 @@ section {
   font-size: 16px;
   gap: 16px;
   white-space: nowrap;
+  width: 100%;
 
-  & a:hover {
-    cursor: pointer;
-    color: #29abe2;
-    white-space: nowrap;
+  & a {
+    display: block;
+    padding: 8px 40px;
+    color: inherit;
+
+    &:hover {
+      cursor: pointer;
+      color: #29abe2;
+    }
+
+    &.active {
+      background-color: #091931;
+      color: #ffffff;
+    }
   }
 }
 
