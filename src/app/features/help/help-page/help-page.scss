@@ -30,6 +30,13 @@
         font-size: 25px;
         margin-bottom: 30px;
     }
+    &__text{
+        font-size: 18px;
+        line-height: 1.5;
+    }
+     ol li{
+    line-height: 1.5;
+}
      ol li::marker {
   font-weight: 600;
   font-size: 20px;
