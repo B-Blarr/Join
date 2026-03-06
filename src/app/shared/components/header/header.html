@@ -1,19 +1,20 @@
 <section class="content">
   <div class="header-container">
-
-
-  <div class="header-left">
-    <img class="header-logo header-logo-desktop" src="assets/icons/logo.png" alt="Join Logo" />
-    <img class="header-logo header-logo-mobile" src="assets/icons/logo2.png" alt="Join Logo" />
-    <span class="header-text">Kanban Project Management Tool</span>
-  </div>
-  <div class="header-buttons">
-    <button routerLink="/help" class="help-button"><img src="assets/icons/help.svg" alt="Help Button" /></button>
-    <button (click)="toggleMenu()" class="nav-button">{{ getInitials() }}</button>
-  </div>
+    <div class="header-left">
+      <img class="header-logo header-logo-desktop" src="assets/icons/logo.png" alt="Join Logo" />
+      <img class="header-logo header-logo-mobile" src="assets/icons/logo2.png" alt="Join Logo" />
+      <span class="header-text">Kanban Project Management Tool</span>
+    </div>
+    @if (supabase.isLoggedIn()) {
+      <div class="header-buttons">
+        <button routerLink="/help" class="help-button">
+          <img src="assets/icons/help.svg" alt="Help Button" />
+        </button>
+        <button (click)="toggleMenu()" class="nav-button">{{ getInitials() }}</button>
+      </div>
+    }
   </div>
 </section>
-
 @if (isMenuOpen) {
   <div class="backdrop" (click)="closeMenu()"></div>
   <div class="header-menu" (click)="$event.stopPropagation()">
