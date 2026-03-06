@@ -7,6 +7,7 @@ import { AppLayout } from './layouts/app-layout/app-layout';
 import { AddTaskPage } from './features/add-task/pages/add-task-page/add-task-page';
 import { BoardPage } from './features/board/components/board-page/board-page';
 import { SummaryPage } from './features/summary/pages/summary-page/summary-page';
+import { GreetingPage } from './features/greeting/greeting-page/greeting-page';
 import { authGuard } from './auth.guard';
 import { PrivacyPolicyPage } from './features/privacy/privacy-policy-page/privacy-policy-page';
 import { LegalNoticePage } from './features/legal/legal-notice-page/legal-notice-page';
@@ -29,6 +30,11 @@ export const routes: Routes = [
       { path: 'signup', component: SignupPage },
       { path: '', pathMatch: 'full', redirectTo: 'login' },
     ],
+  },
+  {
+    path: 'greeting',
+    component: GreetingPage,
+    canActivate: [authGuard],
   },
   {
     path: '',

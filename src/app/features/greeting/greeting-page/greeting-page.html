@@ -1,0 +1,10 @@
+<div class="greeting-page">
+  <div class="greeting-content">
+    <div class="greeting-animation">
+      <h1 class="greeting-message">{{ greeting }}</h1>
+      @if (!isGuestUser && userName()) {
+        <h2 class="user-name">{{ userName() }}</h2>
+      }
+    </div>
+  </div>
+</div>

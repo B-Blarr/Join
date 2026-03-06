@@ -25,18 +25,18 @@ export class LoginPage {
 
   /**
    * Attempts to sign in the user with the provided email and password.
-   * Navigates to the summary page on success.
+   * Navigates to the greeting page on success.
    */
   async login() {
     const success = await this.supabase.signIn(this.email(), this.password());
     if (success) {
-      this.router.navigate(['/summary']);
+      this.router.navigate(['/greeting']);
     }
   }
 
-  /** Logs the user in as a guest and navigates to the summary page. */
+  /** Logs the user in as a guest and navigates to the greeting page. */
   guestLogin() {
     this.supabase.guestLogin();
-    this.router.navigate(['/summary']);
+    this.router.navigate(['/greeting']);
   }
 }
