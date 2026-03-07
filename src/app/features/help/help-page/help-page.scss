@@ -1,95 +1,94 @@
-.help{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 30px 30px;
+.help {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 30px 30px;
 }
 
-.help-top{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px 30px;
+.help-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 30px;
 }
 
-.help-container{
-    max-width: 1440px;
-    margin: 0 auto;
-    width: 100%;
+.help-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.help-main{
-    padding: 0px 30px;
-    &__title{
-        font-size: 42px;
-    }
-    &__subtitle{
-        font-size: 25px;
-        margin-bottom: 30px;
-    }
-    &__text{
-        font-size: 18px;
-        line-height: 1.5;
-    }
-     ol li{
+.help-main {
+  padding: 0px 30px;
+  &__title {
+    font-size: 42px;
+  }
+  &__subtitle {
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+  &__text {
+    font-size: 18px;
     line-height: 1.5;
-}
-     ol li::marker {
-  font-weight: 600;
-  font-size: 20px;
-}
-
-}
-
-.icon-btn{
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+  ol li {
+    line-height: 1.5;
+  }
+  ol li::marker {
+    font-weight: 600;
+    font-size: 20px;
+  }
 }
 
-.join-text{
-    color: rgba(41, 171, 226, 1);
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.join-text {
+  color: rgba(41, 171, 226, 1);
 }
 
 @media (max-width: 768px) {
-    .help{
-        padding: 24px 16px;
+  .help {
+    padding: 24px 16px;
+  }
+  .help-top {
+    padding: 16px 16px;
+  }
+  .help-main {
+    padding: 0px 16px;
+    &__title {
+      font-size: 32px;
     }
-    .help-top{
-        padding: 16px 16px;
+    &__subtitle {
+      font-size: 20px;
     }
-    .help-main{
-        padding: 0px 16px;
-        &__title{
-            font-size: 32px;
-        }
-        &__subtitle{
-            font-size: 20px;
-        }
-    }
+  }
 }
 
 @media (max-width: 480px) {
-    .help{
-        padding: 24px 10px;
-    }
-    .help-top{
-        padding: 16px 10px;
-    }
-    .help-main{
-        padding: 0px 10px;
-    }
+  .help {
+    padding: 24px 10px;
+  }
+  .help-top {
+    padding: 16px 10px;
+  }
+  .help-main {
+    padding: 0px 10px;
+  }
 
-    .help-main{
-    &__text{
-        font-size: 16px;
+  .help-main {
+    &__text {
+      font-size: 16px;
     }
-}
+  }
 }

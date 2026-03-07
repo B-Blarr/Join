@@ -51,9 +51,27 @@
 
 .auth-footer a {
   text-decoration: none;
-  color: #2a3647;
+  color: #A8A8A8;
+  font-size: 16px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::after {
+    content: attr(data-text);
+    font-weight: 700;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: #29ABE2;
+    font-weight: 700;
+  }
 }
-.auth-footer a:hover { opacity: 1; }
 
 .btn {
   border: unset;

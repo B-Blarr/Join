@@ -100,4 +100,8 @@ export class SignupPage {
 
     }
   }
+
+  goBack() {
+    window.history.back();
+  }
 }

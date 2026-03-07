@@ -1,6 +1,11 @@
 <div class="signup-container">
   <div class="signup-card">
-    <h1>Sign Up</h1>
+    <div class="card-header">
+      <button class="icon-btn" (click)="goBack()" aria-label="Back">
+        <img src="assets/icons/Help/arrow-left-line.png" alt="Back" />
+      </button>
+      <h1>Sign up</h1>
+    </div>
     <div class="underline"></div>
 
     @if (successMessage()) {
@@ -86,15 +91,17 @@
           </div>
         </div>
         <div class="form-group form-check">
-          <input
-            type="checkbox"
-            name="privacyAccepted"
-            id="checkbox"
-            [ngModel]="privacyAccepted()"
-            (ngModelChange)="hasReadPrivacy() && privacyAccepted.set($event)"
-            [disabled]="!hasReadPrivacy()"
-            required
-          />
+          <span class="checkbox-wrap">
+            <input
+              type="checkbox"
+              name="privacyAccepted"
+              id="checkbox"
+              [ngModel]="privacyAccepted()"
+              (ngModelChange)="hasReadPrivacy() && privacyAccepted.set($event)"
+              [disabled]="!hasReadPrivacy()"
+              required
+            />
+          </span>
           <label for="checkbox">
             I accept the <span (click)="openPrivacyModal()" class="privacy-link">Privacy Policy</span>
             @if (!hasReadPrivacy()) {
@@ -109,10 +116,6 @@
           </button>
         </div>
       </form>
-
-      <div class="links">
-        <a routerLink="/login">Already have an account? Login</a>
-      </div>
     }
   </div>
 
