@@ -8,8 +8,8 @@
         (click)="toggleFab($event)">⋮</button>
         <div class="fab-wrap" (click)="$event.stopPropagation()">
     <div class="fab-menu" *ngIf="menuOpen">
-      <button type="button" 
-      class="fab-item" 
+      <button type="button"
+      class="fab-item"
       *ngFor="let target of moveTargets"
        (click)="onMove(target.value, $event)">
         {{ target.label }}

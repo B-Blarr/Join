@@ -196,7 +196,7 @@ export class TaskStore {
         priority: updates.priority,
         ...(updates.assignees !== undefined && { assignees: updates.assignees }),
         ...(updates.subtasks !== undefined && { subtasks: updates.subtasks }),
-        due_at: updates.dueDate || null,
+        ...(updates.dueDate !== undefined && { due_at: updates.dueDate }),
       })
       .eq('id', id)
       .select()

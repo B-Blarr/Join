@@ -26,7 +26,7 @@
                 <span>{{ task!.dueDate | date: 'dd/MM/yyyy' }}</span>
               }
             } @else {
-              <span>{{ task?.dueDate | date: 'dd/MM/yyyy'}}</span>
+              <span style="color: #999;">No due date</span>
             }
           </div>
           <div class="view-row">

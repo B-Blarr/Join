@@ -129,16 +129,23 @@ export class TaskDetailDialog implements OnInit {
       name: c.name,
     }));
 
-    // Use the original due date if no new date was provided
-    const finalDueDate = dueDate || this.task.dueDate;
-
-    await this.taskStore.updateTask(this.task.id, {
+    // Prepare updates object
+    const updates: Partial<Task> = {
       title,
       description,
-      dueDate: finalDueDate,
       priority: this.selectedPriority() ?? this.task.priority,
       assignees,
-    });
+    };
+
+    // Only include dueDate if it has a value (preserve original date if not changed)
+    if (dueDate && dueDate.trim()) {
+      updates.dueDate = dueDate;
+    } else if (this.task.dueDate) {
+      // Keep the original date if input is empty but task had a date
+      updates.dueDate = this.task.dueDate;
+    }
+
+    await this.taskStore.updateTask(this.task.id, updates);
 
     this.saving.set(false);
     this.isEditMode.set(false);
