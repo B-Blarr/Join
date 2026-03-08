@@ -36,8 +36,8 @@
     </span>
   </div>
 
-  <div class="assignees" *ngIf="task.assignees?.length">
-    <div class="assignees__initials">
+  <div class="assignees">
+    <div class="assignees__initials" *ngIf="task.assignees?.length">
       <span class="avatar" *ngFor="let a of task.assignees!.slice(0, 5)"
         [style.background-color]="getAvatarColor(a.name || a.initials)">
         {{ a.initials || getInitials(a.name) }}
