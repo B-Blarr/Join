@@ -159,7 +159,7 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     });
     this.authLoading.set(false);
     if (error) {
-      this.authError.set(error.message);
+      this.authError.set('Your email or password is incorrect. Please try again.');
       return false;
     }
     this.currentUser.set(data.user);
