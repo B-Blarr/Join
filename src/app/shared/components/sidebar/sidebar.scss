@@ -129,7 +129,8 @@ section {
 
     &:hover {
       cursor: pointer;
-      color: #29abe2;
+          cursor: pointer;
+    background-color: #29abe21a;
     }
 
     &.active {
