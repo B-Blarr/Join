@@ -5,11 +5,12 @@ section {
   flex-direction: column;
   gap: 0;
 
-  > .help-top {
+  > .privacy-top {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 30px;
 
     > .icon-btn {
       background: transparent;
@@ -39,10 +40,11 @@ section {
     }
   }
 
-  h1 {
+  h1,
+  .privacy-main__title {
     font-size: 48px;
     font-weight: 700;
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
   }
 
   h2 {

@@ -5,11 +5,12 @@
   // justify-content: space-around;
 }
 
-.help-top {
+.legal-top {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 30px;
 }
 
 .icon-btn {
@@ -49,7 +50,6 @@
   &__title {
     font-size: 48px;
     font-weight: 700;
-    margin-bottom: 24px;
   }
 
   h2 {
