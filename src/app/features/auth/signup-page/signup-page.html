@@ -28,13 +28,22 @@
               (ngModelChange)="displayName.set($event)"
               name="displayName"
               required
+              minlength="2"
+              maxlength="40"
+              pattern="^[a-zA-ZÀ-ÿ\s]+$"
               #nameInput="ngModel"
             />
             <img class="input-icon" src="assets/icons/person.png" alt="" aria-hidden="true" />
           </div>
           <div class="error-wrap">
             @if (nameInput.invalid && nameInput.touched) {
-              <span class="error">Name is required</span>
+              @if (nameInput.errors?.['required']) {
+                <span class="error">Name is required</span>
+              } @else if (nameInput.errors?.['minlength']) {
+                <span class="error">Name must be at least 2 characters</span>
+              } @else if (nameInput.errors?.['pattern']) {
+                <span class="error">Name may only contain letters</span>
+              }
             }
           </div>
         </div>
