@@ -1,9 +1,9 @@
 .login-card {
-width: min(500px, 92vw);
+  width: min(500px, 92vw);
   background: #fff;
   border-radius: 24px;
   padding: 48px 56px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
   overflow-y: auto;
 }
@@ -36,12 +36,14 @@ input {
   font-size: 16px;
   cursor: pointer;
 
-  &::placeholder{
-    color: #D1D1D1;
+  &::placeholder {
+    color: #d1d1d1;
   }
 }
 
-input:focus { border-color: #29abe2; }
+input:focus {
+  border-color: #29abe2;
+}
 
 .error {
   display: block;
@@ -70,17 +72,23 @@ input:focus { border-color: #29abe2; }
   transition: 100ms;
   font-weight: 600;
 }
+
 .btn-primary {
   background: #2a3647;
   color: #fff;
 }
-.btn-primary:hover { background: #29abe2; box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); }
+
+.btn-primary:hover {
+  background: #29abe2;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
 
 .btn-secondary {
   background: #fff;
   border: 1px solid #2a3647;
   color: #2a3647;
 }
+
 .btn-secondary:hover {
   border-color: #29abe2;
   color: #29abe2;
@@ -91,22 +99,22 @@ button:disabled {
   opacity: 0.6;
   cursor: default;
 
-  &:hover{
+  &:hover {
     background-color: #2a3647;
     box-shadow: none;
   }
 }
 
-.input-wrap{
+.input-wrap {
   position: relative;
 }
 
-.input-wrap input{
+.input-wrap input {
   width: 100%;
   padding-right: 48px;
 }
 
-.input-icon{
+.input-icon {
   position: absolute;
   right: 14px;
   top: 50%;
@@ -114,17 +122,21 @@ button:disabled {
   width: 20px;
   height: 20px;
   object-fit: contain;
-  opacity: .6;
+  opacity: 0.6;
   pointer-events: none;
+
+  &.clickable {
+    pointer-events: all;
+    cursor: pointer;
+  }
 }
 
-.input-wrap:focus-within .input-icon{
+.input-wrap:focus-within .input-icon {
   opacity: 1;
 }
 
-
-@media screen and (max-width:548px) {
-  .actions{
+@media screen and (max-width: 548px) {
+  .actions {
     flex-direction: column;
   }
 }

@@ -42,6 +42,26 @@ export class SignupPage {
   /** Whether the user has read the entire privacy policy. */
   hasReadPrivacy = signal(false);
 
+  isAlternateImage = false;
+  isFocused = false;
+
+  lockImage = 'assets/icons/lock.png';
+  invisibleImage = 'assets/icons/visibility_off.svg';
+  visibleImage = 'assets/icons/visibility.svg';
+
+  onFocus(): void{
+    this.isFocused = true;
+  }
+
+  onBlur(): void {
+    this.isFocused = false;
+    this.isAlternateImage = false;
+  }
+
+  togglePasswordVisibility(): void {
+    this.isAlternateImage = !this.isAlternateImage;
+  }
+
   /**
    * Opens the privacy policy modal.
    */

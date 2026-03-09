@@ -16,6 +16,25 @@ import { Supabase } from '../../../supabase';
 export class LoginPage {
   supabase = inject(Supabase);
   router = inject(Router);
+  isAlternateImage = false;
+  isFocused = false;
+
+  lockImage = 'assets/icons/lock.png';
+  invisibleImage = 'assets/icons/visibility_off.svg';
+  visibleImage = 'assets/icons/visibility.svg';
+
+  onFocus(): void{
+    this.isFocused = true;
+  }
+
+  onBlur(): void {
+    this.isFocused = false;
+    this.isAlternateImage = false;
+  }
+
+  togglePasswordVisibility(): void {
+    this.isAlternateImage = !this.isAlternateImage;
+  }
 
   /** The user's email input. */
   email = signal('');

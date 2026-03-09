@@ -3,58 +3,73 @@
   <div class="underline"></div>
 
   @if (supabase.authError()) {
-  <div class="error-message">{{ supabase.authError() }}</div>
+    <div class="error-message">{{ supabase.authError() }}</div>
   }
 
   <form novalidate #loginForm="ngForm" (ngSubmit)="loginForm.valid && login()">
     <div class="form-group">
-  <div class="input-wrap">
-    <input
-      type="email"
-      placeholder="Email"
-      [ngModel]="email()"
-      (ngModelChange)="email.set($event)"
-      name="email"
-      required
-      email
-      pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
-      #emailInput="ngModel"
-    />
-    <img class="input-icon" src="assets/icons/mail.png" alt="" aria-hidden="true" />
-  </div>
+      <div class="input-wrap">
+        <input
+          type="email"
+          placeholder="Email"
+          [ngModel]="email()"
+          (ngModelChange)="email.set($event)"
+          name="email"
+          required
+          email
+          pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+          #emailInput="ngModel"
+        />
+        <img class="input-icon" src="assets/icons/mail.png" alt="" aria-hidden="true" />
+      </div>
       @if (emailInput.invalid && emailInput.touched) {
-      <span class="error">Please enter a valid email address</span>
+        <span class="error">Please enter a valid email address</span>
       }
     </div>
 
     <div class="form-group">
-  <div class="input-wrap">
-    <input
-      type="password"
-      placeholder="Password"
-      [ngModel]="password()"
-      (ngModelChange)="password.set($event)"
-      name="password"
-      required
-      minlength="6"
-      #passwordInput="ngModel"
-    />
-    <img class="input-icon" src="assets/icons/lock.png" alt="" aria-hidden="true" />
-  </div>
+      <div class="input-wrap">
+        <input
+          [type]="isAlternateImage ? 'text' : 'password'"
+          placeholder="Password"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+          name="password"
+          required
+          minlength="6"
+          #passwordInput="ngModel"
+        />
+        @if (!isFocused) {
+          <img class="input-icon" [src]="lockImage" alt="Login locked" aria-hidden="true" />
+        } @else {
+          <img
+            class="input-icon clickable"
+            [src]="isAlternateImage ? visibleImage : invisibleImage"
+            (mousedown)="$event.preventDefault()"
+            (click)="togglePasswordVisibility()"
+            alt="Password Visibility"
+            aria-hidden="true"
+          />
+        }
+      </div>
 
       @if (passwordInput.invalid && passwordInput.touched) {
-      <span class="error">Password must be at least 6 characters</span>
+        <span class="error">Password must be at least 6 characters</span>
       }
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid || supabase.authLoading()">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="loginForm.invalid || supabase.authLoading()"
+      >
         {{ supabase.authLoading() ? 'Loading...' : 'Log in' }}
       </button>
 
-      <button class="btn btn-secondary" type="button" (click)="guestLogin()">
-        Guest Log in
-      </button>
+      <button class="btn btn-secondary" type="button" (click)="guestLogin()">Guest Log in</button>
     </div>
   </form>
 </div>
