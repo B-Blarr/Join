@@ -152,12 +152,18 @@ button:disabled {
   input {
     font-size: 14px;
   }
+  .error {
+    font-size: 14px;
+  }
 }
 @media screen and (max-width: 360px) {
   .login-card {
     padding: 35px 20px;
   }
-    input {
+  input {
+    font-size: 13px;
+  }
+  .error {
     font-size: 13px;
   }
 }

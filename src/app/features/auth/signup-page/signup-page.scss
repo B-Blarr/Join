@@ -304,6 +304,42 @@
   }
 }
 
+@media screen and (max-width: 480px) {
+  .signup-card {
+    padding: 28px 18px;
+  }
+  .form-group input:not([type='checkbox']) {
+    font-size: 14px;
+  }
+  .form-group .error {
+    font-size: 14px;
+  }
+  .form-check label {
+    font-size: 14px;
+  }
+  .form-check label .read-required {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .signup-card {
+    padding: 24px 14px;
+  }
+  .form-group input:not([type='checkbox']) {
+    font-size: 13px;
+  }
+  .form-group .error {
+    font-size: 13px;
+  }
+  .form-check label {
+    font-size: 13px;
+  }
+  .form-check label .read-required {
+    font-size: 12px;
+  }
+}
+
 /* Privacy Policy Modal */
 .modal-overlay {
   position: fixed;
