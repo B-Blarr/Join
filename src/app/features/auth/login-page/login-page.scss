@@ -6,6 +6,8 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
   overflow-y: auto;
+  opacity: 0;
+  animation: showImg 2s 2s forwards;
 }
 
 
@@ -236,5 +238,14 @@ button:disabled {
   }
   .error {
     font-size: 13px;
+  }
+}
+
+@keyframes showImg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
