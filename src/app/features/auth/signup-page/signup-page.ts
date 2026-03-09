@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-signup-page',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './signup-page.html',
   styleUrl: './signup-page.scss',
 })
