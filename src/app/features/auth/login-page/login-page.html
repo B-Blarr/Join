@@ -65,14 +65,16 @@
 
     <div class="remember-me">
       <label>
-        <input
-          type="checkbox"
-          [ngModel]="rememberMe()"
-          (ngModelChange)="rememberMe.set($event)"
-          name="rememberMe"
-        />
-        <span>Remember me</span>
+        <span class="checkbox-wrap">
+          <input
+            type="checkbox"
+            [ngModel]="rememberMe()"
+            (ngModelChange)="rememberMe.set($event)"
+            name="rememberMe"
+          />
+        </span>
       </label>
+      <span>Remember me</span>
     </div>
 
     <div class="actions">
