@@ -54,7 +54,7 @@ input:focus {
 }
 
 input.input-error {
-  border-color: #ff3d00;
+  border-color: #E60026;
 }
 
 .error-wrap {
@@ -68,13 +68,13 @@ input.input-error {
 .error {
   display: block;
   padding-top: 6px;
-  color: #ff3d00;
+  color: #E60026;
   font-size: 16px;
 }
 
 .error-message {
   margin-bottom: 16px;
-  color: #ff3d00;
+  color: #E60026;
 }
 
 .actions {

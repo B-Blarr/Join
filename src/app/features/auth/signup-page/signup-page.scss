@@ -82,7 +82,7 @@
     }
 
     &.input-error {
-      border-color: #ff3d00;
+      border-color: #E60026;
     }
 
     &::placeholder {
@@ -97,14 +97,14 @@
   .error {
     display: block;
     padding-top: 6px;
-    color: #ff3d00;
+    color: #E60026;
     font-size: 16px;
   }
 }
 
 .error-message {
   margin-bottom: 16px;
-  color: #ff3d00;
+  color: #E60026;
   text-align: center;
 }
 
@@ -255,7 +255,7 @@
     }
 
     .read-required {
-      color: #ff3d00;
+      color: #E60026;
       font-size: 14px;
       margin-left: 4px;
     }
