@@ -103,9 +103,23 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   /**
    * Initializes authentication by checking the current session
    * and subscribing to auth state changes.
+   * If "Remember Me" was not checked, signs out existing sessions on page load.
    */
   private async initAuth() {
     const { data: { session } } = await this.supabase.auth.getSession();
+
+    // Check if session should be cleared (when "Remember Me" was not checked)
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      const shouldNotPersist = sessionStorage.getItem('no-persist-session') === 'true';
+      if (shouldNotPersist && session) {
+        // Clear the session without API call to avoid logout on server
+        await this.supabase.auth.signOut({ scope: 'local' });
+        sessionStorage.removeItem('no-persist-session');
+        this.currentUser.set(null);
+        return;
+      }
+    }
+
     this.currentUser.set(session?.user ?? null);
 
     if (session?.user) {
@@ -123,11 +137,22 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
    * Signs in a user with email and password.
    * @param email - The user's email address.
    * @param password - The user's password.
+   * @param rememberMe - Whether to persist the session after browser closes (default: true).
    * @returns True if sign-in was successful, false otherwise.
    */
-  async signIn(email: string, password: string): Promise<boolean> {
+  async signIn(email: string, password: string, rememberMe: boolean = true): Promise<boolean> {
     this.authLoading.set(true);
     this.authError.set(null);
+
+    // Store remember me preference
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      if (rememberMe) {
+        sessionStorage.removeItem('no-persist-session');
+      } else {
+        sessionStorage.setItem('no-persist-session', 'true');
+      }
+    }
+
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email,
       password

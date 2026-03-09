@@ -42,12 +42,15 @@ export class LoginPage {
   /** The user's password input. */
   password = signal('');
 
+  /** Whether to keep the user logged in after closing the browser. */
+  rememberMe = signal(true);
+
   /**
    * Attempts to sign in the user with the provided email and password.
    * Navigates to the greeting page on success.
    */
   async login() {
-    const success = await this.supabase.signIn(this.email(), this.password());
+    const success = await this.supabase.signIn(this.email(), this.password(), this.rememberMe());
     if (success) {
       this.router.navigate(['/greeting']);
     }
