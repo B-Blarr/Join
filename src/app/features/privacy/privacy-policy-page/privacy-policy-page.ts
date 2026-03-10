@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './privacy-policy-page.scss',
 })
 export class PrivacyPolicyPage {
-    goBack() {
+  goBack() {
     window.history.back();
   }
 }

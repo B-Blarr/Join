@@ -1,7 +1,7 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core';
-import { Supabase } from '../../../../supabase';
+import { Component, inject, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HostListener } from '@angular/core';
+
+import { Supabase } from '../../../../supabase';
 import { avatarColors } from '../contact-list/contact-list';
 
 /**

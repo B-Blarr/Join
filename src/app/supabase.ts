@@ -49,11 +49,14 @@ export class Supabase {
     return false;
   }
 
-  /** Only real authenticated user */
-isAuthenticated = computed(() => this.currentUser() !== null);
 
-/** Real user OR guest */
-hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
+  /** Only real authenticated user */
+  isAuthenticated = computed(() => this.currentUser() !== null);
+
+
+  /** Real user OR guest */
+  hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
+
 
   /** Set guest status and persist to localStorage */
   private setGuestStatus(value: boolean): void {

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './legal-notice-page.scss',
 })
 export class LegalNoticePage {
-    goBack() {
+  goBack() {
     window.history.back();
   }
 }

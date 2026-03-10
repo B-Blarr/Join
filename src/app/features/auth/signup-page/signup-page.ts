@@ -1,8 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { Supabase } from '../../../supabase';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+
+import { Supabase } from '../../../supabase';
 
 /**
  * Signup page component that handles new user registration.
@@ -130,6 +131,10 @@ export class SignupPage {
 
     if (success) {
       this.successMessage.set('You Signed Up successfully');
+
+      // Sign out the user to prevent auto-login
+      await this.supabase.supabase.auth.signOut({ scope: 'local' });
+      this.supabase.currentUser.set(null);
 
        setTimeout(() => {
          this.router.navigate(['/login'])}, 800);

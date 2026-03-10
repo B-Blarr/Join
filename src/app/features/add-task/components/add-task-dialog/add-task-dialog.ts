@@ -1,6 +1,16 @@
 import { Component, EventEmitter, Output, inject, OnInit, ViewChild, ElementRef, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormControl,FormGroup,ReactiveFormsModule,FormsModule,AbstractControl, ValidationErrors, Validators,ValidatorFn} from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  FormsModule,
+  AbstractControl,
+  ValidationErrors,
+  Validators,
+  ValidatorFn
+} from '@angular/forms';
+
 import { Supabase, Contact } from '../../../../supabase';
 import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
 import { TaskStore } from '../../../board/services/task-store';

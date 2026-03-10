@@ -1,7 +1,8 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Supabase } from '../../../supabase';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { Supabase } from '../../../supabase';
 
 /**
  * Greeting page component that displays a welcome message after login.

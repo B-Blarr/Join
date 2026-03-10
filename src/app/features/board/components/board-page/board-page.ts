@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, inject, ChangeDetectorRef, effect, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Task , Status} from '../../models/task.model';
+import { Task, Status } from '../../models/task.model';
 import { BoardColumn } from '../../components/board-column/board-column';
 import { TaskDetailDialog } from '../../components/task-detail-dialog/task-detail-dialog';
 import { AddTaskDialog } from '../../../add-task/components/add-task-dialog/add-task-dialog';
