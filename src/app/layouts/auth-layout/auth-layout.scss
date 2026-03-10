@@ -170,3 +170,18 @@ img {
     opacity: 0;
   }
 }
+
+@media (max-width: 428px){
+  .auth-shell{
+    animation: bgChangeMobile 2s;
+  }
+}
+
+@keyframes bgChangeMobile {
+  0% {
+    background-color: #2a3647;
+  }
+  100% {
+    background-color: #2a3647;
+  }
+}
