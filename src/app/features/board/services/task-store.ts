@@ -249,33 +249,79 @@ export class TaskStore {
 
   /**
    * Updates a task in local state immediately (optimistic update),
-   * then persists changes to Supabase.
+   * then persists the changes to Supabase.
    *
-   * If the DB update fails:
-   * - logs the error
-   * - reloads tasks from Supabase to restore consistency
+   * If the DB update fails, the error is logged and the task list is reloaded
+   * from Supabase to restore a consistent local state.
    *
-   * @param id Task id to update.
-   * @param updates Partial Task fields to apply.
-   * @returns Updated row returned by Supabase, or null if the update failed.
+   * @param taskId  Id of the task to update.
+   * @param updates Partial {@link Task} fields to apply.
+   * @returns The updated row returned by Supabase, or `null` if the update failed.
    */
-  async updateTask(id: string, updates: Partial<Task>): Promise<Task | null> {
-    // Optimistic local update for snappier UI.
-    this.tasksSignal.update((tasks) => tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)));
+  async updateTask(taskId: string, updates: Partial<Task>): Promise<Task | null> {
+    this.applyOptimisticTaskUpdate(taskId, updates);
 
-    const { data, error } = await this.supabase.supabase
+    const updatePayload = this.buildTaskUpdatePayload(updates);
+    const updatedRow = await this.persistTaskUpdateToDatabase(taskId, updatePayload);
+
+    return updatedRow;
+  }
+
+  /**
+   * Immediately applies the given field updates to the matching task in the local signal.
+   *
+   * This provides instant UI feedback before the database round-trip completes
+   * (optimistic update pattern).
+   *
+   * @param taskId  Id of the task to update in local state.
+   * @param updates Partial {@link Task} fields to merge into the existing task.
+   */
+  private applyOptimisticTaskUpdate(taskId: string, updates: Partial<Task>): void {
+    this.tasksSignal.update((tasks) =>
+      tasks.map((task) => (task.id === taskId ? { ...task, ...updates } : task)),
+    );
+  }
+
+  /**
+   * Maps partial {@link Task} app-model fields to their Supabase column equivalents.
+   *
+   * Optional fields (`assignees`, `subtasks`, `dueDate`) are only included in the
+   * payload when explicitly provided to avoid overwriting existing DB values with `undefined`.
+   *
+   * @param updates Partial {@link Task} fields collected from the UI or caller.
+   * @returns A plain object suitable for a Supabase `.update()` call.
+   */
+  private buildTaskUpdatePayload(updates: Partial<Task>): Record<string, unknown> {
+    return {
+      title: updates.title,
+      description: updates.description,
+      status: updates.status,
+      type: updates.type,
+      priority: updates.priority,
+      ...(updates.assignees !== undefined && { assignees: updates.assignees }),
+      ...(updates.subtasks !== undefined && { subtasks: updates.subtasks }),
+      ...(updates.dueDate !== undefined && { due_at: updates.dueDate }),
+    };
+  }
+
+  /**
+   * Sends the update payload to Supabase and returns the persisted row.
+   *
+   * On failure, logs the error and reloads the task list from Supabase to
+   * roll back the optimistic local update and restore consistency.
+   *
+   * @param taskId        Id of the task row to update in the database.
+   * @param updatePayload The DB-ready payload produced by {@link buildTaskUpdatePayload}.
+   * @returns The raw updated row on success, or `null` if the operation failed.
+   */
+  private async persistTaskUpdateToDatabase(
+    taskId: string,
+    updatePayload: Record<string, unknown>,
+  ): Promise<Task | null> {
+    const { data: updatedRow, error } = await this.supabase.supabase
       .from('tasks')
-      .update({
-        title: updates.title,
-        description: updates.description,
-        status: updates.status,
-        type: updates.type,
-        priority: updates.priority,
-        ...(updates.assignees !== undefined && { assignees: updates.assignees }),
-        ...(updates.subtasks !== undefined && { subtasks: updates.subtasks }),
-        ...(updates.dueDate !== undefined && { due_at: updates.dueDate }),
-      })
-      .eq('id', id)
+      .update(updatePayload)
+      .eq('id', taskId)
       .select()
       .single();
 
@@ -285,7 +331,7 @@ export class TaskStore {
       return null;
     }
 
-    return data;
+    return updatedRow;
   }
 
   /**
