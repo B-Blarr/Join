@@ -34,45 +34,49 @@ export class TaskStore {
   constructor(private supabase: Supabase) {}
 
   /**
-   * Loads tasks from Supabase and updates the internal signal.
+   * Loads all tasks from Supabase, maps them to the app model and updates the signal.
    *
-   * Ordering:
-   * - first by `position` ascending (for manual ordering)
-   * - then by `created_at` descending (newest first among same position)
+   * Exits silently on database error — the caller decides how to handle the empty state.
    *
-   * Notes:
-   * - Maps DB column names to the Task model fields (e.g. `created_at` -> `createdAt`).
-   * - If an error occurs, this method exits silently (caller can decide how to handle).
-   *
-   * @param defer If true, defers the signal update to avoid change detection errors
-   * @returns Promise<void>
+   * @param defer If `true`, defers the signal update via `setTimeout` to avoid
+   *              Angular change-detection errors in dialog contexts.
    */
   async loadTasks(defer: boolean = false): Promise<void> {
-    const { data, error } = await this.supabase.supabase
+    const rawRows = await this.fetchAllTasksFromDatabase();
+    if (!rawRows) return;
+    const mappedTasks = rawRows.map((row) => this.mapRowToTaskModel(row));
+    this.updateTaskSignal(mappedTasks, defer);
+  }
+
+  /**
+   * Queries all tasks from Supabase ordered by position then creation date.
+   *
+   * Ordering:
+   * - `position` ascending  → respects manual drag-and-drop order
+   * - `created_at` descending → newest task first within the same position
+   *
+   * @returns The raw database rows on success, or `null` if an error occurred.
+   */
+  private async fetchAllTasksFromDatabase(): Promise<Record<string, unknown>[] | null> {
+    const { data: rawRows, error } = await this.supabase.supabase
       .from('tasks')
       .select('*')
       .order('position', { ascending: true })
       .order('created_at', { ascending: false });
+    if (error) return null;
+    return rawRows ?? [];
+  }
 
-    if (error) {
-      return;
-    }
-
-    const tasks: Task[] = (data || []).map((task) => ({
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      status: task.status,
-      type: task.type || 'Technical Task',
-      priority: task.priority,
-      assignees: task.assignees || [],
-      subtasks: Array.isArray(task.subtasks) ? task.subtasks : [],
-      createdAt: task.created_at,
-      dueDate: task.due_at,
-      // NOTE: This field is not part of the provided Task interface unless you added it elsewhere.
-      position: task.position ?? 999,
-    })) as Task[];
-
+  /**
+   * Writes the given task array into the reactive signal.
+   *
+   * When `defer` is `true`, the update is wrapped in a `setTimeout` to push it
+   * outside the current change-detection cycle — required when called from dialogs.
+   *
+   * @param tasks The fully mapped {@link Task} array to store.
+   * @param defer Whether to delay the signal update by one macrotask.
+   */
+  private updateTaskSignal(tasks: Task[], defer: boolean): void {
     if (defer) {
       setTimeout(() => this.tasksSignal.set(tasks), 0);
     } else {
@@ -115,16 +119,11 @@ export class TaskStore {
     skipReload: boolean = false,
   ): Promise<Task | null> {
     const { userId, isGuest } = this.resolveAuthContext();
-
     if (!this.canCreateTask(userId, isGuest)) return null;
-
     const newTaskPayload = this.buildNewTaskPayload(userId, data);
     const insertedRow = await this.insertTaskIntoDatabase(newTaskPayload);
-
     if (!insertedRow) return null;
-
     if (!skipReload) await this.loadTasks(true);
-
     return this.mapRowToTaskModel(insertedRow);
   }
 
@@ -342,11 +341,9 @@ export class TaskStore {
    */
   async deleteTask(taskId: string): Promise<boolean> {
     const { error } = await this.supabase.supabase.from('tasks').delete().eq('id', taskId);
-
     if (error) {
       return false;
     }
-
     await this.loadTasks(true);
     return true;
   }
