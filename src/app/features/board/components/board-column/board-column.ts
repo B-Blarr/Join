@@ -1,5 +1,6 @@
 import {
   Component,
+  inject,
   EventEmitter,
   Input,
   Output,
@@ -11,8 +12,6 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { TaskCard } from '../task-card/task-card';
-import { Task, Status } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import {
   CdkDrag,
@@ -22,8 +21,9 @@ import {
   transferArrayItem,
   DragDropModule,
 } from '@angular/cdk/drag-drop';
-import { inject } from '@angular/core';
 import { Supabase } from '../../../../supabase';
+import { Task, Status } from '../../models/task.model';
+import { TaskCard } from '../task-card/task-card';
 
 /**
  * Funktionen sind nach JSDoc Standard dokumentiert:
@@ -95,6 +95,7 @@ export class BoardColumn {
     this.isDragOver = false;
     this.cdr.markForCheck();
   }
+
 
   /**
    * Reorders a task within the same column after an in-column drag & drop.
