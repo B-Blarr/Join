@@ -18,8 +18,9 @@ import {
   AbstractControl,
   ValidationErrors,
   Validators,
-  ValidatorFn,
+  ValidatorFn
 } from '@angular/forms';
+
 import { Supabase, Contact } from '../../../../supabase';
 import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
 import { TaskStore } from '../../../board/services/task-store';
