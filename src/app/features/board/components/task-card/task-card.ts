@@ -3,6 +3,14 @@ import { Status, Task, TaskPriority } from '../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
 
+/**
+ * Task Card component.
+ *
+ * Displays a single task card in the Kanban board. Shows task details including
+ * title, description, type, priority, assignees, subtasks progress, and due date.
+ * Supports drag-and-drop, context menu for moving tasks to different columns,
+ * and click handling for opening task details.
+ */
 @Component({
   selector: 'app-task-card',
   imports: [CommonModule],
@@ -48,6 +56,7 @@ export class TaskCard {
     this.moveTo.emit({ taskId: this.task.id, status });
   }
 
+
   /**
    * Returns the number of completed subtasks.
    * Safely handles missing or non-array `subtasks`.
@@ -60,6 +69,7 @@ export class TaskCard {
     }
     return this.task.subtasks.filter(sub => sub.done).length;
   }
+
 
   /**
    * Returns the total number of subtasks.
@@ -96,6 +106,7 @@ export class TaskCard {
       : '';
   }
 
+
   /**
    * Returns a consistent avatar color based on a contact's name.
    * The same name always maps to the same color.
@@ -114,6 +125,7 @@ export class TaskCard {
     const index = Math.abs(hash) % avatarColors.length;
     return avatarColors[index];
   }
+
 
   /**
    * Toggles the card's context/FAB menu.
