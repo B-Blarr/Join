@@ -55,7 +55,7 @@
     flex: 1;
     display: flex;
     place-items: center;
-    padding: 24px;
+   /* padding: 24px; */
     justify-content: center;
     flex-direction: column;
     overflow-y: auto;
@@ -131,8 +131,16 @@ img {
 }
 }
 
-@media (max-width: 428px){
-  
+@media (max-width: 400px){
+  img {
+   width: 42px;
+  height: 54px;
+}
+}
+@media (max-width: 380px){
+  .auth-footer{
+    padding: 10px 12px;
+  }
 }
 
 @keyframes showImg {
