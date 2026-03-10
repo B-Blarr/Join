@@ -23,15 +23,29 @@ export class LoginPage {
   invisibleImage = 'assets/icons/visibility_off.svg';
   visibleImage = 'assets/icons/visibility.svg';
 
+
+  /**
+   * Handles focus event on password input.
+   * Shows password visibility toggle icon.
+   */
   onFocus(): void {
     this.isFocused = true;
   }
 
+
+  /**
+   * Handles blur event on password input.
+   * Hides password visibility toggle and resets visibility state.
+   */
   onBlur(): void {
     this.isFocused = false;
     this.isAlternateImage = false;
   }
 
+
+  /**
+   * Toggles password visibility between plain text and masked.
+   */
   togglePasswordVisibility(): void {
     this.isAlternateImage = !this.isAlternateImage;
   }
@@ -50,6 +64,7 @@ export class LoginPage {
     this.supabase.authError.set(null);
   }
 
+
   /**
    * Attempts to sign in the user with the provided email and password.
    * Navigates to the greeting page on success.
@@ -60,6 +75,7 @@ export class LoginPage {
       this.router.navigate(['/greeting']);
     }
   }
+
 
   /** Logs the user in as a guest and navigates to the greeting page. */
   guestLogin() {

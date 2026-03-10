@@ -26,6 +26,7 @@ export class SummaryPage implements OnInit {
     await this.loadTaskMetrics();
   }
 
+
   /**
    * Loads the current user's name from user metadata.
    */
@@ -44,6 +45,7 @@ export class SummaryPage implements OnInit {
     }
   }
 
+
   /**
    * Capitalizes the first letter of each word.
    */
@@ -54,69 +56,74 @@ export class SummaryPage implements OnInit {
       .join(' ');
   }
 
+
   /**
    * Loads all tasks and updates the dashboard metrics signals.
    *
    * Delegates fetching, count calculation and deadline resolution to
    * dedicated helper methods. Exits silently on database error.
    */
-  async loadTaskMetrics(): Promise<void> {
-    const tasks = await this.fetchAllTasksForMetrics();
+  async loadTaskMetrics() {
+    const tasks = await this.fetchTasks();
     if (!tasks) return;
-    this.calculateAndUpdateTaskCounts(tasks);
-    this.resolveUpcomingDeadline(tasks);
+
+    this.calculateTaskCounts(tasks);
+    this.findUpcomingDeadline(tasks);
   }
 
-  /**
-   * Fetches all task rows from Supabase for metric calculation.
-   *
-   * @returns The raw task array on success, or `null` if an error occurred.
-   */
-  private async fetchAllTasksForMetrics(): Promise<any[] | null> {
-    const { data: tasks, error } = await this.supabase.supabase.from('tasks').select('*');
-    if (error || !tasks) return null;
-    return tasks;
-  }
+
 
   /**
-   * Counts tasks by status and priority and writes the results into the
-   * corresponding signals.
+   * Fetches all tasks from the database.
    *
-   * Updated signals: `toDoCount`, `doneCount`, `urgentCount`, `tasksInBoard`,
-   * `tasksInProgress`, `awaitingFeedback`.
-   *
-   * @param tasks The raw task array returned by Supabase.
+   * @returns Array of tasks or null if error.
    */
-  private calculateAndUpdateTaskCounts(tasks: any[]): void {
-    this.toDoCount.set(tasks.filter((t) => t.status === 'todo').length);
-    this.doneCount.set(tasks.filter((t) => t.status === 'done').length);
-    this.urgentCount.set(tasks.filter((t) => t.priority === 'high').length);
+  private async fetchTasks() {
+    const { data: tasks, error } = await this.supabase.supabase
+      .from('tasks')
+      .select('*');
+
+    return error ? null : tasks;
+  }
+
+
+
+  /**
+   * Calculates and updates task count signals.
+   *
+   * @param tasks Array of tasks.
+   */
+  private calculateTaskCounts(tasks: any[]) {
+    this.toDoCount.set(tasks.filter(t => t.status === 'todo').length);
+    this.doneCount.set(tasks.filter(t => t.status === 'done').length);
+    this.urgentCount.set(tasks.filter(t => t.priority === 'high').length);
     this.tasksInBoard.set(tasks.length);
-    this.tasksInProgress.set(tasks.filter((t) => t.status === 'inProgress').length);
-    this.awaitingFeedback.set(tasks.filter((t) => t.status === 'awaitFeedback').length);
+    this.tasksInProgress.set(tasks.filter(t => t.status === 'inProgress').length);
+    this.awaitingFeedback.set(tasks.filter(t => t.status === 'awaitFeedback').length);
   }
 
+
+
   /**
-   * Finds the nearest upcoming due date across all tasks and sets the
-   * `upcomingDeadline` signal.
+   * Finds and sets the nearest upcoming deadline.
    *
-   * Only tasks with a `due_at` value that is today or in the future are
-   * considered. The signal is not updated if no such task exists.
-   *
-   * @param tasks The raw task array returned by Supabase.
+   * @param tasks Array of tasks.
    */
-  private resolveUpcomingDeadline(tasks: any[]): void {
+  private findUpcomingDeadline(tasks: any[]) {
+    const tasksWithDates = tasks
+      .filter(t => t.due_at)
+      .map(t => ({ ...t, dueDate: new Date(t.due_at!) }))
+      .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const nearestUpcomingTask = tasks
-      .filter((t) => t.due_at)
-      .map((t) => ({ ...t, parsedDueDate: new Date(t.due_at!) }))
-      .sort((a, b) => a.parsedDueDate.getTime() - b.parsedDueDate.getTime())
-      .find((t) => t.parsedDueDate >= today);
-    if (nearestUpcomingTask) {
-      this.upcomingDeadline.set(nearestUpcomingTask.due_at!);
+
+    const upcomingTask = tasksWithDates.find(t => t.dueDate >= today);
+    if (upcomingTask) {
+      this.upcomingDeadline.set(upcomingTask.due_at!);
     }
   }
+
 
   /**
    * Returns greeting based on current time of day.
@@ -128,6 +135,7 @@ export class SummaryPage implements OnInit {
     if (hour < 18) return `Good afternoon${suffix}`;
     return `Good evening${suffix}`;
   }
+
 
   /**
    * Check if current user is a guest.

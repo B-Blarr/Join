@@ -49,15 +49,29 @@ export class SignupPage {
   invisibleImage = 'assets/icons/visibility_off.svg';
   visibleImage = 'assets/icons/visibility.svg';
 
+
+  /**
+   * Handles focus event on password input.
+   * Shows password visibility toggle icon.
+   */
   onFocus(): void{
     this.isFocused = true;
   }
 
+
+  /**
+   * Handles blur event on password input.
+   * Hides password visibility toggle and resets visibility state.
+   */
   onBlur(): void {
     this.isFocused = false;
     this.isAlternateImage = false;
   }
 
+
+  /**
+   * Toggles password visibility between plain text and masked.
+   */
   togglePasswordVisibility(): void {
     this.isAlternateImage = !this.isAlternateImage;
   }
@@ -69,12 +83,14 @@ export class SignupPage {
     this.showPrivacyModal.set(true);
   }
 
+
   /**
    * Closes the privacy policy modal.
    */
   closePrivacyModal() {
     this.showPrivacyModal.set(false);
   }
+
 
   /**
    * Handles scroll event on privacy policy content to detect if user has read to the end.
@@ -90,6 +106,7 @@ export class SignupPage {
       this.hasReadPrivacy.set(true);
     }
   }
+
 
   /**
    * Validates the password confirmation and registers a new user.
@@ -120,6 +137,10 @@ export class SignupPage {
     }
   }
 
+
+  /**
+   * Navigates back to the previous page using browser history.
+   */
   goBack() {
     window.history.back();
   }
