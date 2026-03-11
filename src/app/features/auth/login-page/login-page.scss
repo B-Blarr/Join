@@ -251,6 +251,28 @@ button:disabled {
   }
 }
 
+@media screen and (max-height: 740px) and (max-width: 480px) {
+  .login-card {
+    padding: 24px 24px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .underline {
+    margin: 8px auto 16px;
+  }
+
+  .actions {
+    margin-top: 10px;
+  }
+
+  .error-wrap {
+    min-height: 20px;
+  }
+}
+
 @keyframes showImg {
   from {
     opacity: 0;

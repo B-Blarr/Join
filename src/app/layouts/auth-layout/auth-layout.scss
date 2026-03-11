@@ -4,7 +4,7 @@
 
 .auth-shell {
   height: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: #f6f7f8;
@@ -156,6 +156,16 @@
   }
 }
 
+@media screen and (max-height: 740px) and (max-width: 480px) {
+  .auth-top {
+    padding: 8px 20px;
+  }
+
+  .auth-footer {
+    padding: 8px 12px;
+  }
+}
+
 @keyframes showImg {
   from {
     opacity: 0;
@@ -211,11 +221,9 @@
   }
 }
 
+
 @keyframes logoImageChange {
-  0% {
-    content: url(../../../../public/assets/img/Capa\ 2.png);
-  }
-  99.9% {
+  0%, 99.9% {
     content: url(../../../../public/assets/img/Capa\ 2.png);
   }
   100% {
@@ -223,9 +231,15 @@
   }
 }
 
+@keyframes bgChangeMobile {
+  0%, 100% {
+    background-color: #2a3647;
+  }
+}
+
 @media (max-width: 768px) {
   .auth-shell {
-    animation: bgChangeMobile 1.9s;
+    animation: bgChangeMobile 1.9s ease;
   }
 
   .logo img {
@@ -236,11 +250,3 @@
   }
 }
 
-@keyframes bgChangeMobile {
-  0% {
-    background-color: #2a3647;
-  }
-  100% {
-    background-color: #2a3647;
-  }
-}

@@ -22,14 +22,14 @@
 
 @media (min-width: 1025px) {
   .add-task-content .main-content .priority-content .priority-content-elements {
-    flex-wrap: nowrap !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 12px;
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
+    flex: 1 1 0;
+    min-width: 0;
     padding: 8px 10px;
     white-space: nowrap;
     overflow: hidden;
@@ -44,7 +44,7 @@
 
 @media (min-width: 1025px) and (max-width: 1150px) {
   .add-task-content .main-content .priority-content .priority-content-elements {
-    gap: 8px !important;
+    gap: 8px;
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
@@ -125,7 +125,7 @@
   .add-task-content .main-content footer .btn-div {
     order: 1;
     width: 100%;
-    padding-bottom: 40px;
+    padding-bottom: 50px;
   }
 
   .add-task-content .main-content footer .btn-div .btn-basic {
@@ -243,10 +243,10 @@
 
 @media (max-width: 480px) and (min-width: 320px) {
   .add-task-content .main-content .priority-content .priority-content-elements {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    justify-content: space-between !important;
-    gap: 6px !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 6px;
   }
 
   .add-task-content .main-content .priority-content .priority-content-elements .priority-basic {
