@@ -19,11 +19,12 @@
   padding: 15px 48px;
 }
 
+/* Default: 66×80, center = left 48+33=81, top 15+40=55 */
 .logo-overlay {
   position: fixed;
   top: 15px;
   left: 48px;
-  width: 64px;
+  width: 66px;
   height: 80px;
   z-index: 10;
   pointer-events: none;
@@ -40,7 +41,7 @@
 
 .logo {
   img {
-    width: 64px;
+    width: 66px;
     height: 80px;
     display: block;
     object-fit: contain;
@@ -145,20 +146,20 @@
   }
 
   .logo img {
-    width: 64px;
+    width: 66px;
     height: 80px;
   }
 }
 
 @media (max-width: 400px) {
   .logo img {
-    width: 42px;
+    width: 44px;
     height: 54px;
   }
 
-  /* Base position for tiny logo: center = left 48+21=69, top 15+27=42 */
+  /* center = left 48+22=70, top 15+27=42 */
   .logo-overlay {
-    width: 42px;
+    width: 44px;
     height: 54px;
     animation: overlayAnimTiny 1.9s ease forwards;
   }
@@ -177,7 +178,7 @@
   }
 }
 
-/* Small height + wider phone (401–480px): 64×80, reduced padding position */
+/* Small height + wider phone (401–480px): 66×80, reduced padding position */
 @media screen and (max-height: 740px) and (max-width: 480px) {
   .auth-top {
     padding: 8px 20px;
@@ -187,7 +188,7 @@
     padding: 8px 12px;
   }
 
-  /* Base position shifts to top:8px left:20px; center = 20+32=52, 8+40=48 */
+  /* center = left 20+33=53, top 8+40=48 */
   .logo-overlay {
     top: 8px;
     left: 20px;
@@ -195,22 +196,22 @@
   }
 }
 
-/* Small height + small phone (≤400px, iPhone SE): 42×54, reduced padding — must come last */
+/* Small height + small phone (≤400px, iPhone SE): 44×54, reduced padding — must come last */
 @media screen and (max-height: 740px) and (max-width: 400px) {
-  /* Base position: top:8px left:20px; center = 20+21=41, 8+27=35 */
+  /* center = left 20+22=42, top 8+27=35 */
   .logo-overlay {
     top: 8px;
     left: 20px;
-    width: 42px;
+    width: 44px;
     height: 54px;
     animation: overlayAnimSmallTiny 1.9s ease forwards;
   }
 }
 
-/* Default: 64×80, center = left 48+32=80, top 15+40=55 */
+/* Default: 66×80, center x=81, center y=55 */
 @keyframes overlayAnim {
   0%, 52.6% {
-    transform: translate(calc(50vw - 80px), calc(50vh - 55px)) scale(4.28, 4.175);
+    transform: translate(calc(50vw - 81px), calc(50vh - 55px)) scale(4.15, 4.175);
     opacity: 1;
   }
   95% {
@@ -223,10 +224,10 @@
   }
 }
 
-/* ≤400px wide, normal height: 42×54, center = 48+21=69, 15+27=42 */
+/* ≤400px wide, normal height: 44×54, center x=70, center y=42 */
 @keyframes overlayAnimTiny {
   0%, 52.6% {
-    transform: translate(calc(50vw - 69px), calc(50vh - 42px)) scale(6.52, 6.19);
+    transform: translate(calc(50vw - 70px), calc(50vh - 42px)) scale(6.23, 6.19);
     opacity: 1;
   }
   95% {
@@ -239,10 +240,10 @@
   }
 }
 
-/* 401–480px wide, small height: 64×80, center = 20+32=52, 8+40=48 */
+/* 401–480px wide, small height: 66×80, center x=53, center y=48 */
 @keyframes overlayAnimSmall {
   0%, 52.6% {
-    transform: translate(calc(50vw - 52px), calc(50vh - 48px)) scale(4.28, 4.175);
+    transform: translate(calc(50vw - 53px), calc(50vh - 48px)) scale(4.15, 4.175);
     opacity: 1;
   }
   95% {
@@ -255,10 +256,10 @@
   }
 }
 
-/* ≤400px wide, small height (iPhone SE): 42×54, center = 20+21=41, 8+27=35 */
+/* ≤400px wide, small height (iPhone SE): 44×54, center x=42, center y=35 */
 @keyframes overlayAnimSmallTiny {
   0%, 52.6% {
-    transform: translate(calc(50vw - 41px), calc(50vh - 35px)) scale(6.52, 6.19);
+    transform: translate(calc(50vw - 42px), calc(50vh - 35px)) scale(6.23, 6.19);
     opacity: 1;
   }
   95% {
@@ -280,38 +281,8 @@
   }
 }
 
-@keyframes overlayAnim {
-  0%, 52.6% {
-    top: 50%;
-    left: 50%;
-    width: 274px;
-    height: 334px;
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
-  95% {
-    top: 15px;
-    left: 48px;
-    width: 64px;
-    height: 80px;
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  100% {
-    top: 15px;
-    left: 48px;
-    width: 64px;
-    height: 80px;
-    transform: translate(0, 0);
-    opacity: 0;
-  }
-}
-
 @keyframes showLogo {
   to {
     opacity: 1;
   }
 }
-
-
-
