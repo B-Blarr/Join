@@ -33,7 +33,7 @@ export interface Contact {
 export class Supabase {
 
   /** Supabase project URL. */
-  private supabaseUrl = 'https://rtunkmriznurqroovzij.supabase.co';
+  private supabaseUrl = 'https://dcdzlseyrzccbjvinfni.supabase.co';
 
   /** Currently authenticated user. */
   currentUser = signal<User | null>(null);
@@ -88,7 +88,7 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   authLoading = signal<boolean>(false);
 
   /** Public anon key for Supabase API access. */
-  private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0dW5rbXJpem51cnFyb292emlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyMTI4MjAsImV4cCI6MjA4Njc4ODgyMH0.J4bDrpH72a81aHGBdHvT5Vrl30NgoZTOB8wvAHwmIoE';
+  private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZHpsc2V5cnpjY2JqdmluZm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMTY0NDAsImV4cCI6MjA4ODc5MjQ0MH0.lWlmDl3mTjv1f6UCdB0XLaZa0UOUchGuGF2XrXp3mK8';
 
   /** Initialized Supabase client instance. */
   supabase: SupabaseClient = createClient(
