@@ -3,6 +3,8 @@ import {
   inject,
   EventEmitter,
   Input,
+  OnInit,
+  OnDestroy,
   Output,
   ViewChild,
   ViewChildren,
@@ -12,6 +14,8 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   CdkDrag,
@@ -43,7 +47,7 @@ import { TaskCard } from '../task-card/task-card';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class BoardColumn {
+export class BoardColumn implements OnInit, OnDestroy {
   @Input() title = '';
   @Input() tasks: Task[] = [];
   @Input() columnId!: Status;
@@ -65,12 +69,28 @@ export class BoardColumn {
 
   private supabase = inject(Supabase);
   private cdr = inject(ChangeDetectorRef);
+  private breakpointObserver = inject(BreakpointObserver);
+  private bpSubscription!: Subscription;
 
+  isMobile = false;
   isDragOver = false;
   isDragging = false;
   draggedTaskIndex = -1;
   previewContainer: TemplateRef<any> | string = 'body';
   draggedElement: ElementRef | null = null;
+
+  ngOnInit(): void {
+    this.bpSubscription = this.breakpointObserver
+      .observe('(max-width: 1023px)')
+      .subscribe(result => {
+        this.isMobile = result.matches;
+        this.cdr.markForCheck();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.bpSubscription.unsubscribe();
+  }
 
   /**
    * Handles a drop event from Angular CDK Drag & Drop.
