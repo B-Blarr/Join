@@ -76,7 +76,7 @@
                 type="tel"
                 placeholder="Phone"
                 formControlName="phone"
-                maxlength="15"
+                maxlength="20"
                 (input)="updatePhone($any($event.target).value)"
                 (keypress)="onPhoneKeyPress($event)"
                 [class.invalid]="phoneControl.invalid && phoneControl.touched"
