@@ -1,6 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Task, Status, TaskPriority, TaskType } from '../models/task.model';
 import { Supabase } from '../../../supabase';
+import { getDemoTasks } from '../../../demo-data';
 
 /**
  * Data required to create a new task.
@@ -59,6 +60,7 @@ export class TaskStore {
 
   /**
    * Loads all tasks from Supabase, maps them to the app model and updates the signal.
+   * In guest mode, seeds demo tasks if not already loaded.
    *
    * Exits silently on database error — the caller decides how to handle the empty state.
    *
@@ -66,8 +68,40 @@ export class TaskStore {
    *              Angular change-detection errors in dialog contexts.
    */
   async loadTasks(defer: boolean = false): Promise<void> {
+    if (this.supabase.isGuest()) {
+      if (this.tasksSignal().length === 0) {
+        this.updateTaskSignal(getDemoTasks(), defer);
+      }
+      return;
+    }
+
     const rawRows = await this.fetchAllTasksFromDatabase();
     if (!rawRows) return;
+
+    const demoTasks = getDemoTasks();
+    const missing = demoTasks.filter(
+      dt => !rawRows.some(r => r['title'] === dt.title)
+    );
+
+    if (missing.length > 0) {
+      const payload = missing.map(t => ({
+        title: t.title,
+        description: t.description,
+        status: t.status,
+        type: t.type,
+        priority: t.priority,
+        assignees: t.assignees ?? [],
+        subtasks: t.subtasks ?? [],
+        due_at: t.dueDate,
+      }));
+      await this.supabase.supabase.from('tasks').insert(payload);
+      const refreshed = await this.fetchAllTasksFromDatabase();
+      if (refreshed) {
+        this.updateTaskSignal(refreshed.map(r => this.mapRowToTaskModel(r)), defer);
+      }
+      return;
+    }
+
     const mappedTasks = rawRows.map((row) => this.mapRowToTaskModel(row));
     this.updateTaskSignal(mappedTasks, defer);
   }
@@ -136,6 +170,24 @@ export class TaskStore {
   async addTask(data: NewTaskData, skipReload: boolean = false): Promise<Task | null> {
     const { userId, isGuest } = this.resolveAuthContext();
     if (!this.canCreateTask(userId, isGuest)) return null;
+
+    if (isGuest) {
+      const newTask: Task = {
+        id: 'demo-t-' + Date.now(),
+        title: data.title,
+        description: data.description,
+        status: data.status,
+        type: data.type,
+        priority: data.priority,
+        assignees: data.assignees ?? [],
+        subtasks: data.subtasks ?? [],
+        createdAt: new Date().toISOString(),
+        dueDate: data.dueDate,
+      };
+      this.tasksSignal.update(tasks => [newTask, ...tasks]);
+      return newTask;
+    }
+
     const newTaskPayload = this.buildNewTaskPayload(userId, data);
     const insertedRow = await this.insertTaskIntoDatabase(newTaskPayload);
     if (!insertedRow) return null;
@@ -271,6 +323,10 @@ export class TaskStore {
   async updateTask(taskId: string, updates: Partial<Task>): Promise<Task | null> {
     this.applyOptimisticTaskUpdate(taskId, updates);
 
+    if (this.supabase.isGuest()) {
+      return this.tasksSignal().find(t => t.id === taskId) ?? null;
+    }
+
     const updatePayload = this.buildTaskUpdatePayload(updates);
     const updatedRow = await this.persistTaskUpdateToDatabase(taskId, updatePayload);
 
@@ -355,6 +411,11 @@ export class TaskStore {
    * @returns True if the delete succeeded; otherwise false.
    */
   async deleteTask(taskId: string): Promise<boolean> {
+    if (this.supabase.isGuest()) {
+      this.tasksSignal.update(tasks => tasks.filter(t => t.id !== taskId));
+      return true;
+    }
+
     const { error } = await this.supabase.supabase.from('tasks').delete().eq('id', taskId);
     if (error) {
       return false;

@@ -11,16 +11,18 @@
           <img src="assets/icons/help.svg" alt="Help Button" />
         </button>
         <button (click)="toggleMenu()" class="nav-button">{{ getInitials() }}</button>
+        @if (isMenuOpen) {
+          <div class="header-menu" [class.closing]="isClosing()" (click)="$event.stopPropagation()">
+            <a class="header-links help-link" routerLink="/help" (click)="closeMenu()">Help</a>
+            <a class="header-links" routerLink="/legal" (click)="closeMenu()">Legal Notice</a>
+            <a class="header-links" routerLink="/privacy" (click)="closeMenu()">Privacy Policy</a>
+            <button class="header-links" (click)="logout()" type="button">Log out</button>
+          </div>
+        }
       </div>
     }
   </div>
 </section>
 @if (isMenuOpen) {
   <div class="backdrop" (click)="closeMenu()" [class.closing]="isClosing()"></div>
-  <div class="header-menu" [class.closing]="isClosing()" (click)="$event.stopPropagation()">
-    <a class="header-links help-link" routerLink="/help" (click)="closeMenu()">Help</a>
-    <a class="header-links" routerLink="/legal" (click)="closeMenu()">Legal Notice</a>
-    <a class="header-links" routerLink="/privacy" (click)="closeMenu()">Privacy Policy</a>
-    <button class="header-links" (click)="logout()" type="button">Log out</button>
-  </div>
 }

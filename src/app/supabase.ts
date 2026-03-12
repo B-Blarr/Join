@@ -1,6 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { Router } from '@angular/router';
+import { DEMO_CONTACTS } from './demo-data';
 
 /**
  * Data model for a contact entry.
@@ -253,9 +254,10 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   }
 
 
-  /** Enables guest mode without requiring authentication. */
+  /** Enables guest mode without requiring authentication. Seeds demo data. */
   guestLogin() {
     this.setGuestStatus(true);
+    this.contacts.set([...DEMO_CONTACTS]);
   }
 
   /** List of all loaded contacts. */
@@ -279,8 +281,17 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   /**
    * Fetches all contacts from the database, sorted by name,
    * and stores them in the contacts signal.
+   * In guest mode, seeds demo contacts if not already loaded.
+   * For real users, re-inserts any missing demo contacts (identified by email).
    */
   async getContacts() {
+    if (this.isGuest()) {
+      if (this.contacts().length === 0) {
+        this.contacts.set([...DEMO_CONTACTS]);
+      }
+      return;
+    }
+
     this.loading.set(true);
     const { data, error } = await this.supabase
       .from('contacts')
@@ -292,15 +303,38 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
       this.error.set(error.message);
       return;
     }
-    this.contacts.set(data || []);
+
+    const existing = data || [];
+    const missing = DEMO_CONTACTS.filter(
+      dc => !existing.some(e => e.email === dc.email)
+    );
+
+    if (missing.length > 0) {
+      const payload = missing.map(c => ({ name: c.name, email: c.email, phone: c.phone }));
+      await this.supabase.from('contacts').insert(payload);
+      const { data: refreshed } = await this.supabase.from('contacts').select('*').order('name');
+      this.contacts.set(refreshed || []);
+      return;
+    }
+
+    this.contacts.set(existing);
   }
 
 
   /**
    * Inserts a new contact into the database and refreshes the contact list.
+   * In guest mode, adds to in-memory signal only.
    * @param contact - The contact data to insert.
    */
   async addContact(contact: Contact) {
+    if (this.isGuest()) {
+      const newContact: Contact = { ...contact, id: 'demo-c-' + Date.now() };
+      this.contacts.update(list =>
+        [...list, newContact].sort((a, b) => a.name.localeCompare(b.name))
+      );
+      return;
+    }
+
     const { error } = await this.supabase
       .from('contacts')
       .insert([contact]);
@@ -314,10 +348,23 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   /**
    * Updates an existing contact in the database and refreshes the contact list.
    * Also updates the selectedContact signal if it matches the updated contact.
+   * In guest mode, updates in-memory signal only.
    * @param id - The ID of the contact to update.
    * @param contact - The fields to update.
    */
   async updateContact(id: string, contact: Partial<Contact>) {
+    if (this.isGuest()) {
+      this.contacts.update(list =>
+        list.map(c => c.id === id ? { ...c, ...contact } : c)
+          .sort((a, b) => a.name.localeCompare(b.name))
+      );
+      if (this.selectedContact()?.id === id) {
+        const updated = this.contacts().find(c => c.id === id);
+        if (updated) this.selectedContact.set(updated);
+      }
+      return;
+    }
+
     const { error } = await this.supabase
       .from('contacts')
       .update(contact)
@@ -327,7 +374,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
 
     await this.getContacts();
 
-    // Update selectedContact if it's the one being edited
     if (this.selectedContact()?.id === id) {
       const updatedContact = this.contacts().find(c => c.id === id);
       if (updatedContact) {
@@ -339,9 +385,16 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
 
   /**
    * Deletes a contact by ID, clears the selection, and refreshes the contact list.
+   * In guest mode, removes from in-memory signal only.
    * @param id - The ID of the contact to delete.
    */
   async deleteContact(id: string) {
+    if (this.isGuest()) {
+      this.contacts.update(list => list.filter(c => c.id !== id));
+      this.selectedContact.set(null);
+      return;
+    }
+
     const { error } = await this.supabase
       .from('contacts')
       .delete()
@@ -355,11 +408,13 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
 
 
   async updateTaskStatus(taskId: string, status: string) {
-  const { error } = await this.supabase
-    .from('tasks')
-    .update({ status })
-    .eq('id', taskId);
+    if (this.isGuest()) return;
 
-  if (error) throw error;
-}
+    const { error } = await this.supabase
+      .from('tasks')
+      .update({ status })
+      .eq('id', taskId);
+
+    if (error) throw error;
+  }
 }
