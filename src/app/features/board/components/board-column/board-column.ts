@@ -157,6 +157,10 @@ export class BoardColumn implements OnInit, OnDestroy {
    * @returns Promise<void>
    */
   private async updateTaskStatus(task: Task): Promise<void> {
+    // Demo tasks live only in local state — their ids are not valid UUIDs,
+    // so any PATCH against Supabase would fail with 400.
+    if (task.id.startsWith('demo-')) return;
+
     try {
       const { error } = await this.supabase.supabase
         .from('tasks')
