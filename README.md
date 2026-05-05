@@ -1,8 +1,36 @@
-# JoinProject
+# 📋 Join
+
+A Kanban-inspired task manager for creating and organizing tasks with drag and drop functionality.
+
+👉 **[Open the app](https://benjaminblarr.dev/join/#/login)**
+
+![Join Preview](public/assets/images/preview.png)
+
+## 📌 About
+Join is a collaborative task management app built by a team of four. It allows users to create, organize and manage tasks using a Kanban board system – including drag and drop, user assignments and category management.
+
+## ✨ Features
+- Kanban board with drag and drop functionality
+- Create, edit and delete tasks
+- Assign tasks to users and categories
+- Clean and responsive UI
+
+## 🛠️ Technologies
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat&logo=sass&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+
+## 👥 Team
+Developed in collaboration as a group project with a team of 4 developers.
+
+---
+
+## 🚀 Getting Started
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
 
-## Development server
+### Development server
 
 To start a local development server, run:
 
@@ -12,48 +40,22 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Code scaffolding
 
 ```bash
 ng generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Building
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Running unit tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
