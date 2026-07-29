@@ -2,7 +2,7 @@
 
 A Kanban-inspired task manager for creating and organizing tasks with drag and drop functionality.
 
-👉 **[Open the app](https://benjaminblarr.dev/join/#/login)**
+👉 **[Open the app](https://benjaminblarr.de/join/)**
 
 ![Join Preview](public/assets/images/preview.png)
 
