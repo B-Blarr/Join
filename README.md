@@ -1,61 +1,59 @@
-# 📋 Join
+# Join
 
-A Kanban-inspired task manager for creating and organizing tasks with drag and drop functionality.
+A Kanban-inspired task manager for creating and organizing tasks with drag and
+drop.
 
 👉 **[Open the app](https://benjaminblarr.de/join/)**
 
 ![Join Preview](public/assets/images/preview.png)
 
-## 📌 About
-Join is a collaborative task management app built by a team of four. It allows users to create, organize and manage tasks using a Kanban board system – including drag and drop, user assignments and category management.
+## About
 
-## ✨ Features
-- Kanban board with drag and drop functionality
-- Create, edit and delete tasks
-- Assign tasks to users and categories
-- Clean and responsive UI
+Join lets users create tasks, sort them into the four columns of a Kanban
+board, assign them to contacts and move them by dragging. Tasks, contacts and
+accounts live in Supabase, so the board looks the same on every device and
+survives a logout.
 
-## 🛠️ Technologies
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=flat&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat&logo=sass&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+Built as a group project with four developers over roughly eight weeks. I
+worked across the whole application rather than owning a single area, from the
+board and the task forms through to the contact management and the responsive
+layout.
 
-## 👥 Team
-Developed in collaboration as a group project with a team of 4 developers.
+## Features
 
----
+- Kanban board with drag and drop across four columns
+- Create, edit and delete tasks with subtasks, priority and due date
+- Contact management, tasks assigned to one or more contacts
+- Sign up, log in and a guest login
+- Responsive down to mobile, with a separate layout for narrow screens
 
-## 🚀 Getting Started
+## Built with
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.5.
+**Frontend**
 
-### Development server
+<p align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angular/angular-original.svg" height="40" alt="angular logo" />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo" />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" height="40" alt="sass logo" />
+</p>
 
-To start a local development server, run:
+**Backend**
+
+<p align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" height="40" alt="supabase logo" />
+</p>
+
+Supabase handles authentication and stores tasks and contacts.
+
+## Getting Started
 
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The app is then available at `http://localhost:4200/`.
 
-### Code scaffolding
-
-```bash
-ng generate component component-name
-```
-
-### Building
-
-```bash
-ng build
-```
-
-### Running unit tests
-
-```bash
-ng test
-```
-
-For more information visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Built with Angular CLI 20.3.5.
