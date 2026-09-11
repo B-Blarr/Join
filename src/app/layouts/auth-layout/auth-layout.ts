@@ -22,10 +22,10 @@ export class AuthLayout {
    */
   constructor(private router: Router) {
     this.updateIsSignupPage();
-    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() =>
-      this.updateIsSignupPage());
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => this.updateIsSignupPage());
   }
-
 
   /** Updates the isSignupPage flag based on the current URL. */
   private updateIsSignupPage() {

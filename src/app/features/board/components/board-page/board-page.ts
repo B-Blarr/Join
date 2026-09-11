@@ -32,7 +32,6 @@ import { TaskStore } from '../../services/task-store';
   templateUrl: './board-page.html',
   styleUrl: './board-page.scss',
 })
-
 export class BoardPage implements OnInit, AfterViewInit {
   private taskStore = inject(TaskStore);
   private cdr = inject(ChangeDetectorRef);
@@ -89,8 +88,7 @@ export class BoardPage implements OnInit, AfterViewInit {
    *
    * @returns void
    */
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   /**
    * Angular lifecycle hook.

@@ -15,7 +15,6 @@ import { ContactFormDialog } from '../../components/contact-form-dialog/contact-
   styleUrl: './contacts-page.scss',
 })
 export class ContactsPage {
-
   showForm = signal(false);
   showDetailOnMobile = signal(false);
 
@@ -34,7 +33,6 @@ export class ContactsPage {
     }
   }
 
-
   /**
    * Listens for the 'contact-selected' custom event to show
    * the detail view on mobile devices (screen width <= 991px).
@@ -48,7 +46,6 @@ export class ContactsPage {
       });
     }
   }
-
 
   /** Hides the mobile detail view by resetting the signal. */
   closeDetail() {

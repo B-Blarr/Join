@@ -15,7 +15,9 @@ export const authGuard: CanActivateFn = async () => {
     return true;
   }
 
-  const { data: { session } } = await supabase.supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.supabase.auth.getSession();
 
   if (session) {
     return true;

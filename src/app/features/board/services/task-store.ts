@@ -57,7 +57,6 @@ export class TaskStore {
    */
   constructor(private supabase: Supabase) {}
 
-
   /**
    * Loads all tasks from Supabase, maps them to the app model and updates the signal.
    * In guest mode, seeds demo tasks if not already loaded.
@@ -79,12 +78,10 @@ export class TaskStore {
     if (!rawRows) return;
 
     const demoTasks = getDemoTasks();
-    const missing = demoTasks.filter(
-      dt => !rawRows.some(r => r['title'] === dt.title)
-    );
+    const missing = demoTasks.filter((dt) => !rawRows.some((r) => r['title'] === dt.title));
 
     if (missing.length > 0) {
-      const payload = missing.map(t => ({
+      const payload = missing.map((t) => ({
         title: t.title,
         description: t.description,
         status: t.status,
@@ -97,7 +94,10 @@ export class TaskStore {
       await this.supabase.supabase.from('tasks').insert(payload);
       const refreshed = await this.fetchAllTasksFromDatabase();
       if (refreshed) {
-        this.updateTaskSignal(refreshed.map(r => this.mapRowToTaskModel(r)), defer);
+        this.updateTaskSignal(
+          refreshed.map((r) => this.mapRowToTaskModel(r)),
+          defer,
+        );
       }
       return;
     }
@@ -105,7 +105,6 @@ export class TaskStore {
     const mappedTasks = rawRows.map((row) => this.mapRowToTaskModel(row));
     this.updateTaskSignal(mappedTasks, defer);
   }
-
 
   /**
    * Queries all tasks from Supabase ordered by position then creation date.
@@ -126,7 +125,6 @@ export class TaskStore {
     return rawRows ?? [];
   }
 
-
   /**
    * Writes the given task array into the reactive signal.
    *
@@ -144,7 +142,6 @@ export class TaskStore {
     }
   }
 
-
   /**
    * Convenience method to load tasks and return the current state.
    *
@@ -154,7 +151,6 @@ export class TaskStore {
     await this.loadTasks();
     return this.tasksSignal();
   }
-
 
   /**
    * Inserts a new task into Supabase and refreshes local store state.
@@ -184,7 +180,7 @@ export class TaskStore {
         createdAt: new Date().toISOString(),
         dueDate: data.dueDate,
       };
-      this.tasksSignal.update(tasks => [newTask, ...tasks]);
+      this.tasksSignal.update((tasks) => [newTask, ...tasks]);
       return newTask;
     }
 
@@ -194,7 +190,6 @@ export class TaskStore {
     if (!skipReload) await this.loadTasks(true);
     return this.mapRowToTaskModel(insertedRow);
   }
-
 
   /**
    * Reads the current authentication context from the Supabase service.
@@ -208,7 +203,6 @@ export class TaskStore {
     console.log('addTask called - userId:', userId, 'isGuest:', isGuest);
     return { userId, isGuest };
   }
-
 
   /**
    * Determines whether the current session is allowed to create a task.
@@ -227,7 +221,6 @@ export class TaskStore {
     }
     return true;
   }
-
 
   /**
    * Builds the Supabase insert payload from the task form data.
@@ -252,7 +245,6 @@ export class TaskStore {
       due_at: taskData.dueDate,
     };
   }
-
 
   /**
    * Executes the Supabase insert for a single task and returns the persisted row.
@@ -283,7 +275,6 @@ export class TaskStore {
     return insertedRow;
   }
 
-
   /**
    * Maps a raw Supabase task row to the app's {@link Task} model.
    *
@@ -308,7 +299,6 @@ export class TaskStore {
     };
   }
 
-
   /**
    * Updates a task in local state immediately (optimistic update),
    * then persists the changes to Supabase.
@@ -324,7 +314,7 @@ export class TaskStore {
     this.applyOptimisticTaskUpdate(taskId, updates);
 
     if (this.supabase.isGuest()) {
-      return this.tasksSignal().find(t => t.id === taskId) ?? null;
+      return this.tasksSignal().find((t) => t.id === taskId) ?? null;
     }
 
     const updatePayload = this.buildTaskUpdatePayload(updates);
@@ -332,7 +322,6 @@ export class TaskStore {
 
     return updatedRow;
   }
-
 
   /**
    * Immediately applies the given field updates to the matching task in the local signal.
@@ -348,7 +337,6 @@ export class TaskStore {
       tasks.map((task) => (task.id === taskId ? { ...task, ...updates } : task)),
     );
   }
-
 
   /**
    * Maps partial {@link Task} app-model fields to their Supabase column equivalents.
@@ -371,7 +359,6 @@ export class TaskStore {
       ...(updates.dueDate !== undefined && { due_at: updates.dueDate }),
     };
   }
-
 
   /**
    * Sends the update payload to Supabase and returns the persisted row.
@@ -403,7 +390,6 @@ export class TaskStore {
     return updatedRow;
   }
 
-
   /**
    * Deletes a task from Supabase and refreshes local store state.
    *
@@ -412,7 +398,7 @@ export class TaskStore {
    */
   async deleteTask(taskId: string): Promise<boolean> {
     if (this.supabase.isGuest()) {
-      this.tasksSignal.update(tasks => tasks.filter(t => t.id !== taskId));
+      this.tasksSignal.update((tasks) => tasks.filter((t) => t.id !== taskId));
       return true;
     }
 

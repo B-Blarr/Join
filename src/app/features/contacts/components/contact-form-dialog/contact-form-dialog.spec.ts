@@ -8,9 +8,8 @@ describe('ContactFormDialog', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactFormDialog]
-    })
-    .compileComponents();
+      imports: [ContactFormDialog],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ContactFormDialog);
     component = fixture.componentInstance;

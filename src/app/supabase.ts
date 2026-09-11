@@ -32,7 +32,6 @@ export interface Contact {
   providedIn: 'root',
 })
 export class Supabase {
-
   /** Supabase project URL. */
   private supabaseUrl = 'https://dcdzlseyrzccbjvinfni.supabase.co';
 
@@ -51,10 +50,10 @@ export class Supabase {
   }
 
   /** Only real authenticated user */
-isAuthenticated = computed(() => this.currentUser() !== null);
+  isAuthenticated = computed(() => this.currentUser() !== null);
 
-/** Real user OR guest */
-hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
+  /** Real user OR guest */
+  hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
 
   /** Set guest status and persist to localStorage */
   private setGuestStatus(value: boolean): void {
@@ -75,7 +74,7 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     return {
       id: user.id,
       email: user.email,
-      display_name: user.user_metadata?.['display_name'] || null
+      display_name: user.user_metadata?.['display_name'] || null,
     };
   });
 
@@ -89,18 +88,15 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   authLoading = signal<boolean>(false);
 
   /** Public anon key for Supabase API access. */
-  private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZHpsc2V5cnpjY2JqdmluZm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMTY0NDAsImV4cCI6MjA4ODc5MjQ0MH0.lWlmDl3mTjv1f6UCdB0XLaZa0UOUchGuGF2XrXp3mK8';
+  private supabaseKey =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZHpsc2V5cnpjY2JqdmluZm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMTY0NDAsImV4cCI6MjA4ODc5MjQ0MH0.lWlmDl3mTjv1f6UCdB0XLaZa0UOUchGuGF2XrXp3mK8';
 
   /** Initialized Supabase client instance. */
-  supabase: SupabaseClient = createClient(
-    this.supabaseUrl,
-    this.supabaseKey
-  );
+  supabase: SupabaseClient = createClient(this.supabaseUrl, this.supabaseKey);
 
   constructor(private router: Router) {
     this.initAuth();
   }
-
 
   /**
    * Initializes authentication by checking the current session
@@ -108,7 +104,9 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
    * If "Remember Me" was not checked, signs out existing sessions on page load.
    */
   private async initAuth() {
-    const { data: { session } } = await this.supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await this.supabase.auth.getSession();
 
     const shouldClearSession = await this.handleSessionPersistence(session);
     if (shouldClearSession) return;
@@ -120,7 +118,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
 
     this.setupAuthStateListener();
   }
-
 
   /**
    * Handles session persistence based on "Remember Me" preference.
@@ -144,7 +141,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     return false;
   }
 
-
   /**
    * Sets up auth state change listener.
    */
@@ -156,7 +152,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
       }
     });
   }
-
 
   /**
    * Signs in a user with email and password.
@@ -176,7 +171,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     return success;
   }
 
-
   /**
    * Stores the remember me preference in session storage.
    *
@@ -194,7 +188,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     }
   }
 
-
   /**
    * Performs the actual sign-in API call.
    *
@@ -205,7 +198,7 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   private async performSignIn(email: string, password: string): Promise<boolean> {
     const { data, error } = await this.supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
 
     if (error) {
@@ -217,7 +210,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     this.setGuestStatus(false);
     return true;
   }
-
 
   /**
    * Registers a new user with email, password, and optional display name.
@@ -233,8 +225,8 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
       email,
       password,
       options: {
-        data: { display_name: displayName }
-      }
+        data: { display_name: displayName },
+      },
     });
     this.authLoading.set(false);
     if (error) {
@@ -244,7 +236,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     return true;
   }
 
-
   /** Signs out the current user and navigates to the login page. */
   async signOut() {
     await this.supabase.auth.signOut({ scope: 'local' });
@@ -252,7 +243,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     this.setGuestStatus(false);
     this.router.navigate(['/login']);
   }
-
 
   /** Enables guest mode without requiring authentication. Seeds demo data. */
   guestLogin() {
@@ -293,10 +283,7 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     }
 
     this.loading.set(true);
-    const { data, error } = await this.supabase
-      .from('contacts')
-      .select('*')
-      .order('name');
+    const { data, error } = await this.supabase.from('contacts').select('*').order('name');
     this.loading.set(false);
 
     if (error) {
@@ -305,12 +292,10 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     }
 
     const existing = data || [];
-    const missing = DEMO_CONTACTS.filter(
-      dc => !existing.some(e => e.email === dc.email)
-    );
+    const missing = DEMO_CONTACTS.filter((dc) => !existing.some((e) => e.email === dc.email));
 
     if (missing.length > 0) {
-      const payload = missing.map(c => ({ name: c.name, email: c.email, phone: c.phone }));
+      const payload = missing.map((c) => ({ name: c.name, email: c.email, phone: c.phone }));
       await this.supabase.from('contacts').insert(payload);
       const { data: refreshed } = await this.supabase.from('contacts').select('*').order('name');
       this.contacts.set(refreshed || []);
@@ -320,7 +305,6 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     this.contacts.set(existing);
   }
 
-
   /**
    * Inserts a new contact into the database and refreshes the contact list.
    * In guest mode, adds to in-memory signal only.
@@ -329,21 +313,18 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
   async addContact(contact: Contact) {
     if (this.isGuest()) {
       const newContact: Contact = { ...contact, id: 'demo-c-' + Date.now() };
-      this.contacts.update(list =>
-        [...list, newContact].sort((a, b) => a.name.localeCompare(b.name))
+      this.contacts.update((list) =>
+        [...list, newContact].sort((a, b) => a.name.localeCompare(b.name)),
       );
       return;
     }
 
-    const { error } = await this.supabase
-      .from('contacts')
-      .insert([contact]);
+    const { error } = await this.supabase.from('contacts').insert([contact]);
 
     if (error) throw error;
 
     await this.getContacts();
   }
-
 
   /**
    * Updates an existing contact in the database and refreshes the contact list.
@@ -354,34 +335,31 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
    */
   async updateContact(id: string, contact: Partial<Contact>) {
     if (this.isGuest()) {
-      this.contacts.update(list =>
-        list.map(c => c.id === id ? { ...c, ...contact } : c)
-          .sort((a, b) => a.name.localeCompare(b.name))
+      this.contacts.update((list) =>
+        list
+          .map((c) => (c.id === id ? { ...c, ...contact } : c))
+          .sort((a, b) => a.name.localeCompare(b.name)),
       );
       if (this.selectedContact()?.id === id) {
-        const updated = this.contacts().find(c => c.id === id);
+        const updated = this.contacts().find((c) => c.id === id);
         if (updated) this.selectedContact.set(updated);
       }
       return;
     }
 
-    const { error } = await this.supabase
-      .from('contacts')
-      .update(contact)
-      .eq('id', id);
+    const { error } = await this.supabase.from('contacts').update(contact).eq('id', id);
 
     if (error) throw error;
 
     await this.getContacts();
 
     if (this.selectedContact()?.id === id) {
-      const updatedContact = this.contacts().find(c => c.id === id);
+      const updatedContact = this.contacts().find((c) => c.id === id);
       if (updatedContact) {
         this.selectedContact.set(updatedContact);
       }
     }
   }
-
 
   /**
    * Deletes a contact by ID, clears the selection, and refreshes the contact list.
@@ -390,15 +368,12 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
    */
   async deleteContact(id: string) {
     if (this.isGuest()) {
-      this.contacts.update(list => list.filter(c => c.id !== id));
+      this.contacts.update((list) => list.filter((c) => c.id !== id));
       this.selectedContact.set(null);
       return;
     }
 
-    const { error } = await this.supabase
-      .from('contacts')
-      .delete()
-      .eq('id', id);
+    const { error } = await this.supabase.from('contacts').delete().eq('id', id);
 
     if (error) throw error;
 
@@ -406,14 +381,10 @@ hasAppAccess = computed(() => this.currentUser() !== null || this.isGuest());
     await this.getContacts();
   }
 
-
   async updateTaskStatus(taskId: string, status: string) {
     if (this.isGuest()) return;
 
-    const { error } = await this.supabase
-      .from('tasks')
-      .update({ status })
-      .eq('id', taskId);
+    const { error } = await this.supabase.from('tasks').update({ status }).eq('id', taskId);
 
     if (error) throw error;
   }

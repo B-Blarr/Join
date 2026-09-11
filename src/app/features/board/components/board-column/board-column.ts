@@ -46,7 +46,6 @@ import { TaskCard } from '../task-card/task-card';
   styleUrl: './board-column.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class BoardColumn implements OnInit, OnDestroy {
   @Input() title = '';
   @Input() tasks: Task[] = [];
@@ -82,7 +81,7 @@ export class BoardColumn implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.bpSubscription = this.breakpointObserver
       .observe('(max-width: 1023px)')
-      .subscribe(result => {
+      .subscribe((result) => {
         this.isMobile = result.matches;
         this.cdr.markForCheck();
       });
@@ -115,7 +114,6 @@ export class BoardColumn implements OnInit, OnDestroy {
     this.isDragOver = false;
     this.cdr.markForCheck();
   }
-
 
   /**
    * Reorders a task within the same column after an in-column drag & drop.

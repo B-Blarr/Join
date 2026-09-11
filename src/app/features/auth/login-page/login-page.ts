@@ -13,7 +13,6 @@ import { Supabase } from '../../../supabase';
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
 })
-
 export class LoginPage {
   supabase = inject(Supabase);
   router = inject(Router);

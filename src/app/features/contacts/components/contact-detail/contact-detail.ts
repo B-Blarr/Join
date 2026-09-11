@@ -26,9 +26,13 @@ export class ContactDetail {
    * @returns Up to two uppercase initials (e.g. "JD" for "John Doe").
    */
   getInitials(name: string): string {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   }
-
 
   /**
    * Returns a consistent avatar color based on the contact's name.
@@ -45,7 +49,6 @@ export class ContactDetail {
     return avatarColors[index];
   }
 
-
   /**
    * Opens the contact form dialog in edit mode for the currently selected contact.
    */
@@ -53,7 +56,6 @@ export class ContactDetail {
     this.supabase.editMode.set(true);
     this.supabase.showForm.set(true);
   }
-
 
   /**
    * Deletes the currently selected contact from the database.
@@ -68,7 +70,6 @@ export class ContactDetail {
       }
     }
   }
-
 
   /**
    * Formats a raw phone number string for display with spaces.
@@ -87,14 +88,12 @@ export class ContactDetail {
     return cleaned.match(/.{1,4}/g)?.join(' ') || cleaned;
   }
 
-
   /**
    * Emits the closeDetail event to hide the detail view on mobile.
    */
   onClose() {
     this.closeDetail.emit();
   }
-
 
   /**
    * Toggles the floating action button menu visibility.
@@ -105,14 +104,12 @@ export class ContactDetail {
     this.fabOpen = !this.fabOpen;
   }
 
-
   /**
    * Closes the floating action button menu.
    */
   closeFab() {
     this.fabOpen = false;
   }
-
 
   /**
    * Closes the FAB menu when clicking anywhere outside of it.

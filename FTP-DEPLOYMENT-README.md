@@ -8,6 +8,7 @@
 Your Angular application has been built for production with **Hash Location Strategy** and is ready for FTP deployment.
 
 ### 🆕 Latest Updates Included:
+
 - ✅ **Hash Location Strategy enabled** - URLs use `#` (works on ANY server, no .htaccess needed!)
 - ✅ **Add Task Page** - Full task creation functionality with form validation
 - ✅ **Success Messages** - Visual feedback when tasks are created (2-second display with animation)
@@ -24,6 +25,7 @@ Your Angular application has been built for production with **Hash Location Stra
 ### 🔗 URL Format with Hash Location:
 
 Your URLs will look like:
+
 - Home: `http://join-4-1226.developerakademie.net/#/`
 - Login: `http://join-4-1226.developerakademie.net/#/login`
 - Signup: `http://join-4-1226.developerakademie.net/#/signup`
@@ -34,6 +36,7 @@ Your URLs will look like:
 ### 📁 Files Location
 
 All deployment files are located in:
+
 ```
 dist/join-project/browser/
 ```
@@ -61,6 +64,7 @@ dist/join-project/browser/
 - **Apache Web Server**: The included `.htaccess` file is for Apache servers. If your server uses Nginx, you'll need a different configuration.
 
 - **Base Href**: If your app is NOT in the root directory (e.g., `example.com/subfolder/`), rebuild with:
+
   ```bash
   ng build --base-href /subfolder/
   ```
@@ -70,6 +74,7 @@ dist/join-project/browser/
 ### 🔒 Supabase Configuration
 
 Make sure your Supabase project settings allow requests from your domain:
+
 1. Go to Supabase Dashboard → Settings → API
 2. Add your domain to the allowed URLs
 3. Update CORS settings if needed
@@ -77,6 +82,7 @@ Make sure your Supabase project settings allow requests from your domain:
 ### ⚠️ Build Warnings (Non-Critical)
 
 The following warnings were generated but won't affect functionality:
+
 - Initial bundle: 742.70 kB (within budget - optimized with compression)
 - add-task-page.scss: 17.43 kB (2.43 kB over budget)
 - add-task-dialog.scss: 16.62 kB (1.62 kB over budget)
@@ -105,6 +111,7 @@ These are size warnings for component styles. The app will work perfectly. The f
 ### 📊 File Structure on Server
 
 Your server's public directory should look like:
+
 ```
 public_html/
 ├── index.html
@@ -121,6 +128,7 @@ public_html/
 ### 🔄 For Future Updates
 
 When you need to update the app:
+
 1. Run `npm run build` again
 2. Upload the new files from `dist/join-project/browser/`
 3. Overwrite existing files on the server
@@ -129,30 +137,39 @@ When you need to update the app:
 ### 🆘 Troubleshooting
 
 **Problem**: Routes show 404 on refresh
+
 - **Solution**: This should NOT happen with hash routing! If it does, verify all files were uploaded correctly.
 
 **Problem**: URLs don't have `#` in them
+
 - **Solution**: Make sure you uploaded the latest build files. The new build uses hash location strategy.
 
 **Problem**: App doesn't load
+
 - **Solution**: Check browser console for errors, verify all files were uploaded correctly
 
 **Problem**: Supabase connection errors
+
 - **Solution**: Verify your domain is allowed in Supabase Dashboard → Settings → API
 
 **Problem**: Form validation not working
+
 - **Solution**: Clear browser cache and reload (Ctrl+Shift+R)
 
 **Problem**: Contact detail doesn't update after editing
+
 - **Solution**: This should be fixed in the latest build. Clear cache and try again.
 
 **Problem**: Styles not loading correctly
+
 - **Solution**: Make sure `styles-J5L2ZLGQ.css` was uploaded correctly
 
 **Problem**: Success message doesn't appear when creating tasks
+
 - **Solution**: Clear browser cache (Ctrl+Shift+R) and verify all files were uploaded
 
 **Problem**: Search results not showing "No results" message
+
 - **Solution**: Verify latest build files were uploaded, clear cache
 
 ---
@@ -165,6 +182,7 @@ When you need to update the app:
 Connect to your FTP server and upload all files from the `browser` folder to start using your Join Kanban application!
 
 **After upload, access your app at:**
+
 - `http://join-4-1226.developerakademie.net/` (redirects to `#/login`)
 - Or directly: `http://join-4-1226.developerakademie.net/#/login`
 

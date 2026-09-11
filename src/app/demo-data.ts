@@ -8,13 +8,48 @@ function futureDate(daysFromNow: number): string {
 }
 
 export const DEMO_CONTACTS: Contact[] = [
-  { id: 'demo-c-1', name: 'Anna Wagner',   email: 'anna.wagner@example.com',   phone: '+49 1511 2345 6781' },
-  { id: 'demo-c-2', name: 'David Braun',   email: 'david.braun@example.com',   phone: '+49 1511 2345 6782' },
-  { id: 'demo-c-3', name: 'Elena Schmidt', email: 'elena.schmidt@example.com', phone: '+49 1511 2345 6783' },
-  { id: 'demo-c-4', name: 'Luca Bauer',    email: 'luca.bauer@example.com',    phone: '+49 1511 2345 6784' },
-  { id: 'demo-c-5', name: 'Max Hoffmann',  email: 'max.hoffmann@example.com',  phone: '+49 1511 2345 6785' },
-  { id: 'demo-c-6', name: 'Sofia Müller',  email: 'sofia.mueller@example.com', phone: '+49 1511 2345 6786' },
-  { id: 'demo-c-7', name: 'Tom Fischer',   email: 'tom.fischer@example.com',   phone: '+49 1511 2345 6787' },
+  {
+    id: 'demo-c-1',
+    name: 'Anna Wagner',
+    email: 'anna.wagner@example.com',
+    phone: '+49 1511 2345 6781',
+  },
+  {
+    id: 'demo-c-2',
+    name: 'David Braun',
+    email: 'david.braun@example.com',
+    phone: '+49 1511 2345 6782',
+  },
+  {
+    id: 'demo-c-3',
+    name: 'Elena Schmidt',
+    email: 'elena.schmidt@example.com',
+    phone: '+49 1511 2345 6783',
+  },
+  {
+    id: 'demo-c-4',
+    name: 'Luca Bauer',
+    email: 'luca.bauer@example.com',
+    phone: '+49 1511 2345 6784',
+  },
+  {
+    id: 'demo-c-5',
+    name: 'Max Hoffmann',
+    email: 'max.hoffmann@example.com',
+    phone: '+49 1511 2345 6785',
+  },
+  {
+    id: 'demo-c-6',
+    name: 'Sofia Müller',
+    email: 'sofia.mueller@example.com',
+    phone: '+49 1511 2345 6786',
+  },
+  {
+    id: 'demo-c-7',
+    name: 'Tom Fischer',
+    email: 'tom.fischer@example.com',
+    phone: '+49 1511 2345 6787',
+  },
 ];
 
 export function getDemoTasks(): Task[] {
@@ -45,9 +80,7 @@ export function getDemoTasks(): Task[] {
       status: 'todo',
       type: 'Technical Task',
       priority: 'medium',
-      assignees: [
-        { id: 'demo-c-5', initials: 'MH', name: 'Max Hoffmann' },
-      ],
+      assignees: [{ id: 'demo-c-5', initials: 'MH', name: 'Max Hoffmann' }],
       subtasks: [
         { id: 'demo-s-4', title: 'Define entities and relations', done: false },
         { id: 'demo-s-5', title: 'Write migration scripts', done: false },
@@ -81,9 +114,7 @@ export function getDemoTasks(): Task[] {
       status: 'inProgress',
       type: 'Technical Task',
       priority: 'low',
-      assignees: [
-        { id: 'demo-c-7', initials: 'TF', name: 'Tom Fischer' },
-      ],
+      assignees: [{ id: 'demo-c-7', initials: 'TF', name: 'Tom Fischer' }],
       subtasks: [],
       createdAt: new Date().toISOString(),
       dueDate: futureDate(21),
@@ -100,9 +131,9 @@ export function getDemoTasks(): Task[] {
         { id: 'demo-c-6', initials: 'SM', name: 'Sofia Müller' },
       ],
       subtasks: [
-        { id: 'demo-s-9',  title: 'Auth endpoints',   done: true },
-        { id: 'demo-s-10', title: 'Data endpoints',   done: true },
-        { id: 'demo-s-11', title: 'Error responses',  done: false },
+        { id: 'demo-s-9', title: 'Auth endpoints', done: true },
+        { id: 'demo-s-10', title: 'Data endpoints', done: true },
+        { id: 'demo-s-11', title: 'Error responses', done: false },
       ],
       createdAt: new Date().toISOString(),
       dueDate: futureDate(3),
@@ -114,9 +145,7 @@ export function getDemoTasks(): Task[] {
       status: 'awaitFeedback',
       type: 'Technical Task',
       priority: 'low',
-      assignees: [
-        { id: 'demo-c-4', initials: 'LB', name: 'Luca Bauer' },
-      ],
+      assignees: [{ id: 'demo-c-4', initials: 'LB', name: 'Luca Bauer' }],
       subtasks: [],
       createdAt: new Date().toISOString(),
       dueDate: futureDate(5),
@@ -134,7 +163,7 @@ export function getDemoTasks(): Task[] {
       ],
       subtasks: [
         { id: 'demo-s-12', title: 'Configure ESLint and Prettier', done: true },
-        { id: 'demo-s-13', title: 'Set up CI/CD pipeline',         done: true },
+        { id: 'demo-s-13', title: 'Set up CI/CD pipeline', done: true },
       ],
       createdAt: new Date().toISOString(),
     },
@@ -145,13 +174,11 @@ export function getDemoTasks(): Task[] {
       status: 'done',
       type: 'User Story',
       priority: 'medium',
-      assignees: [
-        { id: 'demo-c-3', initials: 'ES', name: 'Elena Schmidt' },
-      ],
+      assignees: [{ id: 'demo-c-3', initials: 'ES', name: 'Elena Schmidt' }],
       subtasks: [
         { id: 'demo-s-14', title: 'Login and onboarding', done: true },
-        { id: 'demo-s-15', title: 'Board view',           done: true },
-        { id: 'demo-s-16', title: 'Contacts view',        done: true },
+        { id: 'demo-s-15', title: 'Board view', done: true },
+        { id: 'demo-s-16', title: 'Contacts view', done: true },
       ],
       createdAt: new Date().toISOString(),
     },
