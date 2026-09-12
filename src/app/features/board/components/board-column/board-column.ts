@@ -46,7 +46,6 @@ import { TaskCard } from '../task-card/task-card';
   styleUrl: './board-column.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class BoardColumn implements OnInit, OnDestroy {
   @Input() title = '';
   @Input() tasks: Task[] = [];
@@ -65,7 +64,7 @@ export class BoardColumn implements OnInit, OnDestroy {
   @Output() menuToggleGlobal = new EventEmitter<string>();
   @ViewChild(CdkDropList) dropList!: CdkDropList<Task[]>;
   @ViewChildren('taskElement') taskElements!: QueryList<ElementRef>;
-  @ViewChild('previewContainer', { read: TemplateRef }) previewTemplate!: TemplateRef<any>;
+  @ViewChild('previewContainer', { read: TemplateRef }) previewTemplate!: TemplateRef<unknown>;
 
   private supabase = inject(Supabase);
   private cdr = inject(ChangeDetectorRef);
@@ -76,13 +75,13 @@ export class BoardColumn implements OnInit, OnDestroy {
   isDragOver = false;
   isDragging = false;
   draggedTaskIndex = -1;
-  previewContainer: TemplateRef<any> | string = 'body';
+  previewContainer: TemplateRef<unknown> | string = 'body';
   draggedElement: ElementRef | null = null;
 
   ngOnInit(): void {
     this.bpSubscription = this.breakpointObserver
       .observe('(max-width: 1023px)')
-      .subscribe(result => {
+      .subscribe((result) => {
         this.isMobile = result.matches;
         this.cdr.markForCheck();
       });
@@ -115,7 +114,6 @@ export class BoardColumn implements OnInit, OnDestroy {
     this.isDragOver = false;
     this.cdr.markForCheck();
   }
-
 
   /**
    * Reorders a task within the same column after an in-column drag & drop.
@@ -201,10 +199,8 @@ export class BoardColumn implements OnInit, OnDestroy {
    * Called when dragging starts.
    * Used to prevent click selection while dragging.
    *
-   * @param event Drag start event (type depends on template binding).
-   * @returns void
    */
-  onDragStarted(event: any): void {
+  onDragStarted(): void {
     this.isDragging = true;
     this.cdr.markForCheck();
   }
@@ -212,10 +208,8 @@ export class BoardColumn implements OnInit, OnDestroy {
   /**
    * Called when dragging ends.
    *
-   * @param event Drag end event (type depends on template binding).
-   * @returns void
    */
-  onDragEnded(event: any): void {
+  onDragEnded(): void {
     this.isDragging = false;
     this.cdr.markForCheck();
   }

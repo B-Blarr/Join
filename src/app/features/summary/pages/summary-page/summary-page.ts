@@ -2,6 +2,14 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../../supabase';
+import { Status, TaskPriority } from '../../../board/models/task.model';
+
+/** Raw shape of the `tasks` rows this page reads. The board model renames these to camelCase. */
+interface TaskRow {
+  status: Status;
+  priority: TaskPriority;
+  due_at: string | null;
+}
 
 /** Dashboard summary page showing an overview of tasks and project status. */
 @Component({
@@ -26,7 +34,6 @@ export class SummaryPage implements OnInit {
     await this.loadTaskMetrics();
   }
 
-
   /**
    * Loads the current user's name from user metadata.
    */
@@ -45,7 +52,6 @@ export class SummaryPage implements OnInit {
     }
   }
 
-
   /**
    * Capitalizes the first letter of each word.
    */
@@ -55,7 +61,6 @@ export class SummaryPage implements OnInit {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
   }
-
 
   /**
    * Loads all tasks and updates the dashboard metrics signals.
@@ -71,59 +76,50 @@ export class SummaryPage implements OnInit {
     this.findUpcomingDeadline(tasks);
   }
 
-
-
   /**
    * Fetches all tasks from the database.
    *
    * @returns Array of tasks or null if error.
    */
   private async fetchTasks() {
-    const { data: tasks, error } = await this.supabase.supabase
-      .from('tasks')
-      .select('*');
+    const { data: tasks, error } = await this.supabase.supabase.from('tasks').select('*');
 
     return error ? null : tasks;
   }
-
-
 
   /**
    * Calculates and updates task count signals.
    *
    * @param tasks Array of tasks.
    */
-  private calculateTaskCounts(tasks: any[]) {
-    this.toDoCount.set(tasks.filter(t => t.status === 'todo').length);
-    this.doneCount.set(tasks.filter(t => t.status === 'done').length);
-    this.urgentCount.set(tasks.filter(t => t.priority === 'high').length);
+  private calculateTaskCounts(tasks: TaskRow[]) {
+    this.toDoCount.set(tasks.filter((t) => t.status === 'todo').length);
+    this.doneCount.set(tasks.filter((t) => t.status === 'done').length);
+    this.urgentCount.set(tasks.filter((t) => t.priority === 'high').length);
     this.tasksInBoard.set(tasks.length);
-    this.tasksInProgress.set(tasks.filter(t => t.status === 'inProgress').length);
-    this.awaitingFeedback.set(tasks.filter(t => t.status === 'awaitFeedback').length);
+    this.tasksInProgress.set(tasks.filter((t) => t.status === 'inProgress').length);
+    this.awaitingFeedback.set(tasks.filter((t) => t.status === 'awaitFeedback').length);
   }
-
-
 
   /**
    * Finds and sets the nearest upcoming deadline.
    *
    * @param tasks Array of tasks.
    */
-  private findUpcomingDeadline(tasks: any[]) {
+  private findUpcomingDeadline(tasks: TaskRow[]) {
     const tasksWithDates = tasks
-      .filter(t => t.due_at)
-      .map(t => ({ ...t, dueDate: new Date(t.due_at!) }))
+      .filter((t) => t.due_at)
+      .map((t) => ({ ...t, dueDate: new Date(t.due_at!) }))
       .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const upcomingTask = tasksWithDates.find(t => t.dueDate >= today);
+    const upcomingTask = tasksWithDates.find((t) => t.dueDate >= today);
     if (upcomingTask) {
       this.upcomingDeadline.set(upcomingTask.due_at!);
     }
   }
-
 
   /**
    * Returns greeting based on current time of day.
@@ -135,7 +131,6 @@ export class SummaryPage implements OnInit {
     if (hour < 18) return `Good afternoon${suffix}`;
     return `Good evening${suffix}`;
   }
-
 
   /**
    * Check if current user is a guest.

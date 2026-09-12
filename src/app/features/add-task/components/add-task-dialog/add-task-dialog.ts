@@ -18,7 +18,7 @@ import {
   AbstractControl,
   ValidationErrors,
   Validators,
-  ValidatorFn
+  ValidatorFn,
 } from '@angular/forms';
 
 import { Supabase, Contact } from '../../../../supabase';

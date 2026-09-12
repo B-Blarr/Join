@@ -28,12 +28,13 @@ export class GreetingPage implements OnInit {
     }, 3000);
   }
 
-
   /**
    * Loads the current user's name from profiles table.
    */
   async loadUserName() {
-    const { data: { user } } = await this.supabase.supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await this.supabase.supabase.auth.getUser();
     if (user) {
       const { data: profile } = await this.supabase.supabase
         .from('profiles')
@@ -46,17 +47,15 @@ export class GreetingPage implements OnInit {
     }
   }
 
-
   /**
    * Capitalizes the first letter of each word.
    */
   private capitalizeWords(text: string): string {
     return text
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
   }
-
 
   /**
    * Returns greeting based on current time of day.
@@ -68,7 +67,6 @@ export class GreetingPage implements OnInit {
     if (hour < 18) return `Good afternoon${suffix}`;
     return `Good evening${suffix}`;
   }
-
 
   /**
    * Check if current user is a guest.

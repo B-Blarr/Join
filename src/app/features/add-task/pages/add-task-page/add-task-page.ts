@@ -43,7 +43,6 @@ interface Subtask {
   templateUrl: './add-task-page.html',
   styleUrl: './add-task-page.scss',
 })
-
 export class AddTaskPage implements OnInit {
   @ViewChild('searchInput') searchInputRef!: ElementRef<HTMLInputElement>;
 

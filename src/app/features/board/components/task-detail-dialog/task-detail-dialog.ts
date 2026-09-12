@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Task, TaskPriority } from '../../models/task.model';
+import { Task, TaskPriority, Assignee } from '../../models/task.model';
 import { Supabase, Contact } from '../../../../supabase';
 import { avatarColors } from '../../../contacts/components/contact-list/contact-list';
 import { TaskStore } from '../../services/task-store';
@@ -135,7 +135,7 @@ export class TaskDetailDialog implements OnInit {
     title: string,
     description: string,
     dueDate: string,
-    assignees: any[],
+    assignees: Assignee[],
   ): Partial<Task> {
     const updates: Partial<Task> = {
       title,

@@ -1,5 +1,11 @@
 import { Component, inject, signal, effect } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Supabase, Contact } from '../../../../supabase';
 import { ContactsPage } from '../../pages/contacts-page/contacts-page';
 
@@ -90,14 +96,26 @@ export class ContactFormDialog {
 
   /** Reactive form group with validated name, email, and phone controls. */
   contactForm = this.fb.group({
-    name: ['', [Validators.required, Validators.maxLength(20), noNumbersValidator, twoWordsValidator]],
-    email: ['', [Validators.required, Validators.maxLength(30), Validators.email, strictEmailValidator]],
-    phone: ['', [Validators.required, Validators.maxLength(20), phoneValidator]]
+    name: [
+      '',
+      [Validators.required, Validators.maxLength(20), noNumbersValidator, twoWordsValidator],
+    ],
+    email: [
+      '',
+      [Validators.required, Validators.maxLength(30), Validators.email, strictEmailValidator],
+    ],
+    phone: ['', [Validators.required, Validators.maxLength(20), phoneValidator]],
   });
 
-  get nameControl() { return this.contactForm.get('name')!; }
-  get emailControl() { return this.contactForm.get('email')!; }
-  get phoneControl() { return this.contactForm.get('phone')!; }
+  get nameControl() {
+    return this.contactForm.get('name')!;
+  }
+  get emailControl() {
+    return this.contactForm.get('email')!;
+  }
+  get phoneControl() {
+    return this.contactForm.get('phone')!;
+  }
 
   /**
    * Returns the appropriate validation error message for a given form control.
@@ -109,7 +127,8 @@ export class ContactFormDialog {
     if (!control || !control.errors) return '';
 
     const errors = control.errors;
-    if (errors['required']) return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} is required`;
+    if (errors['required'])
+      return `${controlName.charAt(0).toUpperCase() + controlName.slice(1)} is required`;
     if (errors['maxlength']) {
       const maxLength = errors['maxlength'].requiredLength;
       return `Maximum ${maxLength} characters allowed`;
@@ -122,7 +141,6 @@ export class ContactFormDialog {
     if (errors['phoneMin']) return errors['phoneMin'];
     return '';
   }
-
 
   private avatarColors = [
     '#FF7A00',
@@ -151,7 +169,6 @@ export class ContactFormDialog {
       .slice(0, 2);
   }
 
-
   /**
    * Returns a consistent avatar color based on the contact's name.
    * @param name - The full name of the contact.
@@ -165,7 +182,6 @@ export class ContactFormDialog {
     const index = Math.abs(hash) % this.avatarColors.length;
     return this.avatarColors[index];
   }
-
 
   /**
    * Initializes the form effect: populates fields in edit mode
@@ -181,7 +197,7 @@ export class ContactFormDialog {
           this.contactForm.patchValue({
             name: contact.name,
             email: contact.email,
-            phone: this.formatPhoneInput(contact.phone || '')
+            phone: this.formatPhoneInput(contact.phone || ''),
           });
         } else {
           this.contactForm.reset();
@@ -191,7 +207,6 @@ export class ContactFormDialog {
       }
     });
   }
-
 
   /**
    * Closes the form dialog with a closing animation and resets all fields.
@@ -206,7 +221,6 @@ export class ContactFormDialog {
     }, 400);
   }
 
-
   /**
    * Validates the form, then creates or updates the contact.
    * Shows a saving indicator and closes the form on success.
@@ -218,21 +232,19 @@ export class ContactFormDialog {
     try {
       await this.createOrUpdateContact();
       this.closeForm();
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error:', err);
     } finally {
       this.saving.set(false);
     }
   }
 
-
   /** Marks all form controls as touched to trigger validation messages. */
   private markAllFieldsAsTouched() {
-    Object.keys(this.contactForm.controls).forEach(key => {
+    Object.keys(this.contactForm.controls).forEach((key) => {
       this.contactForm.get(key)?.markAsTouched();
     });
   }
-
 
   /**
    * Extracts and sanitizes the form values into a Contact object.
@@ -247,7 +259,6 @@ export class ContactFormDialog {
     };
   }
 
-
   /**
    * Creates a new contact or updates an existing one based on the current edit mode.
    */
@@ -261,7 +272,6 @@ export class ContactFormDialog {
       this.contactPage.disappearSwitch(true);
     }
   }
-
 
   /**
    * Formats a phone number string for display with grouped digits.
@@ -282,7 +292,6 @@ export class ContactFormDialog {
     return cleaned.match(/.{1,4}/g)?.join(' ') || cleaned;
   }
 
-
   /**
    * Updates the phone form control with the formatted value.
    * @param value - The raw input value from the phone field.
@@ -291,7 +300,6 @@ export class ContactFormDialog {
     const formatted = this.formatPhoneInput(value);
     this.phoneControl.setValue(formatted, { emitEvent: false });
   }
-
 
   /**
    * Prevents non-numeric characters (except '+') from being typed in the phone field.
@@ -304,13 +312,12 @@ export class ContactFormDialog {
     }
   }
 
-
   /**
    * Deletes the currently selected contact from the database.
    */
   async deleteContact() {
     const contact = this.supabase.selectedContact();
-    if (contact?.id ) {
+    if (contact?.id) {
       await this.supabase.deleteContact(contact.id);
     }
   }

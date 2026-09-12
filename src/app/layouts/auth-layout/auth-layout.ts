@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -13,6 +13,8 @@ import { filter } from 'rxjs';
   styleUrl: './auth-layout.scss',
 })
 export class AuthLayout {
+  private router = inject(Router);
+
   /** Whether the current route is the signup page. */
   isSignupPage = false;
 
@@ -20,12 +22,12 @@ export class AuthLayout {
    * Subscribes to router navigation events to track which auth page is active.
    * @param router - The Angular Router instance.
    */
-  constructor(private router: Router) {
+  constructor() {
     this.updateIsSignupPage();
-    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() =>
-      this.updateIsSignupPage());
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => this.updateIsSignupPage());
   }
-
 
   /** Updates the isSignupPage flag based on the current URL. */
   private updateIsSignupPage() {

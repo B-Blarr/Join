@@ -14,6 +14,4 @@ import { Sidebar } from '../../shared/components/sidebar/sidebar';
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
 })
-export class AppLayout {
-
-}
+export class AppLayout {}

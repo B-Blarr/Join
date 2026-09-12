@@ -49,12 +49,10 @@ export class ContactList implements OnInit {
     return groups;
   });
 
-
   /** Fetches all contacts from the database on component initialization. */
   ngOnInit() {
     this.supabase.getContacts();
   }
-
 
   /**
    * Sets the selected contact and dispatches a custom event on mobile
@@ -69,16 +67,19 @@ export class ContactList implements OnInit {
     }
   }
 
-
   /**
    * Extracts the first two initials from a full name.
    * @param name - The full name of the contact.
    * @returns Up to two uppercase initials (e.g. "JD" for "John Doe").
    */
   getInitials(name: string): string {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   }
-
 
   /**
    * Returns a consistent avatar color based on the contact's name.
@@ -95,7 +96,6 @@ export class ContactList implements OnInit {
     return avatarColors[index];
   }
 
-
   /**
    * Truncates a contact name to a maximum of 20 characters.
    *
@@ -103,8 +103,6 @@ export class ContactList implements OnInit {
    * @returns The original name if 20 characters or fewer, otherwise the first 18 characters followed by '...'.
    */
   limitName(name: string): string {
-    return name.length > 20
-      ? name.slice(0, 18) + "..."
-      : name;
+    return name.length > 20 ? name.slice(0, 18) + '...' : name;
   }
 }
