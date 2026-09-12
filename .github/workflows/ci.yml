@@ -1,0 +1,37 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  frontend:
+    name: Angular
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # !cancelled() keeps the remaining checks running after an earlier
+      # failure, so one push reports every problem instead of only the first.
+      - name: Check formatting
+        if: '!cancelled()'
+        run: npm run format:check
+
+      - name: Build
+        if: '!cancelled()'
+        run: npm run build
