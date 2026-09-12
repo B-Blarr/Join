@@ -64,7 +64,7 @@ export class BoardColumn implements OnInit, OnDestroy {
   @Output() menuToggleGlobal = new EventEmitter<string>();
   @ViewChild(CdkDropList) dropList!: CdkDropList<Task[]>;
   @ViewChildren('taskElement') taskElements!: QueryList<ElementRef>;
-  @ViewChild('previewContainer', { read: TemplateRef }) previewTemplate!: TemplateRef<any>;
+  @ViewChild('previewContainer', { read: TemplateRef }) previewTemplate!: TemplateRef<unknown>;
 
   private supabase = inject(Supabase);
   private cdr = inject(ChangeDetectorRef);
@@ -75,7 +75,7 @@ export class BoardColumn implements OnInit, OnDestroy {
   isDragOver = false;
   isDragging = false;
   draggedTaskIndex = -1;
-  previewContainer: TemplateRef<any> | string = 'body';
+  previewContainer: TemplateRef<unknown> | string = 'body';
   draggedElement: ElementRef | null = null;
 
   ngOnInit(): void {
@@ -199,10 +199,8 @@ export class BoardColumn implements OnInit, OnDestroy {
    * Called when dragging starts.
    * Used to prevent click selection while dragging.
    *
-   * @param event Drag start event (type depends on template binding).
-   * @returns void
    */
-  onDragStarted(event: any): void {
+  onDragStarted(): void {
     this.isDragging = true;
     this.cdr.markForCheck();
   }
@@ -210,10 +208,8 @@ export class BoardColumn implements OnInit, OnDestroy {
   /**
    * Called when dragging ends.
    *
-   * @param event Drag end event (type depends on template binding).
-   * @returns void
    */
-  onDragEnded(event: any): void {
+  onDragEnded(): void {
     this.isDragging = false;
     this.cdr.markForCheck();
   }

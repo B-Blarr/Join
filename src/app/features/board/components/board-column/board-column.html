@@ -21,8 +21,8 @@
       cdkDrag
       [cdkDragDisabled]="isMobile"
       [cdkDragData]="task"
-      (cdkDragStarted)="onDragStarted($event)"
-      (cdkDragEnded)="onDragEnded($event)"
+      (cdkDragStarted)="onDragStarted()"
+      (cdkDragEnded)="onDragEnded()"
       (click)="onTaskSelected(task)"
       [ngClass]="{ dragging: draggedTaskIndex === i }"
       class="draggable-task"

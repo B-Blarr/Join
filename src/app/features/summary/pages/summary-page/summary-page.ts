@@ -2,6 +2,14 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Supabase } from '../../../../supabase';
+import { Status, TaskPriority } from '../../../board/models/task.model';
+
+/** Raw shape of the `tasks` rows this page reads. The board model renames these to camelCase. */
+interface TaskRow {
+  status: Status;
+  priority: TaskPriority;
+  due_at: string | null;
+}
 
 /** Dashboard summary page showing an overview of tasks and project status. */
 @Component({
@@ -84,7 +92,7 @@ export class SummaryPage implements OnInit {
    *
    * @param tasks Array of tasks.
    */
-  private calculateTaskCounts(tasks: any[]) {
+  private calculateTaskCounts(tasks: TaskRow[]) {
     this.toDoCount.set(tasks.filter((t) => t.status === 'todo').length);
     this.doneCount.set(tasks.filter((t) => t.status === 'done').length);
     this.urgentCount.set(tasks.filter((t) => t.priority === 'high').length);
@@ -98,7 +106,7 @@ export class SummaryPage implements OnInit {
    *
    * @param tasks Array of tasks.
    */
-  private findUpcomingDeadline(tasks: any[]) {
+  private findUpcomingDeadline(tasks: TaskRow[]) {
     const tasksWithDates = tasks
       .filter((t) => t.due_at)
       .map((t) => ({ ...t, dueDate: new Date(t.due_at!) }))

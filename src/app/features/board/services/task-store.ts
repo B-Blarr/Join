@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Task, Status, TaskPriority, TaskType } from '../models/task.model';
 import { Supabase } from '../../../supabase';
 import { getDemoTasks } from '../../../demo-data';
@@ -30,6 +30,8 @@ interface NewTaskData {
   providedIn: 'root',
 })
 export class TaskStore {
+  private supabase = inject(Supabase);
+
   /**
    * Funktionen sind nach JSDoc Standard dokumentiert:
    *
@@ -51,13 +53,6 @@ export class TaskStore {
   tasks = computed(() => this.tasksSignal());
 
   /**
-   * Creates a new TaskStore.
-   *
-   * @param supabase Supabase service wrapper used for DB operations and auth.
-   */
-  constructor(private supabase: Supabase) {}
-
-  /**
    * Loads all tasks from Supabase, maps them to the app model and updates the signal.
    * In guest mode, seeds demo tasks if not already loaded.
    *
@@ -66,7 +61,7 @@ export class TaskStore {
    * @param defer If `true`, defers the signal update via `setTimeout` to avoid
    *              Angular change-detection errors in dialog contexts.
    */
-  async loadTasks(defer: boolean = false): Promise<void> {
+  async loadTasks(defer = false): Promise<void> {
     if (this.supabase.isGuest()) {
       if (this.tasksSignal().length === 0) {
         this.updateTaskSignal(getDemoTasks(), defer);
@@ -163,7 +158,7 @@ export class TaskStore {
    *                     dialogs that need to avoid change-detection errors).
    * @returns The created {@link Task} mapped to the app model, or `null` on failure.
    */
-  async addTask(data: NewTaskData, skipReload: boolean = false): Promise<Task | null> {
+  async addTask(data: NewTaskData, skipReload = false): Promise<Task | null> {
     const { userId, isGuest } = this.resolveAuthContext();
     if (!this.canCreateTask(userId, isGuest)) return null;
 

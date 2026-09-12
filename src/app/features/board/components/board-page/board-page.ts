@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   AfterViewInit,
   inject,
   ChangeDetectorRef,
@@ -32,7 +31,7 @@ import { TaskStore } from '../../services/task-store';
   templateUrl: './board-page.html',
   styleUrl: './board-page.scss',
 })
-export class BoardPage implements OnInit, AfterViewInit {
+export class BoardPage implements AfterViewInit {
   private taskStore = inject(TaskStore);
   private cdr = inject(ChangeDetectorRef);
   dropListIds: string[] = ['todo', 'inProgress', 'awaitFeedback', 'done'];
@@ -44,7 +43,7 @@ export class BoardPage implements OnInit, AfterViewInit {
    * Column definitions for the board.
    * Each column corresponds to one Status and contains the filtered tasks.
    */
-  columns: Array<{ title: string; status: Status; tasks: Task[] }> = [
+  columns: { title: string; status: Status; tasks: Task[] }[] = [
     { title: 'To do', status: 'todo', tasks: [] },
     { title: 'In progress', status: 'inProgress', tasks: [] },
     { title: 'Await feedback', status: 'awaitFeedback', tasks: [] },
@@ -84,14 +83,6 @@ export class BoardPage implements OnInit, AfterViewInit {
 
   /**
    * Angular lifecycle hook.
-   * Initializes the component.
-   *
-   * @returns void
-   */
-  ngOnInit(): void {}
-
-  /**
-   * Angular lifecycle hook.
    * Loads tasks after the view is initialized to avoid change detection errors.
    *
    * @returns void
@@ -118,8 +109,9 @@ export class BoardPage implements OnInit, AfterViewInit {
     try {
       this.allTasks = await this.taskStore.getTasks();
       this.filterTasks(this.allTasks);
-    } catch (error: any) {
-      this.error = `Failed to load tasks: ${error.message}`;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.error = `Failed to load tasks: ${message}`;
       console.error('Error loading tasks:', error);
     } finally {
       this.isLoading = false;

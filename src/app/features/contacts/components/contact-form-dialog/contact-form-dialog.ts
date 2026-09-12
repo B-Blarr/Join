@@ -232,7 +232,7 @@ export class ContactFormDialog {
     try {
       await this.createOrUpdateContact();
       this.closeForm();
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error:', err);
     } finally {
       this.saving.set(false);

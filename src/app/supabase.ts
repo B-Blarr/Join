@@ -1,5 +1,5 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { createClient, SupabaseClient, User, Session } from '@supabase/supabase-js';
 import { Router } from '@angular/router';
 import { DEMO_CONTACTS } from './demo-data';
 
@@ -32,6 +32,8 @@ export interface Contact {
   providedIn: 'root',
 })
 export class Supabase {
+  private router = inject(Router);
+
   /** Supabase project URL. */
   private supabaseUrl = 'https://dcdzlseyrzccbjvinfni.supabase.co';
 
@@ -94,7 +96,7 @@ export class Supabase {
   /** Initialized Supabase client instance. */
   supabase: SupabaseClient = createClient(this.supabaseUrl, this.supabaseKey);
 
-  constructor(private router: Router) {
+  constructor() {
     this.initAuth();
   }
 
@@ -122,10 +124,10 @@ export class Supabase {
   /**
    * Handles session persistence based on "Remember Me" preference.
    *
-   * @param session Current session object.
+   * @param session Current session, or `null` when nobody is signed in.
    * @returns True if session was cleared, false otherwise.
    */
-  private async handleSessionPersistence(session: any): Promise<boolean> {
+  private async handleSessionPersistence(session: Session | null): Promise<boolean> {
     if (typeof window === 'undefined' || !window.sessionStorage) {
       return false;
     }
@@ -160,7 +162,7 @@ export class Supabase {
    * @param rememberMe - Whether to persist the session after browser closes (default: true).
    * @returns True if sign-in was successful, false otherwise.
    */
-  async signIn(email: string, password: string, rememberMe: boolean = true): Promise<boolean> {
+  async signIn(email: string, password: string, rememberMe = true): Promise<boolean> {
     this.authLoading.set(true);
     this.authError.set(null);
 
@@ -221,7 +223,7 @@ export class Supabase {
   async signUp(email: string, password: string, displayName?: string): Promise<boolean> {
     this.authLoading.set(true);
     this.authError.set(null);
-    const { data, error } = await this.supabase.auth.signUp({
+    const { error } = await this.supabase.auth.signUp({
       email,
       password,
       options: {

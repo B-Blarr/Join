@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { ContactList } from '../../components/contact-list/contact-list';
 import { ContactDetail } from '../../components/contact-detail/contact-detail';
 import { ContactFormDialog } from '../../components/contact-form-dialog/contact-form-dialog';
@@ -14,7 +14,7 @@ import { ContactFormDialog } from '../../components/contact-form-dialog/contact-
   templateUrl: './contacts-page.html',
   styleUrl: './contacts-page.scss',
 })
-export class ContactsPage {
+export class ContactsPage implements OnInit {
   showForm = signal(false);
   showDetailOnMobile = signal(false);
 
