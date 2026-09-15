@@ -11,18 +11,25 @@ drop.
 
 Join lets users create tasks, sort them into the four columns of a Kanban
 board, assign them to contacts and move them by dragging. Tasks, contacts and
-accounts live in Supabase, so the board looks the same on every device and
-survives a logout.
+accounts live in Supabase, so a registered user sees the same board on every
+device.
 
-Built as a group project with four developers over roughly eight weeks. I
-worked across the whole application rather than owning a single area, from the
-board and the task forms through to the contact management and the responsive
-layout.
+The login page offers a guest login, so the app can be explored without
+registering. It loads a set of demo tasks and contacts, and nothing a guest
+changes is saved.
+
+Built as a group project with four developers. I worked across the whole
+application rather than owning a single area, from the board and the task forms
+through to the contact management and the responsive layout.
 
 ## Features
 
 - Kanban board with drag and drop across four columns
-- Create, edit and delete tasks with subtasks, priority and due date
+- Search that filters the board by task title and description
+- Create, edit and delete tasks with subtasks, priority, due date and a
+  category, either User Story or Technical Task
+- Summary page with the task count per column, the number of urgent tasks and
+  the next deadline
 - Contact management, tasks assigned to one or more contacts
 - Sign up, log in and a guest login
 - Responsive down to mobile, with a separate layout for narrow screens
@@ -39,6 +46,9 @@ layout.
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" height="40" alt="sass logo" />
 </p>
 
+Angular 20 with standalone components, signals and zoneless change detection.
+Drag and drop comes from the Angular CDK.
+
 **Backend**
 
 <p align="left">
@@ -49,11 +59,27 @@ Supabase handles authentication and stores tasks and contacts.
 
 ## Getting Started
 
+Requires Node.js 20.19+, 22.12+ or 24+.
+
 ```bash
+git clone https://github.com/B-Blarr/Join.git
+cd Join
 npm install
-ng serve
+npm start
 ```
 
-The app is then available at `http://localhost:4200/`.
+`npm start` runs the development server and opens the app at
+`http://localhost:4200/join/`. A global installation of the Angular CLI is not
+needed.
 
-Built with Angular CLI 20.3.5.
+The app talks to the same Supabase project as the live version, so there are
+no keys to set up and no local database. An account created locally is a real
+account in that project.
+
+## Credits
+
+Built together with [serhat-ozcakir](https://github.com/serhat-ozcakir),
+[vadim-cebanu](https://github.com/vadim-cebanu) and
+[hello90343](https://github.com/hello90343). The team repository is
+[serhat-ozcakir/Join](https://github.com/serhat-ozcakir/Join), this repository
+is my fork of it.
